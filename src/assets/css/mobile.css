@@ -1,0 +1,13 @@
+@media screen and (max-width: 768px) {
+    .flex-grid.flex-grid--cols-2 {
+        display: flex;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .paned {
+        display: initial;
+    }
+}
