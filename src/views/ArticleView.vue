@@ -71,6 +71,7 @@ export default defineComponent({
                     const hResponse = this.handleResponse(response);
                     this.article = hResponse.article;
                     this.headings = hResponse.headings;
+                    document.title = `${this.article!.Title} - ${this.chronosConfig.title}`;
                 });
                 window.history.pushState({}, "", `/${this.chronosStore.prefLang}/${this.$route.params.slug}`);
             }
@@ -84,6 +85,7 @@ export default defineComponent({
                 const hResponse = this.handleResponse(response);
                 this.article = hResponse.article;
                 this.headings = hResponse.headings;
+                document.title = `${this.article!.Title} - ${this.chronosConfig.title}`;
             });
         },
         handleResponse(response: Article) {

@@ -223,17 +223,6 @@ p span.badge {
     margin-left: 25px;
 }
 
-.content h1,
-.content h2,
-.content h3,
-.content h4,
-.content h5 {
-    position: sticky;
-    top: 50px;
-    background-color: #fff;
-    padding: 10px 0;
-}
-
 .modal-card,
 .modal-content {
     overflow: initial;
