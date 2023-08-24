@@ -267,3 +267,7 @@ p span.badge {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.card-content .content {
+    overflow: initial;
+}
