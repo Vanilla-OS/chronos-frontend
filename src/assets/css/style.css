@@ -189,6 +189,7 @@ p span.badge {
 .content {
     line-height: 1.5;
     font-size: 18px;
+    overflow: auto;
 }
 
 .subtitle.is-5 {
@@ -203,7 +204,7 @@ p span.badge {
 
 .sidebar aside {
     position: sticky;
-    top: 0;
+    top: 70px;
 }
 
 .indent-2 {
