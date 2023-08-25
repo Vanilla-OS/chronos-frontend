@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex-grid flex-grid--cols-2" v-if="articlesResponse?.groupedArticles">
+    <div class="flex-grid flex-grid--cols-2" v-if="articlesResponse?.articles">
       <div v-for="(article) in articles" :key="article.Slug">
         <div class="card">
           <div class="card-content">
@@ -33,7 +33,7 @@ export default defineComponent({
   data() {
     return {
       articlesResponse: {} as ArticlesResponse,
-      articles: {} as { [path: string]: Article },
+      articles: [] as Article[],
     };
   },
   computed: {
@@ -51,9 +51,9 @@ export default defineComponent({
   methods: {
     async fetchArticles() {
       // @ts-ignore
-      this.$chronosAPI.getArticles().then((response) => {
+      this.$chronosAPI.getArticles(this.chronosStore.prefLang).then((response) => {
         this.articlesResponse = response;
-        this.articles = this.articlesResponse.groupedArticles[this.chronosStore.prefLang];
+        this.articles = this.articlesResponse.articles;
         console.log(this.articles);
       });
     },

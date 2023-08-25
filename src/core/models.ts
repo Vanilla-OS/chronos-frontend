@@ -15,7 +15,7 @@ interface SearchResponse {
 interface ArticlesResponse {
     title: string;
     supportedLang: string[];
-    groupedArticles: { [lang: string]: { [path: string]: Article } };
+    articles: Article[];
 }
 
 export type { Article, SearchResponse, ArticlesResponse };

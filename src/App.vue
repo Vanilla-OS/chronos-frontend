@@ -125,7 +125,7 @@ export default defineComponent({
     },
     async searchArticles() {
       // @ts-ignore
-      this.$chronosAPI.searchArticles(this.search).then((response) => {
+      this.$chronosAPI.searchArticles(this.chronosStore.perfLang, this.search).then((response) => {
         this.searchResponse = response;
         console.log(this.searchResponse);
       });

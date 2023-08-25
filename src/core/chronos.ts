@@ -5,9 +5,9 @@ import type { Article, ArticlesResponse, SearchResponse } from "@/core/models";
 interface ChronosAPI {
   getStatus(): Promise<string>;
   getLangs(): Promise<string[]>;
-  getArticles(): Promise<ArticlesResponse>;
+  getArticles(lang: string): Promise<ArticlesResponse>;
   getArticleByLanguageAndSlug(lang: string, slug: string): Promise<Article | null>;
-  searchArticles(query: string): Promise<SearchResponse>;
+  searchArticles(lang: string, query: string): Promise<SearchResponse>;
 }
 
 const ChronosPlugin = {
@@ -15,7 +15,7 @@ const ChronosPlugin = {
     const api: ChronosAPI = {
       async getStatus() {
         try {
-          const response = await axios.get(`${baseURL}/`);
+          const response = await axios.get(baseURL);
           return response.data.status;
         } catch (error) {
           throw new Error('Failed to get server status');
@@ -31,9 +31,10 @@ const ChronosPlugin = {
         }
       },
 
-      async getArticles() {
+      async getArticles(lang: string) {
         try {
-          const response = await axios.get(`${baseURL}/articles`);
+          const response = await axios.get(`${baseURL}/articles/${lang}`);
+          console.log(`${baseURL}/articles/${lang}`);
           return response.data;
         } catch (error) {
           throw new Error('Failed to get articles');
@@ -52,9 +53,9 @@ const ChronosPlugin = {
         }
       },
 
-      async searchArticles(query: string): Promise<SearchResponse> {
+      async searchArticles(lang: string, query: string): Promise<SearchResponse> {
         try {
-          const response = await axios.get(`${baseURL}/search?q=${query}`);
+          const response = await axios.get(`${baseURL}/search/${lang}?q=${query}`);
           return response.data;
         } catch (error) {
           throw new Error('Failed to search articles');
