@@ -84,8 +84,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useChronosStore } from "@/core/store";
-import type { SearchResponse } from "@/core/models";
-import ChronosConfig from "@/config";
+import type { SearchResponse, ChronosConfig } from "@/core/models";
 
 export default defineComponent({
   data() {
@@ -96,21 +95,25 @@ export default defineComponent({
       showSearch: false,
       searchResponse: {} as SearchResponse,
       search: "",
+      chronosConfig: {} as ChronosConfig,
     };
   },
   computed: {
     chronosStore() {
       return useChronosStore();
     },
-    chronosConfig() {
-      return ChronosConfig;
-    },
   },
   async mounted() {
+    try {
+      // @ts-ignore
+      this.chronosConfig = await this.$chronosAPI.config();
+    } catch (error) {
+      console.error("Error fetching Chronos config:", error);
+    }
+
     // @ts-ignore
     this.$chronosAPI.getLangs().then((response) => {
       this.langs = response;
-      console.log(this.langs);
     });
     this.chronosStore.$patch((state) => {
       state.prefLang = "en";
@@ -127,7 +130,6 @@ export default defineComponent({
       // @ts-ignore
       this.$chronosAPI.searchArticles(this.chronosStore.perfLang, this.search).then((response) => {
         this.searchResponse = response;
-        console.log(this.searchResponse);
       });
     },
     goToArticle(slug: string) {

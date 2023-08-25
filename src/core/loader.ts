@@ -1,9 +1,8 @@
 import type { App } from "vue";
-import ChronosAPI from "@/core/chronos";
-import ChronosConfig from "@/config";
+import ChronosPlugin from "@/core/chronos";
 
 export default {
     install(app: App) {
-        app.use(ChronosAPI, ChronosConfig.chronosApiUrl);
+        app.use(ChronosPlugin);
     },
 };

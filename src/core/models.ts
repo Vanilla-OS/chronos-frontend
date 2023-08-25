@@ -18,4 +18,19 @@ interface ArticlesResponse {
     articles: Article[];
 }
 
-export type { Article, SearchResponse, ArticlesResponse };
+interface ChronosConfig {
+    title: string;
+    logoTitle: string;
+    logoUrl: string;
+    description: string;
+    baseURL: string;
+    chronosApiUrl: string;
+    extraLinks: ExtraLink[];
+}
+
+interface ExtraLink {
+    url: string;
+    name: string;
+}
+
+export type { Article, SearchResponse, ArticlesResponse, ChronosConfig, ExtraLink };

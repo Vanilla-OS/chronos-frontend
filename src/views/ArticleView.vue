@@ -35,10 +35,9 @@
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
-import type { Article } from "@/core/models";
+import type { Article, ChronosConfig } from "@/core/models";
 import { useChronosStore } from "@/core/store";
 import { useHead } from 'unhead'
-import ChronosConfig from "@/config";
 
 
 export default defineComponent({
@@ -48,17 +47,18 @@ export default defineComponent({
             article: {} as Article,
             lang: "",
             headings: [] as { text: string, id: string, level: number }[],
+            chronosConfig: {} as ChronosConfig,
         };
     },
     computed: {
         chronosStore() {
             return useChronosStore();
         },
-        chronosConfig() {
-            return ChronosConfig;
-        },
     },
     async mounted() {
+        // @ts-ignore
+        this.chronosConfig = await this.$chronosAPI.config();
+
         // @ts-ignore
         await this.loadArticle(this.$route.params.lang, this.$route.params.slug);
         this.setupRouteWatcher();
@@ -79,6 +79,10 @@ export default defineComponent({
     },
     methods: {
         async loadArticle(lang: string, slug: string) {
+            if (slug === undefined) {
+                return;
+            }
+
             // @ts-ignore
             this.$chronosAPI.getArticleByLanguageAndSlug(this.$route.params.lang, this.$route.params.slug).then((response) => {
                 this.lang = this.$route.params.lang as string;
@@ -110,7 +114,7 @@ export default defineComponent({
                     },
                     {
                         name: 'og:url',
-                        content: `${this.chronosConfig.baseUrl}/${this.article!.Slug}`,
+                        content: `${this.chronosConfig.baseURL}/${this.article!.Slug}`,
                     },
                     {
                         name: 'twitter:card',

@@ -54,7 +54,6 @@ export default defineComponent({
       this.$chronosAPI.getArticles(this.chronosStore.prefLang).then((response) => {
         this.articlesResponse = response;
         this.articles = this.articlesResponse.articles;
-        console.log(this.articles);
       });
     },
   },
