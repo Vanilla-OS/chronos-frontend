@@ -1,6 +1,7 @@
 @media screen and (max-width: 768px) {
     .flex-grid.flex-grid--cols-2 {
         display: flex;
+        flex-direction: column;
     }
 
     .container {
@@ -9,5 +10,14 @@
 
     .paned {
         display: initial;
+    }
+
+    nav.navbar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .navbar-end {
+        display: flex;
     }
 }
