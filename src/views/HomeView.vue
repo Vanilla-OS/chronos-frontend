@@ -25,8 +25,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { ArticlesResponse, Article } from "@/core/models";
+import type { ArticlesResponse, Article, ChronosConfig } from "@/core/models";
 import { useChronosStore } from "@/core/store";
+import { useHead } from 'unhead'
 
 export default defineComponent({
   name: "HomeView",
@@ -34,6 +35,7 @@ export default defineComponent({
     return {
       articlesResponse: {} as ArticlesResponse,
       articles: [] as Article[],
+      chronosConfig: {} as ChronosConfig,
     };
   },
   computed: {
@@ -44,8 +46,21 @@ export default defineComponent({
   async mounted() {
     this.fetchArticles();
 
+    // @ts-ignore
+    this.chronosConfig = await this.$chronosAPI.config();
+
     this.chronosStore.$subscribe(() => {
       this.fetchArticles();
+    });
+
+    useHead({
+      title: this.chronosConfig.title,
+      meta: [
+        {
+          name: "description",
+          content: this.chronosConfig.description,
+        },
+      ],
     });
   },
   methods: {
