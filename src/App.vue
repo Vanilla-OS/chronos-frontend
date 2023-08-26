@@ -53,8 +53,7 @@
           </p>
         </div>
         <div class="panel-scrollable">
-          <a class="panel-block" @click="goToArticle(result.Slug)" v-for="(result) in searchResponse.results"
-            :key="result.Slug">
+          <a class="panel-block" @click="goToArticle(result.Slug)" v-for="(result) in searchResponse" :key="result.Slug">
             <span class="panel-icon">
               <i class="mdi material-icons">book</i>
             </span>
@@ -84,7 +83,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useChronosStore } from "@/core/store";
-import type { SearchResponse, ChronosConfig } from "@/core/models";
+import type { Article, ChronosConfig } from "@/core/models";
 
 export default defineComponent({
   data() {
@@ -93,7 +92,7 @@ export default defineComponent({
       langs: [] as string[],
       showLangs: false,
       showSearch: false,
-      searchResponse: {} as SearchResponse,
+      searchResponse: [] as Article[],
       search: "",
       chronosConfig: {} as ChronosConfig,
     };
@@ -128,7 +127,7 @@ export default defineComponent({
     },
     async searchArticles() {
       // @ts-ignore
-      this.$chronosAPI.searchArticles(this.chronosStore.perfLang, this.search).then((response) => {
+      this.$chronosAPI.searchArticles(this.chronosStore.prefLang, this.search).then((response) => {
         this.searchResponse = response;
       });
     },

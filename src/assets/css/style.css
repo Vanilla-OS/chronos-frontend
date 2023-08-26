@@ -239,6 +239,14 @@ p span.badge {
     overflow-y: auto;
 }
 
+.card-content .content {
+    overflow: initial;
+}
+
+.modal-content {
+    padding: 30px;
+}
+
 ::-webkit-scrollbar {
     width: 12px;
 }
@@ -255,8 +263,4 @@ p span.badge {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
-}
-
-.card-content .content {
-    overflow: initial;
 }

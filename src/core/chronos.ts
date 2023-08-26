@@ -75,6 +75,7 @@ const ChronosPlugin = {
           const config = await api.config();
           const baseURL = config.chronosApiUrl;
           const response = await axios.get(`${baseURL}/search/${lang}?q=${query}`);
+          console.log(`${baseURL}/search/${lang}?q=${query}`);
           return response.data;
         } catch (error) {
           throw new Error('Failed to search articles');
