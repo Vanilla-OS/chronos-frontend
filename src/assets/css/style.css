@@ -264,3 +264,7 @@ p span.badge {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.dropdown-menu {
+    min-width: 0;
+}
