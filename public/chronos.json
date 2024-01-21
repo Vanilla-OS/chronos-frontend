@@ -9,13 +9,13 @@
       "shortName": "docs",
       "title": "Docs",
       "url": "http://localhost:8080/documentation",
-      "description": "Read the tecnical documentation for the Vanilla OS components and utilities."
+      "description": "Read the tecnical documentation for the Awesome project."
     },
     {
       "shortName": "handbook",
       "title": "Handbook",
       "url": "http://localhost:8080/handbook",
-      "description": "Are you a new Vanilla OS user? Read the handbook to learn how to use the OS."
+      "description": "Are you a new user? Read the handbook to learn how to use the Awesome project."
     }
   ],
   "extraLinks": [
