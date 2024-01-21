@@ -24,8 +24,15 @@ interface ChronosConfig {
     logoUrl: string;
     description: string;
     baseURL: string;
-    chronosApiUrl: string;
+    chronosCollections: ChronosCollection[];
     extraLinks: ExtraLink[];
+}
+
+interface ChronosCollection {
+    shortName: string;
+    title: string;
+    url: string;
+    description: string;
 }
 
 interface ExtraLink {
@@ -33,4 +40,4 @@ interface ExtraLink {
     name: string;
 }
 
-export type { Article, SearchResponse, ArticlesResponse, ChronosConfig, ExtraLink };
+export type { Article, SearchResponse, ArticlesResponse, ChronosConfig, ChronosCollection, ExtraLink };

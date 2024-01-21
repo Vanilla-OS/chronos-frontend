@@ -4,13 +4,17 @@ import type { Article, ArticlesResponse, SearchResponse, ChronosConfig } from "@
 
 interface ChronosAPI {
   config(): Promise<ChronosConfig>;
-  getStatus(): Promise<string>;
-  getLangs(): Promise<string[]>;
-  getArticles(lang: string): Promise<ArticlesResponse>;
-  getArticleByLanguageAndSlug(lang: string, slug: string): Promise<Article | null>;
-  searchArticles(lang: string, query: string): Promise<SearchResponse>;
+  getStatus(collectionShortName: string): Promise<string>;
+  getLangs(collectionShortName: string): Promise<string[]>;
+  getArticles(lang: string, collectionShortName: string): Promise<ArticlesResponse>;
+  countArticles(lang: string, collectionShortName: string): Promise<number>;
+  getArticleByLanguageAndSlug(lang: string, slug: string, collectionShortName: string): Promise<Article | null>;
+  searchArticles(lang: string, query: string, collectionShortName: string): Promise<SearchResponse>;
 }
 
+const findCollectionByUrl = (config: ChronosConfig, url: string) => {
+  return config.chronosCollections.find(collection => collection.url === url);
+};
 
 const ChronosPlugin = {
   install: async (app: App) => {
@@ -23,59 +27,86 @@ const ChronosPlugin = {
           throw new Error("Failed to fetch Chronos configuration");
         }
       },
-      async getStatus() {
+
+      async getStatus(collectionShortName: string) {
         try {
           const config = await api.config();
-          const baseURL = config.chronosApiUrl;
-          const response = await axios.get(baseURL);
+          const collection = config.chronosCollections.find(c => c.shortName === collectionShortName);
+          if (!collection) {
+            throw new Error(`Collection with shortName ${collectionShortName} not found`);
+          }
+
+          const response = await axios.get(collection.url);
           return response.data.status;
         } catch (error) {
           throw new Error('Failed to get server status');
         }
       },
 
-      async getLangs() {
+      async getLangs(collectionShortName: string) {
         try {
           const config = await api.config();
-          const baseURL = config.chronosApiUrl;
-          const response = await axios.get(`${baseURL}/langs`);
+          const collection = config.chronosCollections.find(c => c.shortName === collectionShortName);
+          if (!collection) {
+            throw new Error(`Collection with shortName ${collectionShortName} not found`);
+          }
+
+          const response = await axios.get(`${collection.url}/langs`);
           return response.data;
         } catch (error) {
           throw new Error('Failed to get langs');
         }
       },
 
-      async getArticles(lang: string) {
+      async getArticles(lang: string, collectionShortName: string) {
         try {
           const config = await api.config();
-          const baseURL = config.chronosApiUrl;
-          const response = await axios.get(`${baseURL}/articles/${lang}`);
+          const collection = config.chronosCollections.find(c => c.shortName === collectionShortName);
+          if (!collection) {
+            throw new Error(`Collection with shortName ${collectionShortName} not found`);
+          }
+
+          const response = await axios.get(`${collection.url}/articles/${lang}`);
           return response.data;
         } catch (error) {
           throw new Error('Failed to get articles');
         }
       },
 
-      async getArticleByLanguageAndSlug(lang: string, slug: string) {
+      async countArticles(lang: string, collectionShortName: string) {
+        try {
+          const articles = await api.getArticles(lang, collectionShortName);
+          return articles.articles.length;
+        } catch (error) {
+          throw new Error('Failed to count articles');
+        }
+      },
+
+      async getArticleByLanguageAndSlug(lang: string, slug: string, collectionShortName: string) {
         try {
           const config = await api.config();
-          const baseURL = config.chronosApiUrl;
-          const response = await axios.get(`${baseURL}/articles/${lang}/${slug}`);
-          return response.data;
-        } catch (error: any) {
-          if (error.response.status === 404) {
-            return null;
+          const collection = config.chronosCollections.find(c => c.shortName === collectionShortName);
+          if (!collection) {
+            throw new Error(`Collection with shortName ${collectionShortName} not found`);
           }
+
+          const response = await axios.get(`${collection.url}/articles/${lang}/${slug}`);
+          return response.data;
+        } catch (error) {
           throw new Error('Failed to get article');
         }
       },
 
-      async searchArticles(lang: string, query: string): Promise<SearchResponse> {
+      async searchArticles(lang: string, query: string, collectionShortName: string): Promise<SearchResponse> {
         try {
           const config = await api.config();
-          const baseURL = config.chronosApiUrl;
-          const response = await axios.get(`${baseURL}/search/${lang}?q=${query}`);
-          console.log(`${baseURL}/search/${lang}?q=${query}`);
+          const collection = config.chronosCollections.find(c => c.shortName === collectionShortName);
+          if (!collection) {
+            throw new Error(`Collection with shortName ${collectionShortName} not found`);
+          }
+
+          const response = await axios.get(`${collection.url}/search/${lang}?q=${query}`);
+          console.log(`${collection.url}/search/${lang}?q=${query}`);
           return response.data;
         } catch (error) {
           throw new Error('Failed to search articles');

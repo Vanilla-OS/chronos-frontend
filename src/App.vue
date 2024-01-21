@@ -12,12 +12,12 @@
           <a class="navbar-item" :href="link.url" target="_blank" v-for="(link) in chronosConfig.extraLinks">
             {{ link.name }}
           </a>
-          <button class="button is-white" @click="toggleSearch()">
+          <button class="button is-white" @click="toggleSearch()" v-if="collectionShortName">
             <span class="icon is-left">
               <i class="mdi material-icons">search</i>
             </span>
           </button>
-          <div class="dropdown" :class="{ 'is-active': showLangs }">
+          <div class="dropdown" :class="{ 'is-active': showLangs }" v-if="collectionShortName">
             <div class="dropdown-trigger">
               <button class="button is-white" @click="showLangs = !showLangs">
                 <span>{{ chronosStore.prefLang }}</span>
@@ -53,11 +53,17 @@
           </p>
         </div>
         <div class="panel-scrollable">
-          <a class="panel-block" @click="goToArticle(result.Slug)" v-for="(result) in searchResponse" :key="result.Slug">
-            <span class="panel-icon">
-              <i class="mdi material-icons">book</i>
-            </span>
-            {{ result.Title }}
+          <a class="panel-block flex-list" @click="goToArticle(result.Slug)" v-for="(result) in searchResponse"
+            :key="result.Slug">
+            <div class="panel-block-header panel-block-header--has-icon">
+              <span class="panel-icon">
+                <i class="mdi material-icons">book</i>
+              </span>
+              {{ result.Title }}
+            </div>
+            <div class="panel-block-content">
+              <p class="is-size-7 has-text-grey">{{ result.Description }}</p>
+            </div>
           </a>
         </div>
       </nav>
@@ -95,11 +101,17 @@ export default defineComponent({
       searchResponse: [] as Article[],
       search: "",
       chronosConfig: {} as ChronosConfig,
+      collectionShortName: "",
     };
   },
   computed: {
     chronosStore() {
       return useChronosStore();
+    },
+  },
+  watch: {
+    $route(to, from) {
+      this.fetchLanguages();
     },
   },
   async mounted() {
@@ -110,10 +122,9 @@ export default defineComponent({
       console.error("Error fetching Chronos config:", error);
     }
 
-    // @ts-ignore
-    this.$chronosAPI.getLangs().then((response) => {
-      this.langs = response;
-    });
+    // Fetch languages initially
+    this.fetchLanguages();
+
     this.chronosStore.$patch((state) => {
       state.prefLang = "en";
     });
@@ -127,12 +138,12 @@ export default defineComponent({
     },
     async searchArticles() {
       // @ts-ignore
-      this.$chronosAPI.searchArticles(this.chronosStore.prefLang, this.search).then((response) => {
+      this.$chronosAPI.searchArticles(this.chronosStore.prefLang, this.search, this.collectionShortName).then((response) => {
         this.searchResponse = response;
       });
     },
     goToArticle(slug: string) {
-      this.$router.push(`/${this.chronosStore.prefLang}/${slug}`);
+      this.$router.push(`/${this.collectionShortName}/${this.chronosStore.prefLang}/${slug}`);
       this.showSearch = false;
     },
     toggleSearch() {
@@ -144,6 +155,20 @@ export default defineComponent({
           // @ts-ignore
           this.$refs.search.focus();
         });
+      }
+    },
+    async fetchLanguages() {
+      // Check if the collection parameter is available in the route
+      this.collectionShortName = this.$route.params.collection as string;
+
+      if (this.collectionShortName) {
+        // Fetch languages for the specific collection
+        try {
+          // @ts-ignore
+          this.langs = await this.$chronosAPI.getLangs(this.collectionShortName);
+        } catch (error) {
+          console.error(`Error fetching languages for collection ${this.collectionShortName}:`, error);
+        }
       }
     },
   },

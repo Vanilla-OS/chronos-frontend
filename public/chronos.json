@@ -1,14 +1,27 @@
 {
-    "title": "Chronos Documentation",
-    "logoTitle": "Documentation",
-    "logoUrl": "/logo.svg",
-    "description": "A frontend in Vue.js for the Chronos documentation server.",
-    "baseUrl": "http://localhost:5173",
-    "chronosApiUrl": "http://localhost:8080/remote1",
-    "extraLinks": [
-      {
-        "url": "https://github.com/vanilla-os/Chronos",
-        "name": "Source Code"
-      }
-    ]
-  }
+  "title": "Chronos Documentation",
+  "logoTitle": "Documentation",
+  "logoUrl": "/logo.svg",
+  "description": "A frontend in Vue.js for the Chronos documentation server.",
+  "baseUrl": "http://localhost:5173",
+  "chronosCollections": [
+    {
+      "shortName": "docs",
+      "title": "Docs",
+      "url": "http://localhost:8080/documentation",
+      "description": "Read the tecnical documentation for the Vanilla OS components and utilities."
+    },
+    {
+      "shortName": "handbook",
+      "title": "Handbook",
+      "url": "http://localhost:8080/handbook",
+      "description": "Are you a new Vanilla OS user? Read the handbook to learn how to use the OS."
+    }
+  ],
+  "extraLinks": [
+    {
+      "url": "https://github.com/vanilla-os/Chronos",
+      "name": "Source Code"
+    }
+  ]
+}

@@ -48,6 +48,7 @@ export default defineComponent({
             lang: "",
             headings: [] as { text: string, id: string, level: number }[],
             chronosConfig: {} as ChronosConfig,
+            collectionName: "",
         };
     },
     computed: {
@@ -58,6 +59,7 @@ export default defineComponent({
     async mounted() {
         // @ts-ignore
         this.chronosConfig = await this.$chronosAPI.config();
+        this.collectionName = this.$route.params.collection as string;
 
         // @ts-ignore
         await this.loadArticle(this.$route.params.lang, this.$route.params.slug);
@@ -66,14 +68,14 @@ export default defineComponent({
         this.chronosStore.$subscribe(() => {
             if (this.lang !== this.chronosStore.prefLang) {
                 // @ts-ignore
-                this.$chronosAPI.getArticleByLanguageAndSlug(this.chronosStore.prefLang, this.$route.params.slug).then((response) => {
+                this.$chronosAPI.getArticleByLanguageAndSlug(this.chronosStore.prefLang, this.article.Slug, this.collectionName).then((response) => {
                     this.lang = this.chronosStore.prefLang;
                     const hResponse = this.handleResponse(response);
                     this.article = hResponse.article;
                     this.headings = hResponse.headings;
                     document.title = `${this.article!.Title} - ${this.chronosConfig.title}`;
                 });
-                window.history.pushState({}, "", `/${this.chronosStore.prefLang}/${this.$route.params.slug}`);
+                window.history.pushState({}, "", `/${this.chronosStore.prefLang}/${this.collectionName}`);
             }
         });
     },
@@ -84,7 +86,7 @@ export default defineComponent({
             }
 
             // @ts-ignore
-            this.$chronosAPI.getArticleByLanguageAndSlug(this.$route.params.lang, this.$route.params.slug).then((response) => {
+            this.$chronosAPI.getArticleByLanguageAndSlug(lang, slug, this.collectionName).then((response) => {
                 this.lang = this.$route.params.lang as string;
                 const hResponse = this.handleResponse(response);
                 this.article = hResponse.article;

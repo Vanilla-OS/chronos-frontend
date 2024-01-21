@@ -268,3 +268,60 @@ p span.badge {
 .dropdown-menu {
     min-width: 0;
 }
+
+.no-gap {
+    gap: 0;
+}
+
+.flex-grid>div>.card {
+    height: 100%;
+}
+
+.flex-grid>div>.card>.card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-grid>div>.card>.card-content>.content {
+    flex: 1;
+}
+
+.sidebar ul.menu-list li::before {
+    content: "";
+    width: 10px;
+    height: 1px;
+    background: #a3a3a3;
+    display: block;
+    position: absolute;
+    margin: 18px 0 0 0;
+    left: 0;
+}
+
+.sidebar ul.menu-list li.indent-2::before {
+    width: 5px;
+}
+
+.sidebar ul.menu-list li.indent-3:before {
+    width: 10px;
+}
+
+.sidebar ul.menu-list li.indent-4::before {
+    width: 15px;
+}
+
+.sidebar ul.menu-list li.indent-5::before {
+    width: 20px;
+}
+
+.panel-scrollable {
+    min-height: 120px;
+}
+
+.panel-block .block {
+    margin-bottom: 0;
+}
+
+.panel-block-header.panel-block-header--has-icon+.panel-block-content {
+    margin-left: 28px;
+}

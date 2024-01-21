@@ -1,41 +1,45 @@
 <template>
-  <div>
-    <div class="flex-grid flex-grid--cols-2" v-if="articlesResponse?.articles">
-      <div v-for="(article) in articles" :key="article.Slug">
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              <h4 class="title is-4">{{ article.Title }}</h4>
-              <p class="subtitle is-5">{{ article.Description }}…</p>
-              <div class="block">
-                <router-link :to="`/${chronosStore.prefLang}/${article.Slug}`" class="button is-ghost is-plain">
-                  <span>Read the article</span>
+  <div v-if="chronosConfig">
+    <h1 class="title is-2">Collections</h1>
+    <div class="columns is-multiline">
+      <div v-for="(collection, index) in chronosConfig.chronosCollections" :key="index" class="column is-half">
+        <router-link :to="`/collections/${collection.shortName}`">
+          <div class="card">
+            <div class="card-content">
+              <p class="title is-4">{{ collection.title }}</p>
+              <p class="subtitle is-6">{{ collection.description }}</p>
+              <div class="content">
+                <p class="is-size-7 is-uppercase has-text-weight-bold flex items-center no-gap">
                   <span class="icon is-small">
-                    <i class="mdi material-icons">arrow_forward</i>
+                    <i class="mdi material-icons">book</i>
                   </span>
-                </router-link>
+                  <span v-if="articleCounts[collection.shortName] !== undefined" class="ml-2">
+                    {{ articleCounts[collection.shortName] }} Articles
+                  </span>
+                  <span v-else>Loading...</span>
+                </p>
               </div>
             </div>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
+
 <script lang="ts">
-import { defineComponent } from "vue";
-import type { ArticlesResponse, Article, ChronosConfig } from "@/core/models";
+import { defineComponent, ref, onMounted } from "vue";
+import type { ChronosConfig, ChronosCollection } from "@/core/models";
 import { useChronosStore } from "@/core/store";
-import { useHead } from 'unhead'
+import { useHead } from 'unhead';
 
 export default defineComponent({
   name: "HomeView",
   data() {
     return {
-      articlesResponse: {} as ArticlesResponse,
-      articles: [] as Article[],
-      chronosConfig: {} as ChronosConfig,
+      chronosConfig: null as ChronosConfig | null,
+      articleCounts: {} as Record<string, number | undefined>,
     };
   },
   computed: {
@@ -44,32 +48,37 @@ export default defineComponent({
     },
   },
   async mounted() {
-    this.fetchArticles();
-
     // @ts-ignore
     this.chronosConfig = await this.$chronosAPI.config();
 
-    this.chronosStore.$subscribe(() => {
-      this.fetchArticles();
-    });
-
     useHead({
-      title: this.chronosConfig.title,
+      title: this.chronosConfig!.title,
       meta: [
         {
           name: "description",
-          content: this.chronosConfig.description,
+          content: this.chronosConfig!.description,
         },
       ],
     });
+
+    await this.fetchArticleCounts();
   },
   methods: {
-    async fetchArticles() {
-      // @ts-ignore
-      this.$chronosAPI.getArticles(this.chronosStore.prefLang).then((response) => {
-        this.articlesResponse = response;
-        this.articles = this.articlesResponse.articles;
-      });
+    async fetchArticleCounts() {
+      const articleCounts: Record<string, number | undefined> = {};
+
+      for (const collection of this.chronosConfig!.chronosCollections) {
+        try {
+          // @ts-ignore
+          const count = await this.$chronosAPI.countArticles(this.chronosStore.prefLang, collection.shortName);
+          articleCounts[collection.shortName] = count;
+        } catch (error) {
+          console.error(`Error fetching article count for collection ${collection.shortName}:`, error);
+          articleCounts[collection.shortName] = undefined;
+        }
+      }
+
+      this.articleCounts = articleCounts;
     },
   },
 });
