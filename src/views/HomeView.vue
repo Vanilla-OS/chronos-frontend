@@ -1,27 +1,36 @@
 <template>
   <div v-if="chronosConfig">
-    <h1 class="title is-2">Collections</h1>
-    <div class="columns is-multiline">
-      <div v-for="(collection, index) in chronosConfig.chronosCollections" :key="index" class="column is-half">
-        <router-link :to="`/collections/${collection.shortName}`">
-          <div class="card">
-            <div class="card-content">
-              <p class="title is-4">{{ collection.title }}</p>
-              <p class="subtitle is-6">{{ collection.description }}</p>
-              <div class="content">
-                <p class="is-size-7 is-uppercase has-text-weight-bold flex items-center no-gap">
-                  <span class="icon is-small">
-                    <i class="mdi material-icons">book</i>
-                  </span>
-                  <span v-if="articleCounts[collection.shortName] !== undefined" class="ml-2">
-                    {{ articleCounts[collection.shortName] }} Articles
-                  </span>
-                  <span v-else>Loading...</span>
-                </p>
+    <section class="hero is-primary is-title">
+      <div class="container">
+        <div class="hero-body has-text-centered">
+          <h1 class="title">{{ chronosConfig.title }}</h1>
+          <p class="subtitle">Collections</p>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+      <div class="columns is-multiline">
+        <div v-for="(collection, index) in chronosConfig.chronosCollections" :key="index" class="column is-half">
+          <router-link :to="`/collections/${collection.shortName}`">
+            <div class="card">
+              <div class="card-content">
+                <p class="title is-4">{{ collection.title }}</p>
+                <p class="subtitle is-6">{{ collection.description }}</p>
+                <div class="content">
+                  <p class="is-size-7 is-uppercase has-text-weight-bold flex items-center no-gap">
+                    <span class="icon is-small">
+                      <i class="mdi material-icons">book</i>
+                    </span>
+                    <span v-if="articleCounts[collection.shortName] !== undefined" class="ml-2">
+                      {{ articleCounts[collection.shortName] }} Articles
+                    </span>
+                    <span v-else>Loading...</span>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </router-link>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>

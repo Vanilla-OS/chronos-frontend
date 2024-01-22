@@ -1,5 +1,13 @@
 <template>
-    <div>
+    <section class="hero is-primary is-title">
+        <div class="container">
+            <div class="hero-body has-text-centered">
+                <h1 class="title">{{ activeCollection!.title }}</h1>
+                <p class="subtitle">{{ activeCollection!.description }}</p>
+            </div>
+        </div>
+    </section>
+    <div class="container">
         <div class="flex-grid flex-grid--cols-2" v-if="articlesResponse?.articles">
             <div v-for="(article) in articles" :key="article.Slug">
                 <div class="card">
@@ -31,7 +39,7 @@
   
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { ArticlesResponse, Article, ChronosConfig } from "@/core/models";
+import type { ArticlesResponse, Article, ChronosConfig, ChronosCollection } from "@/core/models";
 import { useChronosStore } from "@/core/store";
 import { useHead } from 'unhead'
 
@@ -43,6 +51,7 @@ export default defineComponent({
             articles: [] as Article[],
             chronosConfig: {} as ChronosConfig,
             collectionName: "",
+            activeCollection: {} as ChronosCollection | undefined,
         };
     },
     computed: {
@@ -54,6 +63,7 @@ export default defineComponent({
         // @ts-ignore
         this.chronosConfig = await this.$chronosAPI.config();
         this.collectionName = this.$route.params.collection as string;
+        this.activeCollection = this.chronosConfig.chronosCollections.find((collection) => collection.shortName === this.collectionName);
 
         this.fetchArticles();
 

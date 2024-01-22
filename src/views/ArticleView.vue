@@ -1,22 +1,26 @@
 <template>
-    <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><a>{{ lang }}</a></li>
-            <li class="is-active">
-                <a href="#" aria-current="page">
-                    {{ article.Title }}
-                </a>
-            </li>
-        </ul>
+    <nav class="breadcrumb is-main" aria-label="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li><router-link to="/">Home</router-link></li>
+                <li><a>{{ lang }}</a></li>
+                <li class="is-active">
+                    <a href="#" aria-current="page">
+                        {{ article.Title }}
+                    </a>
+                </li>
+            </ul>
+        </div>
     </nav>
-    <section class="hero">
-        <div class="hero-body">
-            <h1 class="title">{{ article.Title }}</h1>
-            <p class="subtitle">{{ article.Description }}</p>
+    <section class="hero is-primary is-title">
+        <div class="container">
+            <div class="hero-body has-text-centered">
+                <h1 class="title">{{ article.Title }}</h1>
+                <p class="subtitle">{{ article.Description }}</p>
+            </div>
         </div>
     </section>
-    <div class="paned">
+    <div class="paned container">
         <div class="sidebar">
             <aside class="menu">
                 <p class="menu-label">
