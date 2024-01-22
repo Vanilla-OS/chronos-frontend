@@ -2,7 +2,8 @@ name: Image
 
 on:
   push:
-    branches: [ "v2" ]
+    branches:
+      - main
 
 env:
   REGISTRY_USER: ${{ github.actor }}
@@ -18,7 +19,7 @@ jobs:
       run: docker image build -f Containerfile --tag ghcr.io/vanilla-os/chronos-fe:main .
 
     - name: Publish image
-      if: github.repository == 'vanilla-os/chronos-fe'
+      if: github.repository == 'vanilla-os/chronos-frontend'
       run: |
         docker login ghcr.io -u ${{ env.REGISTRY_USER }} -p ${{ env.REGISTRY_PASSWORD }}
         docker image push "ghcr.io/vanilla-os/chronos-fe:main"
