@@ -198,13 +198,16 @@ p span.badge {
 
 .paned {
     display: grid;
-    grid-template-columns: 11.25rem 1fr;
+    grid-template-columns: 14.25rem auto;
     gap: 20px;
 }
 
 .sidebar aside {
     position: sticky;
     top: 70px;
+    overflow-y: auto;
+    height: calc(100vh - 70px);
+    padding-bottom: 50px;
 }
 
 .indent-2 {
