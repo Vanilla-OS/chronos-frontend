@@ -20,4 +20,20 @@
     .navbar-end {
         display: flex;
     }
+
+    .breadcrumb.is-main {
+        top: 95px;
+    }
+
+    .breadcrumb.is-main~.paned .sidebar aside {
+        height: auto;
+    }
+
+    .sidebar {
+        padding: 0 20px;
+    }
+
+    .content {
+        padding: 0 20px;
+    }
 }
