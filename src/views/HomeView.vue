@@ -71,6 +71,12 @@ export default defineComponent({
     });
 
     await this.fetchArticleCounts();
+
+    // Redirect if there's only one collection
+    if (this.chronosConfig!.chronosCollections.length === 1) {
+      const collection = this.chronosConfig!.chronosCollections[0];
+      this.$router.replace(`/collections/${collection.shortName}`);
+    }
   },
   methods: {
     async fetchArticleCounts() {
