@@ -4,9 +4,8 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
-RUN npm run generate-config
 RUN npm run build
 
 EXPOSE 6090
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "publish"]
