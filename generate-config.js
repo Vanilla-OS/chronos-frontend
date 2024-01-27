@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { URL } = require("url");
 
 const parseArray = (arrayString) => {
   try {
@@ -50,7 +51,24 @@ if (!fs.existsSync(publicFolderPath)) {
   fs.mkdirSync(publicFolderPath);
 }
 
+if (process.env.CHRONOS_LOGO_URL && !isWebURL(process.env.CHRONOS_LOGO_URL)) {
+  const logoExtension = path.extname(process.env.CHRONOS_LOGO_URL);
+  const logoFileName = `logo${logoExtension}`;
+  const logoFilePath = path.resolve(publicFolderPath, logoFileName);
+  fs.copyFileSync(process.env.CHRONOS_LOGO_URL, logoFilePath);
+  chronosConfig.logoUrl = `/logo${logoExtension}`;
+}
+
 const configFilePath = path.resolve(publicFolderPath, "chronos.json");
 fs.writeFileSync(configFilePath, JSON.stringify(chronosConfig, null, 2));
 
 console.log("chronos.json generated successfully!");
+
+function isWebURL(str) {
+  try {
+    new URL(str);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
