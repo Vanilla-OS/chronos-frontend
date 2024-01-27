@@ -93,7 +93,7 @@ To deploy the production version using Docker, run the following command:
 
 ```bash
 docker pull ghcr.io/vanilla-os/chronos-fe:main
-docker run -d -p 5173:80 ghcr.io/vanilla-os/chronos-fe:main \
+docker run -d -p 6090:80 ghcr.io/vanilla-os/chronos-fe:main \
   -e CHRONOS_TITLE='Chronos Documentation' \
   -e CHRONOS_LOGO_TITLE='Documentation' \
   -e CHRONOS_LOGO_URL='/logo.svg' \

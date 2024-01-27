@@ -17,7 +17,11 @@ const extractItemsFromEnv = (prefix) => {
   while (process.env[`${prefix}_${index}`]) {
     const itemString = process.env[`${prefix}_${index}`];
     const item = parseArray(itemString);
-    items.push(item);
+
+    if (item.length > 0) {
+      items.push(item[0]);
+    }
+
     index++;
   }
 
