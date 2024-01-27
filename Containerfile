@@ -4,6 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
+RUN npm run generate-config
 RUN npm run build
 
 EXPOSE 6090

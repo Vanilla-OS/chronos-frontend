@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-config": "node generate-config.js"
   },
   "dependencies": {
     "@babel/types": "^7.22.5",
