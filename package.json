@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "generate-config": "node generate-config.js",
     "start": "node server.js",
-    "publish": "npm run generate-config && npm run start"
+    "publish": "npm run generate-config && npm run build && npm run start"
   },
   "dependencies": {
     "@babel/types": "^7.22.5",
