@@ -167,9 +167,12 @@ p span.badge {
 .topbar {
     background-color: #fff;
     border-bottom: 1px solid #dddddd;
-    position: sticky;
     top: 0;
     z-index: 9;
+}
+
+.topbar.is-sticky {
+    position: sticky;
 }
 
 .navbar-end {
@@ -360,6 +363,10 @@ p span.badge {
     top: 52px;
     background-color: #fff;
     z-index: 1;
+}
+
+.topbar:not(.is-sticky)~.breadcrumb.is-main {
+    top: 0;
 }
 
 .breadcrumb.is-main~.paned .sidebar aside {

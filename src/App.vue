@@ -1,5 +1,5 @@
 <template>
-  <div class="topbar">
+  <div class="topbar" :class="{ 'is-sticky': stickyTopbar }">
     <div class="container">
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
@@ -105,6 +105,9 @@ export default defineComponent({
   computed: {
     chronosStore() {
       return useChronosStore();
+    },
+    stickyTopbar() {
+      return this.$route.name !== "article";
     },
   },
   watch: {
