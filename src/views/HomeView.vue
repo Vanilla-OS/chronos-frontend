@@ -58,19 +58,16 @@ export default defineComponent({
   },
   async mounted() {
     // @ts-ignore
-    this.chronosConfig = await this.$chronosAPI.config();
-
-    useHead({
-      title: this.chronosConfig!.title,
-      meta: [
-        {
-          name: "description",
-          content: this.chronosConfig!.description,
-        },
-      ],
-    });
+    await this.$chronosAPI.config()
+      .then((config: ChronosConfig) => {
+        this.chronosConfig = config;
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching Chronos config:", error);
+      });
 
     await this.fetchArticleCounts();
+    this.setHead();
 
     // Redirect if there's only one collection
     if (this.chronosConfig!.chronosCollections.length === 1) {
@@ -95,6 +92,28 @@ export default defineComponent({
 
       this.articleCounts = articleCounts;
     },
+    setHead() {
+      window.document.title = this.chronosConfig!.title;
+      const metaTags = [
+        { name: "description", content: this.chronosConfig!.description },
+        { name: "og:title", content: this.chronosConfig!.title },
+        { name: "og:description", content: this.chronosConfig!.description },
+        { name: "og:image", content: this.chronosConfig!.logoUrl },
+        { name: "og:url", content: window.location.href },
+        { name: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: this.chronosConfig!.title },
+        { name: "twitter:description", content: this.chronosConfig!.description },
+        { name: "twitter:image", content: this.chronosConfig!.logoUrl },
+      ];
+      for (const metaTag of metaTags) {
+        const meta = document.createElement("meta");
+        meta.name = metaTag.name;
+        meta.content = metaTag.content;
+        document.head.appendChild(meta);
+      }
+
+    }
   },
 });
 </script>

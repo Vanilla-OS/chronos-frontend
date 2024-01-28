@@ -71,15 +71,7 @@ export default defineComponent({
             this.fetchArticles();
         });
 
-        useHead({
-            title: this.chronosConfig.title,
-            meta: [
-                {
-                    name: "description",
-                    content: this.chronosConfig.description,
-                },
-            ],
-        });
+        this.setHead();
     },
     methods: {
         async fetchArticles() {
@@ -89,6 +81,28 @@ export default defineComponent({
                 this.articles = this.articlesResponse.articles;
             });
         },
+        setHead() {
+            window.document.title = this.activeCollection!.title;
+            const metaTags = [
+                { name: "description", content: this.activeCollection!.description },
+                { name: "og:title", content: this.activeCollection!.title },
+                { name: "og:description", content: this.activeCollection!.description },
+                { name: "og:image", content: this.chronosConfig!.logoUrl },
+                { name: "og:url", content: window.location.href },
+                { name: "og:type", content: "website" },
+                { name: "twitter:card", content: "summary_large_image" },
+                { name: "twitter:title", content: this.activeCollection!.title },
+                { name: "twitter:description", content: this.activeCollection!.description },
+                { name: "twitter:image", content: this.chronosConfig!.logoUrl },
+            ];
+            for (const metaTag of metaTags) {
+                const meta = document.createElement("meta");
+                meta.name = metaTag.name;
+                meta.content = metaTag.content;
+                document.head.appendChild(meta);
+            }
+
+        }
     },
 });
 </script>
