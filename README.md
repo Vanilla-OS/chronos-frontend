@@ -44,6 +44,12 @@ options are available:
 }
 ```
 
+the following optional are available for collections:
+
+- `editUrl`: the URL to the edit page of the collection, it must contain the
+  `{shortName}` placeholder, for example:
+  `https://github.com/Vanilla-OS/documentation/blob/main/articles/{{lang}}/{{slug}}.md`
+
 you can also generate the configuration file using the `npm run generate-config`
 command, by setting the following environment variables:
 

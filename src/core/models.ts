@@ -25,7 +25,7 @@ interface ChronosConfig {
     description: string;
     baseURL: string;
     chronosCollections: ChronosCollection[];
-    extraLinks: ExtraLink[];
+    extraLinks?: ExtraLink[];
 }
 
 interface ChronosCollection {
@@ -33,6 +33,7 @@ interface ChronosCollection {
     title: string;
     url: string;
     description: string;
+    editUrl: string;
 }
 
 interface ExtraLink {

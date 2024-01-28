@@ -31,6 +31,12 @@
                         <a @click="scrollToHeading(heading.id)">{{ heading.text }}</a>
                     </li>
                 </ul>
+                <a v-if="editUrl != ''" :href="editUrl" target="_blank" class="button is-secondary is-fullwidth">
+                    <span class="icon">
+                        <i class="material-icons">edit</i>
+                    </span>
+                    <span>Edit</span>
+                </a>
             </aside>
         </div>
         <div v-html="article.Body" class="content"></div>
@@ -39,10 +45,9 @@
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
-import type { Article, ChronosConfig } from "@/core/models";
+import type { Article, ChronosCollection, ChronosConfig } from "@/core/models";
 import { useChronosStore } from "@/core/store";
-import { useHead } from 'unhead'
-
+import { useHead } from 'unhead';
 
 export default defineComponent({
     name: "ArticleView",
@@ -50,9 +55,10 @@ export default defineComponent({
         return {
             article: {} as Article,
             lang: "",
-            headings: [] as { text: string, id: string, level: number }[],
+            headings: [] as { text: string; id: string; level: number }[],
             chronosConfig: {} as ChronosConfig,
             collectionName: "",
+            editUrl: "",
         };
     },
     computed: {
@@ -61,42 +67,64 @@ export default defineComponent({
         },
     },
     async mounted() {
-        // @ts-ignore
-        this.chronosConfig = await this.$chronosAPI.config();
-        this.collectionName = this.$route.params.collection as string;
+        await this.initializeArticle();
+        const collectionConfig = this.chronosConfig.chronosCollections.find(
+            (c) => c.shortName === this.collectionName
+        );
 
-        // @ts-ignore
-        await this.loadArticle(this.$route.params.lang, this.$route.params.slug);
-        this.setupRouteWatcher();
-
-        this.chronosStore.$subscribe(() => {
-            if (this.lang !== this.chronosStore.prefLang) {
-                // @ts-ignore
-                this.$chronosAPI.getArticleByLanguageAndSlug(this.chronosStore.prefLang, this.article.Slug, this.collectionName).then((response) => {
-                    this.lang = this.chronosStore.prefLang;
-                    const hResponse = this.handleResponse(response);
-                    this.article = hResponse.article;
-                    this.headings = hResponse.headings;
-                    document.title = `${this.article!.Title} - ${this.chronosConfig.title}`;
-                });
-                window.history.pushState({}, "", `/${this.chronosStore.prefLang}/${this.collectionName}`);
-            }
-        });
+        this.setEditUrl(collectionConfig);
     },
     methods: {
+        async initializeArticle() {
+            // @ts-ignore
+            this.chronosConfig = await this.$chronosAPI.config();
+            this.collectionName = this.$route.params.collection as string;
+
+            this.setupRouteWatcher();
+
+            const lang = Array.isArray(this.$route.params.lang)
+                ? this.$route.params.lang[0]
+                : this.$route.params.lang;
+            const slug = Array.isArray(this.$route.params.slug)
+                ? this.$route.params.slug[0]
+                : this.$route.params.slug;
+            await this.loadArticle(lang, slug);
+
+            this.chronosStore.$subscribe(() => {
+                if (this.lang !== this.chronosStore.prefLang) {
+                    this.loadArticleAndHandleResponse(this.chronosStore.prefLang);
+                }
+            });
+        },
+        async loadArticleAndHandleResponse(lang: string) {
+            // @ts-ignore
+            const response = await this.$chronosAPI.getArticleByLanguageAndSlug(
+                lang,
+                this.$route.params.slug,
+                this.collectionName
+            );
+            this.handleArticleResponse(response, lang);
+        },
         async loadArticle(lang: string, slug: string) {
             if (slug === undefined) {
                 return;
             }
 
             // @ts-ignore
-            this.$chronosAPI.getArticleByLanguageAndSlug(lang, slug, this.collectionName).then((response) => {
-                this.lang = this.$route.params.lang as string;
-                const hResponse = this.handleResponse(response);
-                this.article = hResponse.article;
-                this.headings = hResponse.headings;
-                document.title = `${this.article!.Title} - ${this.chronosConfig.title}`;
-            });
+            const response = await this.$chronosAPI.getArticleByLanguageAndSlug(
+                lang,
+                slug,
+                this.collectionName
+            );
+            this.handleArticleResponse(response, lang);
+        },
+        handleArticleResponse(response: Article, lang: string) {
+            const { article, headings } = this.handleResponse(response);
+
+            this.lang = lang;
+            this.article = article;
+            this.headings = headings;
+            document.title = `${this.article!.Title} - ${this.chronosConfig.title}`;
         },
         handleResponse(response: Article) {
             let _article = response;
@@ -106,41 +134,20 @@ export default defineComponent({
             useHead({
                 title: `${this.article!.Title} - ${this.chronosConfig.title}`,
                 meta: [
-                    {
-                        name: 'description',
-                        content: this.article!.Description,
-                    },
-                    {
-                        name: 'og:title',
-                        content: `${this.article!.Title} - ${this.chronosConfig.title}`,
-                    },
-                    {
-                        name: 'og:description',
-                        content: this.article!.Description,
-                    },
-                    {
-                        name: 'og:url',
-                        content: `${this.chronosConfig.baseURL}/${this.article!.Slug}`,
-                    },
-                    {
-                        name: 'twitter:card',
-                        content: 'summary_large_image',
-                    },
-                    {
-                        name: 'twitter:title',
-                        content: `${this.article!.Title} - ${this.chronosConfig.title}`,
-                    },
-                    {
-                        name: 'twitter:description',
-                        content: this.article!.Description,
-                    },
+                    { name: "description", content: this.article!.Description },
+                    { name: "og:title", content: `${this.article!.Title} - ${this.chronosConfig.title}` },
+                    { name: "og:description", content: this.article!.Description },
+                    { name: "og:url", content: `${this.chronosConfig.baseURL}/${this.article!.Slug}` },
+                    { name: "twitter:card", content: "summary_large_image" },
+                    { name: "twitter:title", content: `${this.article!.Title} - ${this.chronosConfig.title}` },
+                    { name: "twitter:description", content: this.article!.Description },
                 ],
-            })
+            });
 
             return {
                 article: _article,
                 headings: _headings,
-            }
+            };
         },
         setHeadingIds(body: string) {
             const parser = new DOMParser();
@@ -158,14 +165,26 @@ export default defineComponent({
                 () => this.$route,
                 async (newRoute, oldRoute) => {
                     if (newRoute.params.slug !== oldRoute.params.slug || newRoute.params.lang !== oldRoute.params.lang) {
-                        // @ts-ignore
-                        await this.loadArticle(newRoute.params.lang, newRoute.params.slug);
+                        const lang = Array.isArray(newRoute.params.lang)
+                            ? newRoute.params.lang[0]
+                            : newRoute.params.lang;
+                        const slug = Array.isArray(newRoute.params.slug)
+                            ? newRoute.params.slug[0]
+                            : newRoute.params.slug;
+                        await this.loadArticle(lang, slug);
                     }
                 }
             );
         },
+        setEditUrl(collectionConfig: ChronosCollection | undefined) {
+            if (collectionConfig && collectionConfig.editUrl) {
+                this.editUrl = collectionConfig.editUrl
+                    .replace("{{lang}}", this.lang)
+                    .replace("{{slug}}", this.article.Slug);
+            }
+        },
         extractHeadings(body: string) {
-            const headings = [] as { text: string, id: string, level: number }[];
+            const headings = [] as { text: string; id: string; level: number }[];
             const parser = new DOMParser();
             const doc = parser.parseFromString(body, "text/html");
             const hTags = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");

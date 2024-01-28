@@ -207,6 +207,13 @@ p span.badge {
     overflow-y: auto;
     height: calc(100vh - 70px);
     padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.sidebar aside .menu-label {
+    margin-bottom: 0;
 }
 
 .indent-2 {
