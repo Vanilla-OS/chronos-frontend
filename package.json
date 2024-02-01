@@ -11,7 +11,7 @@
     "publish": "npm run generate-config && npm run build && npm run start"
   },
   "dependencies": {
-    "@babel/types": "^7.22.5",
+    "@babel/types": "^7.23.9",
     "@highlightjs/vue-plugin": "^2.1.0",
     "axios": "^1.6.7",
     "express": "^4.18.2",
