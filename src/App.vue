@@ -1,34 +1,31 @@
 <template>
-  <div class="topbar" :class="{ 'is-sticky': stickyTopbar }">
-    <div class="container">
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <router-link to="/" class="navbar-item">
-            <img :src="chronosConfig.logoUrl" height="28">
-            <h1 class="title is-4">{{ chronosConfig.logoTitle }}</h1>
+  <div :class="{ 'sticky top-0 z-50 bg-white shadow': stickyTopbar }" class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex justify-between items-center py-4" aria-label="main navigation">
+        <div class="flex items-center">
+          <router-link to="/" class="flex items-center">
+            <img :src="chronosConfig.logoUrl" class="h-7" alt="Logo">
+            <h1 class="text-lg font-semibold ml-2">{{ chronosConfig.logoTitle }}</h1>
           </router-link>
         </div>
-        <div class="navbar-end">
-          <a class="navbar-item" :href="link.url" target="_blank" v-for="(link) in chronosConfig.extraLinks">
+        <div class="flex items-center space-x-4">
+          <a class="text-base text-gray-600 hover:text-gray-900" :href="link.url" target="_blank"
+            v-for="(link, index) in chronosConfig.extraLinks" :key="index">
             {{ link.name }}
           </a>
-          <button class="button is-white" @click="toggleSearch()" v-if="collectionShortName">
-            <span class="icon is-left">
-              <i class="mdi material-icons">search</i>
-            </span>
+          <button class="flex items-center p-2 text-gray-600 hover:text-gray-900" @click="toggleSearch()"
+            v-if="collectionShortName">
+            <i class="material-icons">search</i>
           </button>
-          <div class="dropdown" :class="{ 'is-active': showLangs }" v-if="collectionShortName">
-            <div class="dropdown-trigger">
-              <button class="button is-white" @click="showLangs = !showLangs">
-                <span>{{ chronosStore.prefLang }}</span>
-                <span class="icon is-small">
-                  <i class="mdi material-icons">arrow_drop_down</i>
-                </span>
-              </button>
-            </div>
-            <div class="dropdown-menu">
-              <div class="dropdown-content">
-                <a v-for="(lang) in langs" :key="lang" class="dropdown-item" @click="setLang(lang)">
+          <div v-if="collectionShortName" class="relative">
+            <button @click="showLangs = !showLangs" class="flex items-center p-2 text-gray-600 hover:text-gray-900">
+              <span>{{ chronosStore.prefLang }}</span>
+              <i class="material-icons">arrow_drop_down</i>
+            </button>
+            <div v-show="showLangs" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
+              <div class="py-1">
+                <a v-for="(lang, index) in langs" :key="index" @click="setLang(lang)"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                   {{ lang }}
                 </a>
               </div>
@@ -37,52 +34,53 @@
         </div>
       </nav>
     </div>
-  </div>
 
-  <div class="modal search-overlay" :class="{ 'is-active': showSearch }">
-    <div class="modal-background" @click="toggleSearch()"></div>
-    <div class="modal-content">
-      <nav class="panel">
-        <p class="panel-heading">Search</p>
-        <div class="panel-block">
-          <p class="control has-icons-left">
-            <input class="input" type="text" placeholder="Search" v-model="search" @input="searchArticles" ref="search">
-            <span class="icon is-left">
-              <i class="mdi material-icons">search</i>
-            </span>
-          </p>
-        </div>
-        <div class="panel-scrollable">
-          <a class="panel-block flex-list" @click="goToArticle(result.Slug)" v-for="(result) in searchResponse"
-            :key="result.Slug">
-            <div class="panel-block-header panel-block-header--has-icon">
-              <span class="panel-icon">
-                <i class="mdi material-icons">book</i>
+    <div :class="{ 'hidden': !showSearch }" class="fixed inset-0 bg-black bg-opacity-50 z-50">
+      <div @click="toggleSearch()" class="absolute inset-0"></div>
+      <div class="relative bg-white rounded-lg shadow overflow-hidden max-w-lg mx-auto mt-20 p-6">
+        <nav>
+          <p class="text-lg font-semibold mb-4">Search</p>
+          <div class="mb-4">
+            <div
+              class="flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
+              <input class="flex-1 px-4 py-2 text-gray-700 focus:outline-none" type="text" placeholder="Search"
+                v-model="search" @input="searchArticles" ref="search">
+              <span class="p-2 text-gray-500">
+                <i class="mdi material-icons">search</i>
               </span>
-              {{ result.Title }}
             </div>
-            <div class="panel-block-content">
-              <p class="is-size-7 has-text-grey">{{ result.Description }}</p>
-            </div>
-          </a>
-        </div>
-      </nav>
+          </div>
+          <div class="max-h-60 overflow-auto">
+            <a class="block p-4 hover:bg-gray-50 rounded-lg" @click="goToArticle(result.Slug)"
+              v-for="(result, index) in searchResponse" :key="index">
+              <div class="flex items-center space-x-2">
+                <i class="mdi material-icons text-gray-500">book</i>
+                <div class="flex-1">
+                  <p class="font-semibold">{{ result.Title }}</p>
+                  <p class="text-sm text-gray-500">{{ result.Description }}</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </nav>
+      </div>
     </div>
+
+
+    <router-view />
+
+    <footer class="bg-white mt-12">
+      <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-base text-gray-600">
+          <strong>Chronos</strong> by <a href="https://vanillaos.org" class="text-blue-600 hover:underline">Vanilla
+            OS</a>.
+        </p>
+      </div>
+    </footer>
   </div>
-
-  <router-view />
-
-  <br />
-  <br />
-
-  <footer class="footer">
-    <div class="content has-text-centered">
-      <p>
-        <strong>Chronos</strong> by <a href="https://vanillaos.org">Vanilla OS</a>.
-      </p>
-    </div>
-  </footer>
 </template>
+
+
 
 <script lang="ts">
 import { defineComponent } from "vue";

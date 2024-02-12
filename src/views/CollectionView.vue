@@ -1,31 +1,26 @@
 <template>
-    <section class="hero is-primary is-title">
-        <div class="container">
-            <div class="hero-body has-text-centered">
-                <h1 class="title">{{ activeCollection!.title }}</h1>
-                <p class="subtitle">{{ activeCollection!.description }}</p>
-            </div>
+    <section class="bg-gray-100 text-black text-center py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold">{{ activeCollection!.title }}</h1>
+            <p class="mt-4">{{ activeCollection!.description }}</p>
         </div>
     </section>
-    <div class="container">
-        <div class="flex-grid flex-grid--cols-2" v-if="articlesResponse?.articles">
+    <div class="container mx-auto px-4 my-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" v-if="articlesResponse?.articles">
             <div v-for="(article) in articles" :key="article.Slug">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="content">
-                            <h4 class="title is-4">{{ article.Title }}</h4>
-                            <p class="subtitle is-5">{{ article.Description }}…</p>
-                        </div>
-                        <footer class="card-footer">
-                            <div class="block">
-                                <router-link :to="`/${collectionName}/${chronosStore.prefLang}/${article.Slug}`"
-                                    class="button is-ghost is-plain is-size-16 is-uppercase has-text-weight-semibold">
-                                    <span>Read the article</span>
-                                    <span class="icon is-small">
-                                        <i class="mdi material-icons">arrow_forward</i>
-                                    </span>
-                                </router-link>
-                            </div>
+                <div
+                    class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out">
+                    <div class="p-5">
+                        <h4 class="text-xl font-semibold mb-2">{{ article.Title }}</h4>
+                        <p class="text-gray-700 mb-4">{{ article.Description }}…</p>
+                        <footer>
+                            <router-link :to="`/${collectionName}/${chronosStore.prefLang}/${article.Slug}`"
+                                class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors duration-150 ease-in-out">
+                                <span>Read the article</span>
+                                <span class="ml-2 flex items-center">
+                                    <i class="material-icons text-base">arrow_forward</i>
+                                </span>
+                            </router-link>
                         </footer>
                     </div>
                 </div>
@@ -36,6 +31,7 @@
         </div>
     </div>
 </template>
+
   
 <script lang="ts">
 import { defineComponent } from "vue";

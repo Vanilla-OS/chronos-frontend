@@ -1,47 +1,47 @@
 <template>
-    <nav class="breadcrumb is-main" aria-label="breadcrumbs">
-        <div class="container">
-            <ul>
-                <li><router-link to="/">Home</router-link></li>
-                <li><a>{{ lang }}</a></li>
-                <li class="is-active">
-                    <a href="#" aria-current="page">
-                        {{ article.Title }}
-                    </a>
+    <nav class="bg-gray-50 border-b border-gray-200 px-4 py-3" aria-label="breadcrumbs">
+        <div class="container mx-auto">
+            <ul class="flex space-x-4">
+                <li>
+                    <router-link to="/" class="text-blue-600 hover:text-blue-800">Home</router-link>
+                </li>
+                <li>
+                    <a class="cursor-pointer text-gray-600">{{ lang }}</a>
+                </li>
+                <li class="text-gray-500" aria-current="page">
+                    {{ article.Title }}
                 </li>
             </ul>
         </div>
     </nav>
-    <section class="hero is-primary is-title">
-        <div class="container">
-            <div class="hero-body has-text-centered">
-                <h1 class="title">{{ article.Title }}</h1>
-                <p class="subtitle">{{ article.Description }}</p>
-            </div>
+    <section class="bg-gray-100 text-black">
+        <div class="container mx-auto py-8 px-4 text-center">
+            <h1 class="text-3xl font-bold">{{ article.Title }}</h1>
+            <p class="mt-4">{{ article.Description }}</p>
         </div>
     </section>
-    <div class="paned container">
-        <div class="sidebar">
-            <aside class="menu">
-                <p class="menu-label">
-                    Navigation
-                </p>
-                <ul class="menu-list">
-                    <li v-for="(heading) in headings" :key="heading.id" :class="`indent-${heading.level}`">
-                        <a @click="scrollToHeading(heading.id)">{{ heading.text }}</a>
-                    </li>
-                </ul>
-                <a v-if="editUrl != ''" :href="editUrl" target="_blank" class="button is-secondary is-fullwidth">
-                    <span class="icon">
-                        <i class="material-icons">edit</i>
-                    </span>
-                    <span>Edit</span>
-                </a>
+    <div class="container mx-auto flex py-8 px-4">
+        <div class="w-1/4 pr-4">
+            <aside class="sticky top-4 z-1">
+                <div class="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                    <p class="font-semibold mb-4">Navigation</p>
+                    <ul class="space-y-2">
+                        <li v-for="(heading, index) in headings" :key="index" :class="`pl-${heading.level * 2}`">
+                            <a @click="scrollToHeading(heading.id)"
+                                class="cursor-pointer text-blue-600 hover:text-blue-800">{{ heading.text }}</a>
+                        </li>
+                    </ul>
+                    <a v-if="editUrl != ''" :href="editUrl" target="_blank"
+                        class="mt-4 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Edit
+                    </a>
+                </div>
             </aside>
         </div>
-        <div v-html="article.Body" class="content"></div>
+        <div class="w-3/4 content prose" v-html="article.Body"></div>
     </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";

@@ -1,40 +1,42 @@
 <template>
   <div v-if="chronosConfig">
-    <section class="hero is-primary is-title">
-      <div class="container">
-        <div class="hero-body has-text-centered">
-          <h1 class="title">{{ chronosConfig.title }}</h1>
-          <p class="subtitle">Collections</p>
-        </div>
+    <section class="bg-gray-100 text-black text-center py-8">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold">{{ chronosConfig.title }}</h1>
+        <p class="mt-4">Collections</p>
       </div>
     </section>
-    <div class="container">
-      <div class="columns is-multiline">
-        <div v-for="(collection, index) in chronosConfig.chronosCollections" :key="index" class="column is-half">
-          <router-link :to="`/collections/${collection.shortName}`">
-            <div class="card">
-              <div class="card-content">
-                <p class="title is-4">{{ collection.title }}</p>
-                <p class="subtitle is-6">{{ collection.description }}</p>
-                <div class="content">
-                  <p class="is-size-7 is-uppercase has-text-weight-bold flex items-center no-gap">
-                    <span class="icon is-small">
-                      <i class="mdi material-icons">book</i>
-                    </span>
-                    <span v-if="articleCounts[collection.shortName] !== undefined" class="ml-2">
-                      {{ articleCounts[collection.shortName] }} Articles
-                    </span>
-                    <span v-else>Loading...</span>
-                  </p>
-                </div>
+    <div class="container mx-auto px-4 my-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" v-if="chronosConfig.chronosCollections">
+        <div v-for="(collection, index) in chronosConfig.chronosCollections" :key="index"
+          class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out">
+          <router-link :to="`/collections/${collection.shortName}`" class="block p-5 hover:no-underline">
+            <div>
+              <p class="text-xl font-semibold">{{ collection.title }}</p>
+              <p class="text-gray-700 mt-2">{{ collection.description }}</p>
+            </div>
+            <div class="mt-4">
+              <div
+                class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors duration-150 ease-in-out">
+                <span class="flex items-center">
+                  <i class="material-icons text-base mr-2">book</i>
+                  <span v-if="articleCounts[collection.shortName] !== undefined">
+                    {{ articleCounts[collection.shortName] }} Articles
+                  </span>
+                  <span v-else>Loading...</span>
+                </span>
               </div>
             </div>
           </router-link>
         </div>
       </div>
+      <div v-else>
+        <p>Loading...</p>
+      </div>
     </div>
   </div>
 </template>
+
 
 
 <script lang="ts">
