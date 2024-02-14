@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <nav class="flex justify-between items-center py-4" aria-label="main navigation">
         <router-link to="/" class="flex items-center">
-          <img :src="chronosConfig.logoUrl" class="h-7" alt="Logo">
+          <img :src="chronosConfig.logoUrl" class="w-7 min-w-7 h-7 min-h-7" alt="Logo" />
           <h1 class="text-lg font-semibold ml-2 hidden sm:block">{{ chronosConfig.logoTitle }}</h1>
         </router-link>
 
@@ -35,6 +35,20 @@
             v-for="(link, index) in chronosConfig.extraLinks" :key="index">
             {{ link.name }}
           </a>
+        </div>
+        <div v-if="collectionShortName" class="relative">
+          <button @click="showLangs = !showLangs" class="flex items-center p-2 text-gray-600 hover:text-gray-900">
+            <span>{{ chronosStore.prefLang }}</span>
+            <i class="material-icons">arrow_drop_down</i>
+          </button>
+          <div v-show="showLangs" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-50">
+            <div class="py-1">
+              <a v-for="(lang, index) in langs" :key="index" @click="setLang(lang)"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                {{ lang }}
+              </a>
+            </div>
+          </div>
         </div>
       </nav>
     </div>
