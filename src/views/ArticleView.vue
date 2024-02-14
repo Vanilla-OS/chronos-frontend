@@ -18,6 +18,16 @@
         <div class="container mx-auto py-8 px-4 text-center">
             <h1 class="text-3xl font-bold">{{ article.Title }}</h1>
             <p class="mt-4">{{ article.Description }}</p>
+            <div class="flex justify-center space-x-4 mt-4 gap-2">
+                <div v-for="author in article.Authors" :key="author" class="flex items-center -mr-6">
+                    <img v-if="!imageError[author]" :src="`https://github.com/${author}.png?size=40`" :alt="author"
+                        class="w-7 h-7 rounded-full object-cover " @error="imageError[author] = true" :title="author">
+                    <span v-else
+                        class="w-7 h-7 rounded-full overflow-hidden bg-blue-500 text-white font-bold inline-flex items-center justify-center -mr-3">
+                        {{ getInitials(author) }}
+                    </span>
+                </div>
+            </div>
         </div>
     </section>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex py-8">
@@ -70,7 +80,7 @@
 
 
 <script lang="ts">
-import { defineComponent, watch } from "vue";
+import { defineComponent, reactive, watch } from "vue";
 import type { Article, ChronosCollection, ChronosConfig } from "@/core/models";
 import { useChronosStore } from "@/core/store";
 import { useHead } from 'unhead';
@@ -86,6 +96,7 @@ export default defineComponent({
             collectionName: "",
             editUrl: "",
             isSidebarVisible: false,
+            imageError: reactive({} as any),
         };
     },
     computed: {
@@ -234,6 +245,16 @@ export default defineComponent({
             const y = element?.getBoundingClientRect().top;
             window.scrollTo({ top: y ? y + window.scrollY - offset : 0, behavior: "smooth" });
             this.isSidebarVisible = false;
+        },
+        getInitials(name: string) {
+            const names = name.split(" ");
+            if (names.length > 1) {
+                return names[0].charAt(0) + names[names.length - 1].charAt(0);
+            }
+            return names[0].charAt(0);
+        },
+        onImageError(event: any, author: string) {
+            event.target.style.display = 'none';
         },
     },
 });
