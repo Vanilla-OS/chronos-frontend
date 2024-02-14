@@ -6,26 +6,30 @@
         <p class="mt-4">Collections</p>
       </div>
     </section>
-    <div class="container mx-auto px-4 my-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" v-if="chronosConfig.chronosCollections">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8" v-if="chronosConfig.chronosCollections">
         <div v-for="(collection, index) in chronosConfig.chronosCollections" :key="index"
-          class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out">
-          <router-link :to="`/collections/${collection.shortName}`" class="block p-5 hover:no-underline">
-            <div>
-              <p class="text-xl font-semibold">{{ collection.title }}</p>
-              <p class="text-gray-700 mt-2">{{ collection.description }}</p>
-            </div>
-            <div class="mt-4">
-              <div
-                class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors duration-150 ease-in-out">
-                <span class="flex items-center">
-                  <i class="material-icons text-base mr-2">book</i>
-                  <span v-if="articleCounts[collection.shortName] !== undefined">
-                    {{ articleCounts[collection.shortName] }} Articles
-                  </span>
-                  <span v-else>Loading...</span>
+          class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out flex flex-col p-5 gap-4">
+          <router-link :to="`/collections/${collection.shortName}`" class="hover:no-underline flex-1 flex gap-2 flex-col">
+            <h4 class="text-xl font-semibold">{{ collection.title }}</h4>
+            <p class="text-gray-700">{{ collection.description }}</p>
+            <div
+              class="inline-flex items-center text-gray-600 hover:text-gray-800 font-semibold text-sm transition-colors duration-150 ease-in-out mb-4">
+              <span class="flex items-center">
+                <i class="material-icons text-base mr-2">book</i>
+                <span v-if="articleCounts[collection.shortName] !== undefined">
+                  {{ articleCounts[collection.shortName] }} Articles
                 </span>
-              </div>
+                <span v-else>Loading...</span>
+              </span>
+            </div>
+            <div class="mt-auto">
+              <span
+                class="inline-flex items-center text-lg text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-150 ease-in-out">
+                View collection
+                <i class="material-icons ml-2">arrow_forward</i>
+              </span>
             </div>
           </router-link>
         </div>

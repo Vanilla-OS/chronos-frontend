@@ -1,6 +1,6 @@
 <template>
     <nav class="bg-gray-50 border-b border-gray-200 px-4 py-3" aria-label="breadcrumbs">
-        <div class="container mx-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ul class="flex space-x-4">
                 <li>
                     <router-link to="/" class="text-blue-600 hover:text-blue-800">Home</router-link>
@@ -20,7 +20,7 @@
             <p class="mt-4">{{ article.Description }}</p>
         </div>
     </section>
-    <div class="container mx-auto flex py-8 px-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex py-8">
         <div class="w-1/4 pr-4">
             <aside class="sticky top-4 z-1">
                 <div class="bg-gray-50 border border-gray-200 p-4 rounded-lg">

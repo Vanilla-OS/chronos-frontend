@@ -3,6 +3,7 @@ interface Article {
     Description: string;
     PublicationDate: string;
     Authors: string[];
+    Tags: string[];
     Body: string;
     Slug: string;
 }
@@ -15,6 +16,7 @@ interface SearchResponse {
 interface ArticlesResponse {
     title: string;
     supportedLang: string[];
+    tags: string[];
     articles: Article[];
 }
 
