@@ -11,7 +11,7 @@
           <div
             class="flex items-center border bg-gray-100 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-opacity-50">
             <input class="flex-1 px-4 py-2 text-gray-600 bg-transparent focus:outline-none" type="text"
-              placeholder="Search" v-model="search" @input="searchArticles">
+              placeholder="Search for articles.." v-model="search" @input="searchArticles">
             <i class="material-icons p-2 text-gray-400">search</i>
           </div>
           <div v-if="searchResponse.length > 0"
