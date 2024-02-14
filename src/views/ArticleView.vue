@@ -21,8 +21,8 @@
         </div>
     </section>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex py-8">
-        <div class="w-1/4 pr-4">
-            <aside class="sticky top-4 z-1">
+        <aside class="hidden lg:block lg:w-1/4">
+            <div class="sticky top-4 z-1">
                 <div class="bg-gray-50 border border-gray-200 p-4 rounded-lg">
                     <p class="font-semibold mb-4">Navigation</p>
                     <ul class="space-y-2">
@@ -36,9 +36,35 @@
                         Edit
                     </a>
                 </div>
-            </aside>
+            </div>
+        </aside>
+        <div class="w-full lg:w-3/4 lg:pl-4">
+            <div class="content prose" v-html="article.Body"></div>
         </div>
-        <div class="w-3/4 content prose" v-html="article.Body"></div>
+    </div>
+
+    <button @click="isSidebarVisible = !isSidebarVisible"
+        class="material-icons fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full z-50 md:hidden">
+        menu
+    </button>
+
+    <div v-if="isSidebarVisible" @click.self="isSidebarVisible = false"
+        class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden bottom-0 flex flex-col items-end justify-end">
+        <aside class="relative bg-white p-4 shadow-lg overflow-auto w-full rounded-t-lg pb-16">
+            <div class="p-2">
+                <p class="font-semibold mb-4">Navigation</p>
+                <ul class="space-y-2">
+                    <li v-for="(heading, index) in headings" :key="index" :class="`pl-${heading.level * 2}`">
+                        <a @click="scrollToHeading(heading.id)" class="cursor-pointer text-blue-600 hover:text-blue-800">{{
+                            heading.text }}</a>
+                    </li>
+                </ul>
+                <a v-if="editUrl != ''" :href="editUrl" target="_blank"
+                    class="mt-4 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Edit
+                </a>
+            </div>
+        </aside>
     </div>
 </template>
 
@@ -59,6 +85,7 @@ export default defineComponent({
             chronosConfig: {} as ChronosConfig,
             collectionName: "",
             editUrl: "",
+            isSidebarVisible: false,
         };
     },
     computed: {
@@ -206,6 +233,7 @@ export default defineComponent({
             const element = document.getElementById(headingId);
             const y = element?.getBoundingClientRect().top;
             window.scrollTo({ top: y ? y + window.scrollY - offset : 0, behavior: "smooth" });
+            this.isSidebarVisible = false;
         },
     },
 });
