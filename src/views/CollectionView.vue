@@ -12,7 +12,7 @@
                     class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out">
                     <div class="p-5">
                         <h4 class="text-xl font-semibold mb-2">{{ article.Title }}</h4>
-                        <p class="text-gray-700 mb-4">{{ article.Description }}…</p>
+                        <p class="text-gray-700 mb-4">{{ article.Description }}</p>
                         <footer>
                             <router-link :to="`/${collectionName}/${chronosStore.prefLang}/${article.Slug}`"
                                 class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors duration-150 ease-in-out">
