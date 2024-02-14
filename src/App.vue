@@ -10,9 +10,23 @@
         <div class="flex-1 mx-4 relative" v-if="collectionShortName">
           <div
             class="flex items-center border bg-gray-100 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-opacity-50">
-            <input class="flex-1 px-4 py-2 text-gray-600 bg-transparent focus:outline-none" type="text"
+            <input class="flex-1 px-4 py-2 text-gray-600 bg-transparent focus:outline-none w-full" type="text"
               placeholder="Search for articles.." v-model="search" @input="searchArticles">
             <i class="material-icons p-2 text-gray-400">search</i>
+            <div v-if="collectionShortName" class="relative border-l">
+              <button @click="showLangs = !showLangs" class="flex items-center p-2 text-gray-600 hover:text-gray-900">
+                <span>{{ chronosStore.prefLang }}</span>
+                <i class="material-icons">arrow_drop_down</i>
+              </button>
+            </div>
+          </div>
+          <div v-show="showLangs" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-50">
+            <div class="py-1">
+              <a v-for="(lang, index) in langs" :key="index" @click="setLang(lang)"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                {{ lang }}
+              </a>
+            </div>
           </div>
           <div v-if="searchResponse.length > 0"
             class="absolute w-full mt-1 z-50 max-h-80 overflow-auto bg-white rounded-md shadow-lg m-2">
@@ -35,20 +49,6 @@
             v-for="(link, index) in chronosConfig.extraLinks" :key="index">
             {{ link.name }}
           </a>
-        </div>
-        <div v-if="collectionShortName" class="relative">
-          <button @click="showLangs = !showLangs" class="flex items-center p-2 text-gray-600 hover:text-gray-900">
-            <span>{{ chronosStore.prefLang }}</span>
-            <i class="material-icons">arrow_drop_down</i>
-          </button>
-          <div v-show="showLangs" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-50">
-            <div class="py-1">
-              <a v-for="(lang, index) in langs" :key="index" @click="setLang(lang)"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
-                {{ lang }}
-              </a>
-            </div>
-          </div>
         </div>
       </nav>
     </div>
