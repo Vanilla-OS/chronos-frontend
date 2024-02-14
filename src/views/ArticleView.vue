@@ -19,7 +19,7 @@
             <h1 class="text-3xl font-bold">{{ article.Title }}</h1>
             <p class="mt-4">{{ article.Description }}</p>
             <div class="flex justify-center space-x-4 mt-4 gap-2">
-                <div v-for="author in article.Authors" :key="author" class="flex items-center -mr-6">
+                <div v-for="author in article.Authors" :key="author" class="flex items-center">
                     <img v-if="!imageError[author]" :src="`https://github.com/${author}.png?size=40`" :alt="author"
                         class="w-7 h-7 rounded-full object-cover " @error="imageError[author] = true" :title="author">
                     <span v-else
