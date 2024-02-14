@@ -7,10 +7,23 @@ hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('yaml', yaml);
 
 export default {
-  mounted(el: HTMLElement, binding: any) {
-    const code = el.innerText;
-    const highlightedCode = hljs.highlight(binding.arg, code).value;
-    el.innerHTML = highlightedCode;
-    el.classList.add('hljs');
+  install(app: any) {
+    app.mixin({
+      mounted() {
+        this.highlightCode();
+      },
+      updated() {
+        this.highlightCode();
+      },
+      methods: {
+        highlightCode() {
+          requestAnimationFrame(() => {
+            document.querySelectorAll('.language-yaml, .language-bash, pre code').forEach((block) => {
+              hljs.highlightElement(block as HTMLElement);
+            });
+          });
+        }
+      }
+    });
   }
 };

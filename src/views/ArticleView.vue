@@ -39,7 +39,7 @@
             </div>
         </aside>
         <div class="w-full lg:w-3/4 lg:pl-4">
-            <div class="content prose" v-html="article.Body"></div>
+            <div class="content prose article-content" v-html="article.Body"></div>
         </div>
     </div>
 

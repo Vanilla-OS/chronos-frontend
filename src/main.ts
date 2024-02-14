@@ -12,7 +12,7 @@ const app = createApp(App);
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-app.directive("highlight", highlight);
+app.use(highlight);
 
 app.use(router);
 app.use(pinia);
