@@ -1,30 +1,32 @@
 <template>
     <div class="relative">
-        <div @click="toggleDropdown" class="form-input cursor-pointer">
-            <span v-if="!modelValue.length" class="text-blue-600">{{ defaultLabel }}</span>
-            <span v-else-if="modelValue.length === 1" class="text-blue-600">{{ modelValue[0] }}</span>
-            <span v-else class="text-blue-600">{{ modelValue.length }} Tags Selected</span>
+        <div @click="toggleDropdown" class="form-input cursor-pointer dark:text-gray-200">
+            <span v-if="!modelValue.length" class="text-blue-600 dark:text-blue-400">{{ defaultLabel }}</span>
+            <span v-else-if="modelValue.length === 1" class="text-blue-600 dark:text-blue-400">{{ modelValue[0] }}</span>
+            <span v-else class="text-blue-600 dark:text-blue-400">{{ modelValue.length }} Tags Selected</span>
         </div>
-        <div v-show="openDropdown" class="absolute z-10 bg-white mt-1 rounded-md shadow-lg border w-content right-0"
+        <div v-show="openDropdown"
+            class="absolute z-10 bg-white dark:bg-gray-800 mt-1 rounded-md shadow-lg border dark:border-gray-700 w-content right-0"
             style="min-width: 10rem;">
             <ul class="max-h-60 overflow-auto">
                 <li v-for="option in filteredOptions" :key="option" @click="selectOption(option)"
-                    class="cursor-pointer select-none p-2 hover:bg-blue-100">
+                    class="cursor-pointer select-none p-2 hover:bg-blue-100 dark:hover:bg-gray-700 dark:text-gray-200">
                     {{ option }}
-                    <span v-if="modelValue.includes(option)" class="material-icons text-sm">check</span>
+                    <span v-if="modelValue.includes(option)" class="material-icons text-sm dark:text-gray-200">check</span>
                 </li>
             </ul>
-            <div v-if="modelValue.length !== 0" class="p-2 flex flex-wrap gap-2 flex-col">
+            <div v-if="modelValue.length !== 0" class="p-2 flex flex-wrap gap-2 flex-col dark:bg-gray-600">
                 <span v-for="tag in modelValue" :key="tag"
-                    class="bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-xs font-medium flex items-center flex-1 mr-2">
+                    class="bg-blue-100 dark:bg-gray-800 text-blue-800 dark:text-blue-200 rounded-full px-3 py-1 text-xs font-medium flex items-center flex-1 mr-2">
                     {{ tag }}
-                    <i class="material-icons text-sm cursor-pointer ml-auto" @click.stop="removeTag(tag)">cancel</i>
+                    <i class="material-icons text-sm cursor-pointer ml-auto dark:text-gray-200"
+                        @click.stop="removeTag(tag)">cancel</i>
                 </span>
             </div>
         </div>
     </div>
 </template>
-  
+
 <script lang="ts">
 import { defineComponent, ref, watch, computed } from 'vue';
 

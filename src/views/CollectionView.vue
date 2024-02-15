@@ -1,62 +1,61 @@
 <template>
-  <section class="bg-gray-100 text-black text-center py-8">
+  <section class="bg-gray-100 dark:bg-gray-800 text-black dark:text-gray-200 text-center py-8">
     <div class="container mx-auto px-4 max-w-6xl">
       <h1 class="text-3xl font-bold">{{ activeCollection!.title }}</h1>
       <p class="mt-4">{{ activeCollection!.description }}</p>
     </div>
   </section>
 
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8">
-
-    <aside class="bg-white p-4 rounded-lg shadow md:sticky top-2 flex flex-row gap-4 mt-2 items-center">
-      <router-link class="text-blue-600 flex items-center mr-auto" to="/">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-6 mt-4">
+    <aside class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow md:sticky top-2 flex flex-row gap-4 mt-2 items-center">
+      <router-link class="text-blue-600 dark:text-blue-400 flex items-center mr-auto" to="/">
         <i class="material-icons">arrow_back</i>
         <span class="hidden sm:inline">Back to collections</span>
       </router-link>
 
       <div class="flex flex-row items-center gap-2" v-if="articlesResponse.tags">
-        <label for="tag-filter" class="whitespace-nowrap text-sm font-medium text-gray-700">Tags:</label>
+        <label for="tag-filter"
+          class="whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-300">Tags:</label>
         <CustomSelect :options="articlesResponse.tags" v-model="selectedTags" multiple placeholder="Select tags" />
       </div>
 
       <div class="flex flex-row items-center gap-2">
-        <label for="date-filter" class="whitespace-nowrap text-sm font-medium text-gray-700">Order:</label>
+        <label for="date-filter"
+          class="whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-300">Order:</label>
         <CustomSelect :options="['Recent', 'Oldest']" v-model="selectedDate" placeholder="Select date" />
       </div>
     </aside>
 
     <div class="flex-1" v-if="articlesResponse?.articles">
-      <div class="my-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <article v-for="article in filteredArticles" :key="article.Slug"
-            class="flex flex-col bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out p-5">
-            <div class="flex-1">
-              <h4 class="text-xl font-semibold mb-2">{{ article.Title }}</h4>
-              <p class="text-gray-700 mb-4">{{ article.Description }}</p>
-              <div class="flex flex-wrap gap-2 mt-2 mb-4">
-                <span v-for="tag in article.Tags" :key="tag"
-                  class="inline-block bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-xs font-medium">
-                  {{ tag }}
-                </span>
-              </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <article v-for="article in filteredArticles" :key="article.Slug"
+          class="flex flex-col bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out p-5">
+          <div class="flex-1">
+            <h4 class="text-xl font-semibold mb-2 text-black dark:text-gray-200">
+              {{ article.Title }}
+            </h4>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">{{ article.Description }}</p>
+            <div class="flex flex-wrap gap-2 mt-2 mb-4">
+              <span v-for="tag in article.Tags" :key="tag"
+                class="inline-block bg-blue-100 dark:bg-gray-800 text-blue-800 dark:text-blue-200 rounded-full px-3 py-1 text-xs font-medium">
+                {{ tag }}
+              </span>
             </div>
-            <router-link :to="`/${collectionName}/${chronosStore.prefLang}/${article.Slug}`"
-              class="mt-auto inline-flex items-center text-lg text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-150 ease-in-out">
-              Read the article
-              <i class="material-icons ml-2">arrow_forward</i>
-            </router-link>
-          </article>
-        </div>
+          </div>
+          <router-link :to="`/${collectionName}/${chronosStore.prefLang}/${article.Slug}`"
+            class="mt-auto inline-flex items-center text-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-semibold transition-colors duration-150 ease-in-out">
+            Read the article
+            <i class="material-icons ml-2">arrow_forward</i>
+          </router-link>
+        </article>
       </div>
     </div>
 
     <div v-else>
-      <p>Loading...</p>
+      <p class="text-black dark:text-gray-200">Loading...</p>
     </div>
-
   </section>
 </template>
-
   
 <script lang="ts">
 import { defineComponent } from "vue";

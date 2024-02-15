@@ -1,20 +1,22 @@
 <template>
-    <nav class="bg-gray-50 border-b border-gray-200 px-4 py-3" aria-label="breadcrumbs">
+    <nav class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3"
+        aria-label="breadcrumbs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ul class="flex space-x-4">
                 <li>
-                    <router-link to="/" class="text-blue-600 hover:text-blue-800">Home</router-link>
+                    <router-link to="/"
+                        class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">Home</router-link>
                 </li>
                 <li>
-                    <a class="cursor-pointer text-gray-600">{{ lang }}</a>
+                    <a class="cursor-pointer text-gray-600 dark:text-gray-400">{{ lang }}</a>
                 </li>
-                <li class="text-gray-500" aria-current="page">
+                <li class="text-gray-500 dark:text-gray-300" aria-current="page">
                     {{ article.Title }}
                 </li>
             </ul>
         </div>
     </nav>
-    <section class="bg-gray-100 text-black">
+    <section class="bg-gray-100 dark:bg-gray-800 text-black dark:text-gray-200">
         <div class="container mx-auto py-8 px-4 text-center">
             <h1 class="text-3xl font-bold">{{ article.Title }}</h1>
             <p class="mt-4">{{ article.Description }}</p>
@@ -23,7 +25,7 @@
                     <img v-if="!imageError[author]" :src="`https://github.com/${author}.png?size=40`" :alt="author"
                         class="w-7 h-7 rounded-full object-cover " @error="imageError[author] = true" :title="author">
                     <span v-else
-                        class="w-7 h-7 rounded-full overflow-hidden bg-blue-500 text-white font-bold inline-flex items-center justify-center -mr-3">
+                        class="w-7 h-7 rounded-full overflow-hidden bg-blue-500 dark:bg-blue-700 text-white font-bold inline-flex items-center justify-center -mr-3">
                         {{ getInitials(author) }}
                     </span>
                 </div>
@@ -33,23 +35,25 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex py-8">
         <aside class="hidden lg:block lg:w-1/4">
             <div class="sticky top-4 z-1">
-                <div class="bg-gray-50 border border-gray-200 p-4 rounded-lg">
-                    <p class="font-semibold mb-4">Navigation</p>
+                <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg">
+                    <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">Navigation</p>
                     <ul class="space-y-2">
-                        <li v-for="(heading, index) in headings" :key="index" :class="`pl-${heading.level * 2}`">
+                        <li v-for="(heading, index) in headings" :key="index"
+                            :class="`pl-${heading.level * 2} text-gray-900 dark:text-gray-200`">
                             <a @click="scrollToHeading(heading.id)"
-                                class="cursor-pointer text-blue-600 hover:text-blue-800">{{ heading.text }}</a>
+                                class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
+                                    heading.text }}</a>
                         </li>
                     </ul>
                     <a v-if="editUrl != ''" :href="editUrl" target="_blank"
-                        class="mt-4 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        class="mt-4 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
                         Edit
                     </a>
                 </div>
             </div>
         </aside>
         <div class="w-full lg:w-3/4 lg:pl-4">
-            <div class="content prose article-content" v-html="article.Body"></div>
+            <div class="content prose dark:prose-invert article-content" v-html="article.Body"></div>
         </div>
     </div>
 
@@ -60,24 +64,25 @@
 
     <div v-if="isSidebarVisible" @click.self="isSidebarVisible = false"
         class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden bottom-0 flex flex-col items-end justify-end">
-        <aside class="relative bg-white p-4 shadow-lg overflow-auto w-full rounded-t-lg pb-16">
+        <aside class="relative bg-white dark:bg-gray-700 p-4 shadow-lg overflow-auto w-full rounded-t-lg pb-16">
             <div class="p-2">
-                <p class="font-semibold mb-4">Navigation</p>
+                <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">Navigation</p>
                 <ul class="space-y-2">
-                    <li v-for="(heading, index) in headings" :key="index" :class="`pl-${heading.level * 2}`">
-                        <a @click="scrollToHeading(heading.id)" class="cursor-pointer text-blue-600 hover:text-blue-800">{{
-                            heading.text }}</a>
+                    <li v-for="(heading, index) in headings" :key="index"
+                        :class="`pl-${heading.level * 2} text-gray-900 dark:text-gray-200`">
+                        <a @click="scrollToHeading(heading.id)"
+                            class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
+                                heading.text }}</a>
                     </li>
                 </ul>
                 <a v-if="editUrl != ''" :href="editUrl" target="_blank"
-                    class="mt-4 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    class="mt-4 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
                     Edit
                 </a>
             </div>
         </aside>
     </div>
 </template>
-
 
 <script lang="ts">
 import { defineComponent, reactive, watch } from "vue";
