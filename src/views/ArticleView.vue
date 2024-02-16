@@ -21,10 +21,10 @@
                 <li>
                     <a class="cursor-pointer text-gray-600 dark:text-gray-400">{{ lang }}</a>
                 </li>
-                <li v-if="article.Title">
+                <li v-if="article.Title" class="hidden md:flex">
                     <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
                 </li>
-                <li class="text-gray-500 dark:text-gray-300" aria-current="page" v-if="article.Title">
+                <li class="text-gray-500 dark:text-gray-300 hidden md:flex" aria-current="page" v-if="article.Title">
                     {{ article.Title }}
                 </li>
             </ul>
