@@ -1,16 +1,30 @@
 <template>
-    <nav class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3"
+    <nav class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2"
         aria-label="breadcrumbs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ul class="flex space-x-4">
+            <ul class="flex space-x-2">
                 <li>
                     <router-link to="/"
                         class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">Home</router-link>
                 </li>
                 <li>
+                    <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
+                </li>
+                <li v-if="collectionName">
+                    <router-link :to="{ name: 'collection', params: { collection: collectionName } }"
+                        class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
+                            collectionName }}</router-link>
+                </li>
+                <li v-if="collectionName">
+                    <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
+                </li>
+                <li>
                     <a class="cursor-pointer text-gray-600 dark:text-gray-400">{{ lang }}</a>
                 </li>
-                <li class="text-gray-500 dark:text-gray-300" aria-current="page">
+                <li v-if="article.Title">
+                    <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
+                </li>
+                <li class="text-gray-500 dark:text-gray-300" aria-current="page" v-if="article.Title">
                     {{ article.Title }}
                 </li>
             </ul>
