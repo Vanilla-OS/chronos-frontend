@@ -52,8 +52,8 @@
                 <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg">
                     <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">Navigation</p>
                     <ul class="space-y-2">
-                        <li v-for="(heading, index) in headings" :key="index"
-                            :class="`pl-${heading.level * 2} text-gray-900 dark:text-gray-200`">
+                        <li v-for="(heading, index) in headings" :key="index" :style="heading.style"
+                            class="text-gray-900 dark:text-gray-200">
                             <a @click="scrollToHeading(heading.id)"
                                 class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
                                     heading.text }}</a>
@@ -82,8 +82,8 @@
             <div class="p-2">
                 <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">Navigation</p>
                 <ul class="space-y-2">
-                    <li v-for="(heading, index) in headings" :key="index"
-                        :class="`pl-${heading.level * 2} text-gray-900 dark:text-gray-200`">
+                    <li v-for="(heading, index) in headings" :key="index" :style="heading.style"
+                        class="text-gray-900 dark:text-gray-200">
                         <a @click="scrollToHeading(heading.id)"
                             class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
                                 heading.text }}</a>
@@ -110,7 +110,7 @@ export default defineComponent({
         return {
             article: {} as Article,
             lang: "",
-            headings: [] as { text: string; id: string; level: number }[],
+            headings: [] as { text: string; id: string; level: number, style: string }[],
             chronosConfig: {} as ChronosConfig,
             collectionName: "",
             editUrl: "",
@@ -241,7 +241,7 @@ export default defineComponent({
             }
         },
         extractHeadings(body: string) {
-            const headings = [] as { text: string; id: string; level: number }[];
+            const headings = [] as { text: string; id: string; level: number, style: string }[];
             const parser = new DOMParser();
             const doc = parser.parseFromString(body, "text/html");
             const hTags = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
@@ -252,6 +252,7 @@ export default defineComponent({
                     text: hTag.textContent as string,
                     id: hTag.id,
                     level: level,
+                    style: `padding-left: ${level - 2}rem;`,
                 };
                 headings.push(heading);
             });
