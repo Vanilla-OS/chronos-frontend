@@ -1,6 +1,10 @@
-const fs = require("fs");
-const path = require("path");
-const { URL } = require("url");
+import { fileURLToPath } from 'url';
+import { dirname, resolve, extname } from 'path';
+import { promises as fs } from 'fs';
+import { URL } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const parseArray = (arrayString) => {
   try {
@@ -46,21 +50,19 @@ const chronosConfig = {
   ],
 };
 
-const publicFolderPath = path.resolve(__dirname, "public");
-if (!fs.existsSync(publicFolderPath)) {
-  fs.mkdirSync(publicFolderPath);
-}
+const publicFolderPath = resolve(__dirname, "public");
+fs.mkdir(publicFolderPath, { recursive: true }).catch(console.error);
 
 if (process.env.CHRONOS_LOGO_URL && !isWebURL(process.env.CHRONOS_LOGO_URL)) {
-  const logoExtension = path.extname(process.env.CHRONOS_LOGO_URL);
+  const logoExtension = extname(process.env.CHRONOS_LOGO_URL);
   const logoFileName = `logo${logoExtension}`;
-  const logoFilePath = path.resolve(publicFolderPath, logoFileName);
-  fs.copyFileSync(process.env.CHRONOS_LOGO_URL, logoFilePath);
+  const logoFilePath = resolve(publicFolderPath, logoFileName);
+  fs.copyFile(process.env.CHRONOS_LOGO_URL, logoFilePath).catch(console.error);
   chronosConfig.logoUrl = `/logo${logoExtension}`;
 }
 
-const configFilePath = path.resolve(publicFolderPath, "chronos.json");
-fs.writeFileSync(configFilePath, JSON.stringify(chronosConfig, null, 2));
+const configFilePath = resolve(publicFolderPath, "chronos.json");
+fs.writeFile(configFilePath, JSON.stringify(chronosConfig, null, 2)).catch(console.error);
 
 console.log("chronos.json generated successfully!");
 

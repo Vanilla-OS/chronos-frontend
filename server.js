@@ -1,13 +1,17 @@
-const express = require("express");
-const path = require("path");
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+import * as express from 'express';
 
-const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const app = express.default();
 const PORT = process.env.PORT || 6090;
 
-app.use(express.static(path.resolve(__dirname, "dist")));
+app.use(express.static(resolve(__dirname, "dist")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+  res.sendFile(resolve(__dirname, "dist", "index.html"));
 });
 
 app.listen(PORT, () => {
