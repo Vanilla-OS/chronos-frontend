@@ -1,6 +1,6 @@
+// Node
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
-import * as express from 'express';
 
 // Fastify
 import Fastify from 'fastify';
@@ -9,6 +9,16 @@ import Helmet from '@fastify/helmet';
 import Cors from '@fastify/cors'
 import Static from '@fastify/static';
 
+/**
+ * Server
+ * @class
+ * @description Fastify server
+ * @method start
+ * @returns {Promise<void>}
+ * @example
+ * import { Server } from './server.js';
+ * new Server().start();
+ */
 export class Server {
   app
   port
@@ -16,7 +26,7 @@ export class Server {
   __dirname
 
   constructor() {
-    this.app = Fastify({ logger: true })
+    this.app = Fastify()
     this.port = process.env.PORT || 6090;
     this.__filename = fileURLToPath(import.meta.url);
     this.__dirname = dirname(this.__filename);
@@ -55,5 +65,3 @@ export class Server {
     }
   }
 }
-
-new Server().start()

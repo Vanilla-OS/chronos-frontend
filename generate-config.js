@@ -33,7 +33,7 @@ const extractItemsFromEnv = (prefix) => {
   return items;
 };
 
-const chronosConfig = {
+const generateChronosConfig = {
   title: process.env.CHRONOS_TITLE || "Chronos Documentation",
   logoTitle: process.env.CHRONOS_LOGO_TITLE || "Documentation",
   logoUrl: process.env.CHRONOS_LOGO_URL || "/logo.svg",
@@ -50,21 +50,23 @@ const chronosConfig = {
   ],
 };
 
-const publicFolderPath = resolve(__dirname, "public");
-fs.mkdir(publicFolderPath, { recursive: true }).catch(console.error);
+export function createChronosPath() {
+  const publicFolderPath = resolve(__dirname, "public");
+  fs.mkdir(publicFolderPath, { recursive: true }).catch(console.error);
 
-if (process.env.CHRONOS_LOGO_URL && !isWebURL(process.env.CHRONOS_LOGO_URL)) {
-  const logoExtension = extname(process.env.CHRONOS_LOGO_URL);
-  const logoFileName = `logo${logoExtension}`;
-  const logoFilePath = resolve(publicFolderPath, logoFileName);
-  fs.copyFile(process.env.CHRONOS_LOGO_URL, logoFilePath).catch(console.error);
-  chronosConfig.logoUrl = `/logo${logoExtension}`;
+  if (process.env.CHRONOS_LOGO_URL && !isWebURL(process.env.CHRONOS_LOGO_URL)) {
+    const logoExtension = extname(process.env.CHRONOS_LOGO_URL);
+    const logoFileName = `logo${logoExtension}`;
+    const logoFilePath = resolve(publicFolderPath, logoFileName);
+    fs.copyFile(process.env.CHRONOS_LOGO_URL, logoFilePath).catch(console.error);
+    generateChronosConfig.logoUrl = `/logo${logoExtension}`;
+  }
+
+  const configFilePath = resolve(publicFolderPath, "chronos.json");
+  fs.writeFile(configFilePath, JSON.stringify(generateChronosConfig, null, 2)).catch(console.error);
+
+  console.log("chronos.json generated successfully!");
 }
-
-const configFilePath = resolve(publicFolderPath, "chronos.json");
-fs.writeFile(configFilePath, JSON.stringify(chronosConfig, null, 2)).catch(console.error);
-
-console.log("chronos.json generated successfully!");
 
 function isWebURL(str) {
   try {
