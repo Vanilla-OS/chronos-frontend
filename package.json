@@ -19,7 +19,7 @@
     "express": "^4.19.2",
     "highlight.js": "^11.9.0",
     "js-yaml": "^4.1.0",
-    "pinia": "^2.1.6",
+    "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
     "unhead": "^1.8.10",
     "vue": "^3.2.47",
