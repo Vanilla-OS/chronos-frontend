@@ -35,7 +35,6 @@ export class Server {
   #middlewares() {
     return Promise.all([
       this.app.register(RateLimit, {
-        global: true,
         max: 100
       }),
       this.app.register(Cors),

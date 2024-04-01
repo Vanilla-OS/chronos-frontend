@@ -4,30 +4,6 @@
   "logoUrl": "/logo.svg",
   "description": "A frontend in Vue.js for the Chronos documentation server.",
   "baseUrl": "http://localhost:5173",
-  "chronosCollections": [
-    [
-      {
-        "shortName": "docs",
-        "title": "Docs",
-        "url": "http://localhost:8080/documentation",
-        "description": "Read the technical documentation for the Awesome project."
-      }
-    ],
-    [
-      {
-        "shortName": "handbook",
-        "title": "Handbook",
-        "url": "http://localhost:8080/handbook",
-        "description": "Are you a new user? Read the handbook to learn how to use the Awesome project."
-      }
-    ]
-  ],
-  "extraLinks": [
-    [
-      {
-        "url": "https://github.com/vanilla-os/Chronos",
-        "name": "Source Code"
-      }
-    ]
-  ]
+  "chronosCollections": [],
+  "extraLinks": []
 }
