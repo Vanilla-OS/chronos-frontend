@@ -6,7 +6,7 @@ stages:
     singlelayer: false
     labels:
       maintainer: Vanilla OS Contributors
-    entrypoint: ["npm", "run", "publish"]
+    entrypoint: ["cd /app && npm run publish"]
     expose: 
       "6090": ""
     modules:
