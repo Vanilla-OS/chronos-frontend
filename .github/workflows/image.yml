@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  pull_request:
   workflow_dispatch:
 
 env:
@@ -15,12 +16,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+ 
+    - uses: vanilla-os/vib-gh-action@v0.6.2
+      with:
+        recipe: 'recipe.yml'
+    
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Containerfile
+        path: Containerfile
 
     - name: Build image
       run: docker image build -f Containerfile --tag ghcr.io/vanilla-os/chronos-fe:main .
 
     - name: Publish image
-      if: github.repository == 'vanilla-os/chronos-frontend'
+      if: github.repository == 'vanilla-os/chronos-frontend' && github.ref == 'refs/heads/main'
       run: |
         docker login ghcr.io -u ${{ env.REGISTRY_USER }} -p ${{ env.REGISTRY_PASSWORD }}
         docker image push "ghcr.io/vanilla-os/chronos-fe:main"
