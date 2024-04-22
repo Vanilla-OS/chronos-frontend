@@ -7,7 +7,7 @@ stages:
     labels:
       maintainer: Vanilla OS Contributors
     entrypoint: ["/bin/sh", "-c", "cd /app && npm run publish"]
-    expose: 
+    expose:
       "6090": ""
     modules:
       - name: build-app
