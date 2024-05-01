@@ -15,7 +15,7 @@
     "@babel/types": "^7.23.9",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@tailwindcss/typography": "^0.5.12",
-    "axios": "^1.6.7",
+    "axios": "^1.6.8",
     "express": "^4.19.2",
     "highlight.js": "^11.9.0",
     "js-yaml": "^4.1.0",
