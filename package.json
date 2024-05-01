@@ -12,7 +12,7 @@
     "publish": "npm run generate-config && npm run build && npm run start"
   },
   "dependencies": {
-    "@babel/types": "^7.23.9",
+    "@babel/types": "^7.24.5",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@tailwindcss/typography": "^0.5.12",
     "axios": "^1.6.8",
