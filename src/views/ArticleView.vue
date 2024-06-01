@@ -52,12 +52,12 @@
             <div class="sticky top-4 z-1">
                 <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg">
                     <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">Navigation</p>
-                    <ul class="space-y-2">
+                    <ul class="space-y-2 max-h-[85vh] overflow-y-scroll">
                         <li v-for="(heading, index) in headings" :key="index" :style="heading.style"
                             class="text-gray-900 dark:text-gray-200">
                             <a @click="scrollToHeading(heading.id)"
                                 class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
-                                heading.text }}</a>
+                                    heading.text }}</a>
                         </li>
                     </ul>
                     <a v-if="editUrl != ''" :href="editUrl" target="_blank"
@@ -68,7 +68,8 @@
             </div>
         </aside>
         <div class="w-full lg:w-3/4 lg:pl-4">
-            <div class="content prose dark:prose-invert article-content" v-html="article.Body"></div>
+            <div class="content prose dark:prose-invert article-content"
+                v-html="article.Body"></div>
         </div>
     </div>
 
