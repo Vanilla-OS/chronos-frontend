@@ -7,18 +7,18 @@ on:
     tags:
       - '*'
   workflow_dispatch:
-  pull_request:
 
 env:
   BUILDX_NO_DEFAULT_ATTESTATIONS: 1
 
-permissions:
-    contents: write # Allow actions to create release
-    packages: write # Allow pushing images to GHCR
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allow actions to write contents
+      packages: write # Allow pushing images to GHCR
+      attestations: write # To create and write attestations
+      id-token: write # Additional permissions for persistence of the attestations
 
     steps:
     - uses: actions/checkout@v4
@@ -73,3 +73,12 @@ jobs:
         cache-to: type=gha,mode=max
         platforms: linux/amd64
         provenance: false
+
+    - name: Attest pushed image
+      uses: actions/attest-build-provenance@v1
+      id: attest
+      if: ${{ github.event_name != 'pull_request' }}
+      with:
+        subject-name: ${{ env.IMAGE_NAME }}
+        subject-digest: ${{ steps.push.outputs.digest }}
+        push-to-registry: false
