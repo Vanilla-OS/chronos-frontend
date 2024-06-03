@@ -24,7 +24,8 @@
             </div>
           </div>
 
-          <div v-show="showLangs" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-md z-50">
+          <div v-show="showLangs"
+            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-md z-50">
             <div class="py-1">
               <a v-for="(lang, index) in langs" :key="index" @click="setLang(lang)"
                 class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
@@ -55,8 +56,8 @@
         </button>
 
         <div class="hidden sm:flex items-center space-x-4">
-          <a class="text-base text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white" :href="link.url"
-            target="_blank" v-for="(link, index) in chronosConfig.extraLinks" :key="index">
+          <a class="text-base text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            :href="link.url" target="_blank" v-for="(link, index) in chronosConfig.extraLinks" :key="index">
             {{ link.name }}
           </a>
         </div>
@@ -125,9 +126,11 @@ export default defineComponent({
     // Dark mode
     const userPrefersDark = localStorage.getItem('darkMode') === 'true' ||
       (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    this.isDarkMode = userPrefersDark;
     if (userPrefersDark) {
       document.documentElement.classList.add('dark');
-      this.isDarkMode = true;
+    } else {
+      document.documentElement.classList.remove('dark');
     }
   },
   methods: {
