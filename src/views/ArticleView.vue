@@ -13,7 +13,7 @@
                 <li v-if="collectionName">
                     <router-link :to="{ name: 'collection', params: { collection: collectionName } }"
                         class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
-                            collectionName }}</router-link>
+                        collectionName }}</router-link>
                 </li>
                 <li v-if="collectionName">
                     <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
@@ -35,14 +35,15 @@
             <h1 class="text-3xl font-bold">{{ article.Title }}</h1>
             <p class="mt-4">{{ article.Description }}</p>
             <div class="flex justify-center mt-4 gap-2">
-                <div v-for="author in article.Authors" :key="author" class="flex items-center">
+                <a v-for="author in article.Authors" :key="author" class="flex items-center"
+                    :href="`https://github.com/${author}`" target="_blank">
                     <img v-if="!imageError[author]" :src="`https://github.com/${author}.png?size=40`" :alt="author"
                         class="w-7 h-7 rounded-full object-cover " @error="imageError[author] = true" :title="author">
                     <span v-else
                         class="w-7 h-7 rounded-full overflow-hidden bg-blue-500 dark:bg-blue-700 text-white font-bold inline-flex items-center justify-center -mr-3">
                         {{ getInitials(author) }}
                     </span>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -51,7 +52,7 @@
             <div class="sticky top-4 z-1">
                 <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg">
                     <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">Navigation</p>
-                    <ul class="space-y-2">
+                    <ul class="space-y-2 max-h-[85vh] overflow-y-scroll">
                         <li v-for="(heading, index) in headings" :key="index" :style="heading.style"
                             class="text-gray-900 dark:text-gray-200">
                             <a @click="scrollToHeading(heading.id)"
@@ -67,7 +68,8 @@
             </div>
         </aside>
         <div class="w-full lg:w-3/4 lg:pl-4">
-            <div class="content prose dark:prose-invert article-content" v-html="article.Body"></div>
+            <div class="content prose dark:prose-invert article-content"
+                v-html="article.Body"></div>
         </div>
     </div>
 
@@ -86,7 +88,7 @@
                         class="text-gray-900 dark:text-gray-200">
                         <a @click="scrollToHeading(heading.id)"
                             class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
-                                heading.text }}</a>
+                            heading.text }}</a>
                     </li>
                 </ul>
                 <a v-if="editUrl != ''" :href="editUrl" target="_blank"
