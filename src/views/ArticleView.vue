@@ -35,12 +35,12 @@
             <h1 class="text-3xl font-bold">{{ article.Title }}</h1>
             <p class="mt-4">{{ article.Description }}</p>
             <div class="flex justify-center mt-4 gap-2">
-                <a v-for="author in article.Authors" :key="author" class="flex items-center"
+                <a v-for="author in article.Authors" :key="author" class="flex items-center hover:scale-120 transition-transform"
                     :href="`https://github.com/${author}`" target="_blank">
                     <img v-if="!imageError[author]" :src="`https://github.com/${author}.png?size=40`" :alt="author"
-                        class="w-7 h-7 rounded-full object-cover " @error="imageError[author] = true" :title="author">
+                        class="w-7 h-7 rounded-full object-cover hover:shadow-lg transition-shadow" @error="imageError[author] = true" :title="author">
                     <span v-else
-                        class="w-7 h-7 rounded-full overflow-hidden bg-blue-500 dark:bg-blue-700 text-white font-bold inline-flex items-center justify-center -mr-3">
+                        class="w-7 h-7 rounded-full overflow-hidden bg-blue-500 dark:bg-blue-700 text-white font-bold inline-flex items-center justify-center -mr-3 hover:shadow-lg transition-shadow">
                         {{ getInitials(author) }}
                     </span>
                 </a>
