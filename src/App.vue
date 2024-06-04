@@ -141,10 +141,14 @@ export default defineComponent({
       this.showLangs = false;
     },
     async searchArticles() {
-      // @ts-ignore
-      this.$chronosAPI.searchArticles(this.chronosStore.prefLang, this.search, this.collectionShortName).then((response) => {
+      try {
+        // @ts-ignore
+        const response = await this.$chronosAPI.searchArticles(this.chronosStore.prefLang, this.search, this.collectionShortName);
         this.searchResponse = response;
-      });
+      } catch (error) {
+        console.error("Error searching articles:", error);
+        this.searchResponse = [];
+      }
     },
     goToArticle(slug: string) {
       this.$router.push(`/${this.collectionShortName}/${this.chronosStore.prefLang}/${slug}`);
