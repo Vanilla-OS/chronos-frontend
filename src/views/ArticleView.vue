@@ -45,6 +45,7 @@
                     </span>
                 </a>
             </div>
+            <p class="mt-4 text-gray-500 dark:text-gray-400"><b>Reading time:</b> {{ readingTime }}</p>
         </div>
     </section>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex py-8">
@@ -123,6 +124,18 @@ export default defineComponent({
     computed: {
         chronosStore() {
             return useChronosStore();
+        },
+        readingTime() {
+            if (!this.article || !this.article.Body) return '0m 0s';
+
+            const wordCount = this.article.Body.split(/\s+/).length;
+
+            // assuming an average reading speed of 200 words per minute
+            const readingSpeed = 200;
+            const minutes = Math.floor(wordCount / readingSpeed);
+            const seconds = Math.round((wordCount / readingSpeed - minutes) * 60);
+
+            return `${minutes}m ${seconds}s`;
         },
     },
     async mounted() {
