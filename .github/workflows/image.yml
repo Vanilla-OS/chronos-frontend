@@ -34,14 +34,14 @@ jobs:
       run: |
         REPO_OWNER_LOWERCASE="$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')"
         echo "REPO_OWNER_LOWERCASE=$REPO_OWNER_LOWERCASE" >> "$GITHUB_ENV"
-        echo "IMAGE_URL=ghcr.io/$REPO_OWNER_LOWERCASE/chronos-fe" >> "$GITHUB_ENV"
+        echo "IMAGE_NAME=ghcr.io/$REPO_OWNER_LOWERCASE/chronos-fe" >> "$GITHUB_ENV"
 
     - name: Docker meta
       id: docker_meta
       uses: docker/metadata-action@v5
       with:
         images: |
-          ${{ env. IMAGE_URL }}
+          ${{ env. IMAGE_NAME }}
         tags: |
           type=semver,pattern={{version}}
           type=semver,pattern={{major}}.{{minor}}
@@ -79,6 +79,6 @@ jobs:
       id: attest
       if: ${{ github.event_name != 'pull_request' }}
       with:
-        subject-name: ${{ env.IMAGE_URL }}
+        subject-name: ${{ env.IMAGE_NAME }}
         subject-digest: ${{ steps.push.outputs.digest }}
         push-to-registry: false
