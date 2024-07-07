@@ -47,7 +47,7 @@
             </div>
             <div class="flex flex-row justify-center mt-2 align-middle">
                 <p class="mt-4 text-gray-500 dark:text-gray-400"><b>Reading time:</b> {{ readingTime }}</p>
-                <div class="btn" @click="printArticle">
+                <div class="px-6 py-3.5 inline-flex justify-center align-middle cursor-pointer" @click="printArticle">
                     <span class="toolBox-item-icon mdi material-icons -ml-4">print</span>
                 </div>
             </div>
