@@ -1,26 +1,6 @@
-.btn {
-    --btn-bg-color: var(--secondary-bg-color);
-    --btn-color: var(--text-color);
-    --btn-primary-bg-color: var(--primary-bg-color);
-    --btn-primary-color: var(--text-color-alt);
-    --btn-link-hover-color: var(--link-hover-color);
-    --btn-circle-hover-bg-color: var(--secondary-bg-color-alt);
-    --btn-secondary-hover-bg-color: var(--primary-bg-color);
-    --btn-secondary-hover-color: var(--text-color-alt);
-    --btn-link-2-color: var(--link-focus-color);
+@layer components {
+    .btn {
+        @apply px-6 py-3.5 inline-flex justify-center align-middle cursor-pointer
+    }
 }
 
-.btn {
-    border-radius: 100px;
-    background-color: var(--btn-bg-color);
-    padding: 14px 24px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    font-size: 18px;
-    cursor: pointer;
-    /* color: var(--btn-color); */
-    border: 0;
-}
