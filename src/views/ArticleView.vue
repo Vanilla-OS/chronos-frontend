@@ -45,7 +45,12 @@
                     </span>
                 </a>
             </div>
-            <p class="mt-4 text-gray-500 dark:text-gray-400"><b>Reading time:</b> {{ readingTime }}</p>
+            <div class="flex flex-row justify-center mt-2 align-middle">
+                <p class="mt-4 text-gray-500 dark:text-gray-400"><b>Reading time:</b> {{ readingTime }}</p>
+                <div class="btn" @click="printArticle">
+                    <span class="toolBox-item-icon mdi material-icons -ml-4">print</span>
+                </div>
+            </div>
         </div>
     </section>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex py-8">
@@ -291,6 +296,9 @@ export default defineComponent({
         onImageError(event: any, author: string) {
             event.target.style.display = 'none';
         },
+        printArticle() {
+            window.print()
+        }
     },
 });
 </script>

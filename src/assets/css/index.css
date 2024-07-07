@@ -1,5 +1,6 @@
 @import url('fonts.css');
 @import url('style.css');
+@import url('btn.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
