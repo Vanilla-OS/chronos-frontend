@@ -7,7 +7,34 @@
   </section>
 
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-6 mt-4">
-    <aside class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow md:sticky top-2 flex flex-row gap-4 mt-2 items-center">
+
+    <!-- Stories -->
+    <div class="flex flex-col" v-if="stories">
+      <h2 class="text-2xl font-semibold text-black dark:text-gray-200">Stories</h2>
+      <p class="text-gray-700 dark:text-gray-300">Stories are a collection of articles that are best read in order.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" v-if="stories">
+      <article v-for="story in stories" :key="story.Name"
+        class="flex flex-col bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out p-5">
+        <router-link :to="`/${collectionName}/${chronosStore.prefLang}/${story.StartSlug}`" class="flex flex-col gap-2">
+          <h4 class="text-xl font-semibold text-black dark:text-gray-200">
+            {{ story.Name }}
+          </h4>
+          <p class="text-gray-700 dark:text-gray-300">{{ story.Description }}</p>
+          <div class="mt-auto">
+            <span
+              class="inline-flex items-center text-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-semibold transition-colors duration-150 ease-in-out">
+              Start reading
+              <i class="material-icons ml-2">arrow_forward</i>
+            </span>
+          </div>
+        </router-link>
+      </article>
+    </div>
+
+    <!-- Toolbox -->
+    <aside
+      class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow md:sticky top-2 flex flex-row gap-4 mt-2 items-center">
       <router-link class="text-blue-600 dark:text-blue-400 flex items-center mr-auto" to="/">
         <i class="material-icons">arrow_back</i>
         <span class="hidden sm:inline">Back to collections</span>
@@ -26,6 +53,11 @@
       </div>
     </aside>
 
+    <!-- Articles -->
+    <div class="flex flex-col" v-if="articlesResponse?.articles">
+      <h2 class="text-2xl font-semibold text-black dark:text-gray-200">Articles</h2>
+      <p class="text-gray-700 dark:text-gray-300">All articles in this collection.</p>
+    </div>
     <div class="flex-1" v-if="articlesResponse?.articles">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <article v-for="article in filteredArticles" :key="article.Slug"
@@ -56,10 +88,10 @@
     </div>
   </section>
 </template>
-  
+
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { ArticlesResponse, Article, ChronosConfig, ChronosCollection } from "@/core/models";
+import type { ArticlesResponse, Article, Story, ChronosConfig, ChronosCollection } from "@/core/models";
 import { useChronosStore } from "@/core/store";
 import CustomSelect from "../components/CustomSelect.vue";
 
@@ -72,6 +104,7 @@ export default defineComponent({
     return {
       articlesResponse: {} as ArticlesResponse,
       articles: [] as Article[],
+      stories: [] as Story[],
       chronosConfig: {} as ChronosConfig,
       collectionName: "",
       activeCollection: {} as ChronosCollection | undefined,
@@ -84,7 +117,7 @@ export default defineComponent({
       return useChronosStore();
     },
     filteredArticles() {
-      let filtered = this.articles;
+      let filtered = this.articles.filter((article) => article.Listed !== false);
       if (this.selectedTags.length > 0) {
         filtered = filtered.filter((article) => {
           if (article.Tags === null) return false;
@@ -121,6 +154,7 @@ export default defineComponent({
       this.$chronosAPI.getArticles(this.chronosStore.prefLang, this.collectionName).then((response) => {
         this.articlesResponse = response;
         this.articles = this.articlesResponse.articles;
+        this.stories = this.articlesResponse?.stories;
       });
     },
     setHead() {

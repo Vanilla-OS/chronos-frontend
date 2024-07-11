@@ -5,22 +5,24 @@
   "description": "A frontend in Vue.js for the Chronos documentation server.",
   "baseUrl": "http://localhost:5173",
   "chronosCollections": [
-    [
-      {
-        "shortName": "docs",
-        "title": "Docs",
-        "url": "http://localhost:8080/documentation",
-        "description": "Read the technical documentation for the Awesome project."
-      }
-    ],
-    [
-      {
-        "shortName": "handbook",
-        "title": "Handbook",
-        "url": "http://localhost:8080/handbook",
-        "description": "Are you a new user? Read the handbook to learn how to use the Awesome project."
-      }
-    ]
+    {
+      "shortName": "docs",
+      "title": "Docs",
+      "url": "http://localhost:8080/remote1",
+      "description": "Read the technical documentation for the Awesome project."
+    },
+    {
+      "shortName": "handbook",
+      "title": "Handbook",
+      "url": "http://localhost:8080/remote2",
+      "description": "Are you a new user? Read the handbook to learn how to use the Awesome project."
+    },
+    {
+      "shortName": "myAwesomeProject",
+      "title": "myAwesomeProject",
+      "url": "http://localhost:8080/myAwesomeProject",
+      "description": "Test"
+    }
   ],
   "extraLinks": [
     [

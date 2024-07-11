@@ -6,6 +6,11 @@ interface Article {
     Tags: string[];
     Body: string;
     Slug: string;
+    StoryId: string;
+    Story: Story;
+    Previous: string | null;
+    Next: string | null;
+    Listed: boolean;
 }
 
 interface SearchResponse {
@@ -13,11 +18,19 @@ interface SearchResponse {
     results: Article[];
 }
 
+interface Story {
+    Id: string;
+    Name: string;
+    Description: string;
+    StartSlug: string;
+}
+
 interface ArticlesResponse {
     title: string;
     supportedLang: string[];
     tags: string[];
     articles: Article[];
+    stories: Story[];
 }
 
 interface ChronosConfig {
@@ -43,4 +56,4 @@ interface ExtraLink {
     name: string;
 }
 
-export type { Article, SearchResponse, ArticlesResponse, ChronosConfig, ChronosCollection, ExtraLink };
+export type { Article, SearchResponse, ArticlesResponse, ChronosConfig, ChronosCollection, ExtraLink, Story };

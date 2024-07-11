@@ -11,7 +11,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8" v-if="chronosConfig.chronosCollections">
         <div v-for="(collection, index) in chronosConfig.chronosCollections" :key="index"
           class="bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out flex flex-col p-5 gap-4">
-          <router-link :to="`/collections/${collection.shortName}`" class="hover:no-underline flex-1 flex gap-2 flex-col">
+          <router-link :to="`/collections/${collection.shortName}`"
+            class="hover:no-underline flex-1 flex gap-2 flex-col">
             <h4 class="text-xl font-semibold text-black dark:text-gray-200">
               {{ collection.title }}
             </h4>
@@ -86,14 +87,14 @@ export default defineComponent({
     async fetchArticleCounts() {
       const articleCounts: Record<string, number | undefined> = {};
 
-      for (const collection of this.chronosConfig!.chronosCollections) {
+      for (const c of this.chronosConfig!.chronosCollections) {
         try {
           // @ts-ignore
-          const count = await this.$chronosAPI.countArticles(this.chronosStore.prefLang, collection.shortName);
-          articleCounts[collection.shortName] = count;
+          const count = await this.$chronosAPI.countArticles(this.chronosStore.prefLang, c.shortName);
+          articleCounts[c.shortName] = count;
         } catch (error) {
-          console.error(`Error fetching article count for collection ${collection.shortName}:`, error);
-          articleCounts[collection.shortName] = undefined;
+          console.error(`Error fetching article count for collection ${c.shortName}:`, error);
+          articleCounts[c.shortName] = undefined;
         }
       }
 

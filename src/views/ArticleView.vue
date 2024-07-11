@@ -13,7 +13,7 @@
                 <li v-if="collectionName">
                     <router-link :to="{ name: 'collection', params: { collection: collectionName } }"
                         class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
-                        collectionName }}</router-link>
+                    collectionName }}</router-link>
                 </li>
                 <li v-if="collectionName">
                     <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
@@ -35,10 +35,12 @@
             <h1 class="text-3xl font-bold">{{ article.Title }}</h1>
             <p class="mt-4">{{ article.Description }}</p>
             <div class="flex justify-center mt-4 gap-2">
-                <a v-for="author in article.Authors" :key="author" class="flex items-center hover:scale-120 transition-transform"
+                <a v-for="author in article.Authors" :key="author"
+                    class="flex items-center hover:scale-120 transition-transform"
                     :href="`https://github.com/${author}`" target="_blank">
                     <img v-if="!imageError[author]" :src="`https://github.com/${author}.png?size=40`" :alt="author"
-                        class="w-7 h-7 rounded-full object-cover hover:shadow-lg transition-shadow" @error="imageError[author] = true" :title="author">
+                        class="w-7 h-7 rounded-full object-cover hover:shadow-lg transition-shadow"
+                        @error="imageError[author] = true" :title="author">
                     <span v-else
                         class="w-7 h-7 rounded-full overflow-hidden bg-blue-500 dark:bg-blue-700 text-white font-bold inline-flex items-center justify-center -mr-3 hover:shadow-lg transition-shadow">
                         {{ getInitials(author) }}
@@ -63,7 +65,7 @@
                             class="text-gray-900 dark:text-gray-200">
                             <a @click="scrollToHeading(heading.id)"
                                 class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
-                                    heading.text }}</a>
+                    heading.text }}</a>
                         </li>
                     </ul>
                     <a v-if="editUrl != ''" :href="editUrl" target="_blank"
@@ -74,8 +76,35 @@
             </div>
         </aside>
         <div class="w-full lg:w-3/4 lg:pl-4">
-            <div class="content prose dark:prose-invert article-content"
-                v-html="article.Body"></div>
+            <div class="content prose dark:prose-invert article-content" v-html="article.Body"></div>
+            <div class="flex justify-between mt-8 space-x-4">
+                <div class="w-1/2">
+                    <router-link v-if="previousArticle && previousArticle.Slug !== undefined"
+                        :to="`/${collectionName}/${chronosStore.prefLang}/${previousArticle.Slug}`"
+                        class="flex justify-between items-center border border-gray-300 rounded-lg p-4 gap-4">
+                        <span class="material-icons">arrow_back</span>
+                        <div class="flex flex-col">
+                            <span class="mr-2 text-gray-700 dark:text-gray-300 text-right">Previous</span>
+                            <span class="mr-2 text-gray-700 dark:text-gray-300 text-right font-semibold text-lg">
+                                {{ previousArticle.Title }}
+                            </span>
+                        </div>
+                    </router-link>
+                </div>
+                <div class="w-1/2 text-right">
+                    <router-link v-if="nextArticle && nextArticle.Slug !== undefined"
+                        :to="`/${collectionName}/${chronosStore.prefLang}/${nextArticle.Slug}`"
+                        class="flex justify-between items-center border border-gray-300 rounded-lg p-4 gap-4">
+                        <div class="flex flex-col">
+                            <span class="ml-2 text-gray-700 dark:text-gray-300 text-left">Next</span>
+                            <span class="ml-2 text-gray-700 dark:text-gray-300 text-left font-semibold text-lg">
+                                {{ nextArticle.Title }}
+                            </span>
+                        </div>
+                        <span class="material-icons">arrow_forward</span>
+                    </router-link>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -94,7 +123,7 @@
                         class="text-gray-900 dark:text-gray-200">
                         <a @click="scrollToHeading(heading.id)"
                             class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
-                            heading.text }}</a>
+                    heading.text }}</a>
                     </li>
                 </ul>
                 <a v-if="editUrl != ''" :href="editUrl" target="_blank"
@@ -124,6 +153,8 @@ export default defineComponent({
             editUrl: "",
             isSidebarVisible: false,
             imageError: reactive({} as any),
+            previousArticle: {} as Article,
+            nextArticle: {} as Article,
         };
     },
     computed: {
@@ -194,6 +225,31 @@ export default defineComponent({
                 this.collectionName
             );
             this.handleArticleResponse(response, lang);
+            this.setNextAndPreviousArticles();
+        },
+        async setNextAndPreviousArticles() {
+            this.previousArticle = {} as Article;
+            this.nextArticle = {} as Article;
+
+            if (this.article.Previous && this.article.Previous !== "") {
+                // @ts-ignore
+                this.previousArticle = await this.$chronosAPI.getArticleByLanguageAndSlug(
+                    this.lang,
+                    this.article.Previous,
+                    this.collectionName
+                );
+            }
+
+            if (this.article.Next && this.article.Next !== "") {
+                // @ts-ignore
+                this.nextArticle = await this.$chronosAPI.getArticleByLanguageAndSlug(
+                    this.lang,
+                    this.article.Next,
+                    this.collectionName
+                );
+            }
+
+            console.log(this.previousArticle, this.nextArticle);
         },
         handleArticleResponse(response: Article, lang: string) {
             const { article, headings } = this.handleResponse(response);
