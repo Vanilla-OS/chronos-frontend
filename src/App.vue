@@ -25,7 +25,7 @@
           </div>
 
           <div v-show="showLangs"
-            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-md z-50">
+            class="absolute right-0 mt-2 w-max bg-white dark:bg-gray-800 shadow-lg rounded-md z-50">
             <div class="py-1">
               <a v-for="(lang, index) in langs" :key="index" @click="setLang(lang)"
                 class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
