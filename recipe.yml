@@ -9,9 +9,9 @@ stages:
     entrypoint:
       workdir: /app
       exec:
-        - "/bin/sh"
-        - "-c"
-        - "npm run publish"
+        - npm
+        - run
+        - publish
     expose:
       "6090": ""
     modules:
