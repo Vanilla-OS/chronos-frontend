@@ -68,8 +68,8 @@
             </h4>
             <p class="text-gray-700 dark:text-gray-300 mb-4">{{ article.Description }}</p>
             <div class="flex flex-wrap gap-2 mt-2 mb-4">
-              <span v-for="tag in article.Tags" :key="tag"
-                class="inline-block bg-blue-100 dark:bg-gray-800 text-blue-800 dark:text-blue-200 rounded-full px-3 py-1 text-xs font-medium">
+              <span v-for="tag in article.Tags" :key="tag" @click="setTag(tag)"
+                class="inline-block bg-blue-100 dark:bg-gray-800 text-blue-800 dark:text-blue-200 rounded-full px-3 py-1 text-xs font-medium cursor-pointer">
                 {{ tag }}
               </span>
             </div>
@@ -178,6 +178,9 @@ export default defineComponent({
         document.head.appendChild(meta);
       }
     },
+    setTag(tag: string) {
+        this.selectedTags = [tag as never]
+    }
   },
 });
 </script>
