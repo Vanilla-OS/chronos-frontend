@@ -144,7 +144,11 @@ export default defineComponent({
       try {
         // @ts-ignore
         const response = await this.$chronosAPI.searchArticles(this.chronosStore.prefLang, this.search, this.collectionShortName);
-        this.searchResponse = response;
+        if (response != null) {
+            this.searchResponse = response;
+        } else {
+            this.searchResponse = [];
+        }
       } catch (error) {
         console.error("Error searching articles:", error);
         this.searchResponse = [];
