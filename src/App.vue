@@ -12,7 +12,7 @@
           <div v-if="collectionShortName"
             class="flex items-center border bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-opacity-50 border-gray-200 dark:border-gray-600">
             <input class="flex-1 px-4 py-2 text-gray-600 dark:text-gray-300 bg-transparent focus:outline-none w-full"
-              type="text" placeholder="Search for articles.." v-model="search" @input="searchArticles">
+              type="text" placeholder="Search for articles.." v-model="search" @input="searchArticles" @blur="emptySearch()">
             <i class="material-icons p-2 text-gray-400 dark:text-gray-500">search</i>
 
             <div v-if="collectionShortName" class="relative border-l border-gray-200 dark:border-gray-600">
@@ -179,6 +179,10 @@ export default defineComponent({
       const isDarkMode = document.documentElement.classList.contains('dark');
       localStorage.setItem('darkMode', isDarkMode ? 'true' : 'false');
       this.isDarkMode = isDarkMode;
+    },
+    emptySearch() {
+        this.searchResponse = [];
+        console.log("Focus lost")
     },
   },
 });
