@@ -9,9 +9,9 @@ stages:
     cmd:
       workdir: /app
       exec:
-        - npm
-        - run
-        - publish
+        - "npm"
+        - "run"
+        - "publish"
     expose:
       "6090": ""
     modules:
