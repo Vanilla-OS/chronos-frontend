@@ -6,7 +6,7 @@ stages:
     singlelayer: false
     labels:
       maintainer: Vanilla OS Contributors
-    entrypoint:
+    cmd:
       workdir: /app
       exec:
         - npm
