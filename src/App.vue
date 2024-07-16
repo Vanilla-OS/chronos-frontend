@@ -70,7 +70,7 @@
       <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
         <p class="text-base text-gray-600 dark:text-gray-400">
           <strong>Chronos</strong> by <a href="https://vanillaos.org"
-            class="text-blue-600 dark:text-blue-400 hover:underline">Vanilla OS</a>.
+            class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
         </p>
       </div>
     </footer>
