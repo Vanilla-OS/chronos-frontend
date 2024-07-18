@@ -13,13 +13,15 @@
                 <li v-if="collectionName">
                     <router-link :to="{ name: 'collection', params: { collection: collectionName } }"
                         class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
-                    collectionName }}</router-link>
+                        collectionName }}</router-link>
                 </li>
                 <li v-if="collectionName">
                     <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
                 </li>
                 <li>
-                    <a class="cursor-pointer text-gray-600 dark:text-gray-400">{{ lang }}</a>
+                    <a class="cursor-pointer text-gray-600 dark:text-gray-400">{{
+                        lang
+                        }}</a>
                 </li>
                 <li v-if="article.Title" class="hidden md:flex">
                     <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
@@ -40,7 +42,7 @@
                     :href="`https://github.com/${author}`" target="_blank">
                     <img v-if="!imageError[author]" :src="`https://github.com/${author}.png?size=40`" :alt="author"
                         class="w-7 h-7 rounded-full object-cover hover:shadow-lg transition-shadow"
-                        @error="imageError[author] = true" :title="author">
+                        @error="imageError[author] = true" :title="author" />
                     <span v-else
                         class="w-7 h-7 rounded-full overflow-hidden bg-blue-500 dark:bg-blue-700 text-white font-bold inline-flex items-center justify-center -mr-3 hover:shadow-lg transition-shadow">
                         {{ getInitials(author) }}
@@ -48,7 +50,9 @@
                 </a>
             </div>
             <div class="flex flex-row justify-center mt-2 align-middle">
-                <p class="mt-4 text-gray-700 dark:text-gray-400"><b>Reading time:</b> {{ readingTime }}</p>
+                <p class="mt-4 text-gray-700 dark:text-gray-400">
+                    <b>Reading time:</b> {{ readingTime }}
+                </p>
                 <div class="px-6 py-3.5 inline-flex justify-center align-middle cursor-pointer" @click="printArticle">
                     <span class="toolBox-item-icon mdi material-icons -ml-4">print</span>
                 </div>
@@ -59,13 +63,15 @@
         <aside class="hidden lg:block lg:w-1/4">
             <div class="sticky top-4 z-1">
                 <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg">
-                    <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">Navigation</p>
+                    <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">
+                        Navigation
+                    </p>
                     <ul class="space-y-2 max-h-[85vh] overflow-y-scroll">
                         <li v-for="(heading, index) in headings" :key="index" :style="heading.style"
                             class="text-gray-900 dark:text-gray-200">
                             <a @click="scrollToHeading(heading.id)"
                                 class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
-                    heading.text }}</a>
+                                heading.text }}</a>
                         </li>
                     </ul>
                     <a v-if="editUrl != ''" :href="editUrl" target="_blank"
@@ -117,13 +123,15 @@
         class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden bottom-0 flex flex-col items-end justify-end">
         <aside class="relative bg-white dark:bg-gray-700 p-4 shadow-lg overflow-auto w-full rounded-t-lg pb-16">
             <div class="p-2">
-                <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">Navigation</p>
+                <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">
+                    Navigation
+                </p>
                 <ul class="space-y-2">
                     <li v-for="(heading, index) in headings" :key="index" :style="heading.style"
                         class="text-gray-900 dark:text-gray-200">
                         <a @click="scrollToHeading(heading.id)"
                             class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">{{
-                    heading.text }}</a>
+                            heading.text }}</a>
                     </li>
                 </ul>
                 <a v-if="editUrl != ''" :href="editUrl" target="_blank"
@@ -139,7 +147,7 @@
 import { defineComponent, reactive, watch } from "vue";
 import type { Article, ChronosCollection, ChronosConfig } from "@/core/models";
 import { useChronosStore } from "@/core/store";
-import { useHead } from 'unhead';
+import { useHead } from "unhead";
 
 export default defineComponent({
     name: "ArticleView",
@@ -147,7 +155,12 @@ export default defineComponent({
         return {
             article: {} as Article,
             lang: "",
-            headings: [] as { text: string; id: string; level: number, style: string }[],
+            headings: [] as {
+                text: string;
+                id: string;
+                level: number;
+                style: string;
+            }[],
             chronosConfig: {} as ChronosConfig,
             collectionName: "",
             editUrl: "",
@@ -162,7 +175,7 @@ export default defineComponent({
             return useChronosStore();
         },
         readingTime() {
-            if (!this.article || !this.article.Body) return '0m 0s';
+            if (!this.article || !this.article.Body) return "0m 0s";
 
             const wordCount = this.article.Body.split(/\s+/).length;
 
@@ -177,8 +190,10 @@ export default defineComponent({
     async mounted() {
         await this.initializeArticle();
         const collectionConfig = this.chronosConfig.chronosCollections.find(
-            (c) => c.shortName === this.collectionName
+            (c) => c.shortName === this.collectionName,
         );
+
+        this.addCopyToClipboardToPres();
 
         this.setEditUrl(collectionConfig);
     },
@@ -209,7 +224,7 @@ export default defineComponent({
             const response = await this.$chronosAPI.getArticleByLanguageAndSlug(
                 lang,
                 this.$route.params.slug,
-                this.collectionName
+                this.collectionName,
             );
             this.handleArticleResponse(response, lang);
         },
@@ -222,7 +237,7 @@ export default defineComponent({
             const response = await this.$chronosAPI.getArticleByLanguageAndSlug(
                 lang,
                 slug,
-                this.collectionName
+                this.collectionName,
             );
             this.handleArticleResponse(response, lang);
             this.setNextAndPreviousArticles();
@@ -233,11 +248,12 @@ export default defineComponent({
 
             if (this.article.Previous && this.article.Previous !== "") {
                 // @ts-ignore
-                this.previousArticle = await this.$chronosAPI.getArticleByLanguageAndSlug(
-                    this.lang,
-                    this.article.Previous,
-                    this.collectionName
-                );
+                this.previousArticle =
+                    await this.$chronosAPI.getArticleByLanguageAndSlug(
+                        this.lang,
+                        this.article.Previous,
+                        this.collectionName,
+                    );
             }
 
             if (this.article.Next && this.article.Next !== "") {
@@ -245,7 +261,7 @@ export default defineComponent({
                 this.nextArticle = await this.$chronosAPI.getArticleByLanguageAndSlug(
                     this.lang,
                     this.article.Next,
-                    this.collectionName
+                    this.collectionName,
                 );
             }
 
@@ -268,11 +284,20 @@ export default defineComponent({
                 title: `${this.article!.Title} - ${this.chronosConfig.title}`,
                 meta: [
                     { name: "description", content: this.article!.Description },
-                    { name: "og:title", content: `${this.article!.Title} - ${this.chronosConfig.title}` },
+                    {
+                        name: "og:title",
+                        content: `${this.article!.Title} - ${this.chronosConfig.title}`,
+                    },
                     { name: "og:description", content: this.article!.Description },
-                    { name: "og:url", content: `${this.chronosConfig.baseURL}/${this.article!.Slug}` },
+                    {
+                        name: "og:url",
+                        content: `${this.chronosConfig.baseURL}/${this.article!.Slug}`,
+                    },
                     { name: "twitter:card", content: "summary_large_image" },
-                    { name: "twitter:title", content: `${this.article!.Title} - ${this.chronosConfig.title}` },
+                    {
+                        name: "twitter:title",
+                        content: `${this.article!.Title} - ${this.chronosConfig.title}`,
+                    },
                     { name: "twitter:description", content: this.article!.Description },
                 ],
             });
@@ -288,7 +313,9 @@ export default defineComponent({
             const hTags = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
             hTags.forEach((hTag) => {
-                hTag.id = hTag.textContent?.replace(/\s+/g, "-").toLowerCase() as string;
+                hTag.id = hTag.textContent
+                    ?.replace(/\s+/g, "-")
+                    .toLowerCase() as string;
             });
 
             return doc.body.innerHTML;
@@ -297,7 +324,10 @@ export default defineComponent({
             watch(
                 () => this.$route,
                 async (newRoute, oldRoute) => {
-                    if (newRoute.params.slug !== oldRoute.params.slug || newRoute.params.lang !== oldRoute.params.lang) {
+                    if (
+                        newRoute.params.slug !== oldRoute.params.slug ||
+                        newRoute.params.lang !== oldRoute.params.lang
+                    ) {
                         const lang = Array.isArray(newRoute.params.lang)
                             ? newRoute.params.lang[0]
                             : newRoute.params.lang;
@@ -306,7 +336,7 @@ export default defineComponent({
                             : newRoute.params.slug;
                         await this.loadArticle(lang, slug);
                     }
-                }
+                },
             );
         },
         setEditUrl(collectionConfig: ChronosCollection | undefined) {
@@ -317,7 +347,12 @@ export default defineComponent({
             }
         },
         extractHeadings(body: string) {
-            const headings = [] as { text: string; id: string; level: number, style: string }[];
+            const headings = [] as {
+                text: string;
+                id: string;
+                level: number;
+                style: string;
+            }[];
             const parser = new DOMParser();
             const doc = parser.parseFromString(body, "text/html");
             const hTags = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
@@ -339,7 +374,10 @@ export default defineComponent({
             const offset = 53;
             const element = document.getElementById(headingId);
             const y = element?.getBoundingClientRect().top;
-            window.scrollTo({ top: y ? y + window.scrollY - offset : 0, behavior: "smooth" });
+            window.scrollTo({
+                top: y ? y + window.scrollY - offset : 0,
+                behavior: "smooth",
+            });
             this.isSidebarVisible = false;
         },
         getInitials(name: string) {
@@ -350,11 +388,35 @@ export default defineComponent({
             return names[0].charAt(0);
         },
         onImageError(event: any, author: string) {
-            event.target.style.display = 'none';
+            event.target.style.display = "none";
         },
         printArticle() {
-            window.print()
-        }
+            window.print();
+        },
+        addCopyToClipboardToPres() {
+            const highlightBlocks = document.querySelectorAll("pre");
+            highlightBlocks.forEach((block) => {
+                const button = document.createElement("button");
+                const iconStyle = "p-0 m-0 text-lg leading-none";
+                button.className = "bg-blue-500 text-white p-[6px] rounded absolute right-2 top-2 opacity-0 transition-opacity size-fit flex items-center justify-center";
+                button.type = "button";
+                button.innerHTML = `<span class="material-icons ${iconStyle}">content_copy</span>`;
+
+                button.addEventListener("click", () => {
+                    if (block.textContent !== null) {
+                        navigator.clipboard.writeText(block.textContent);
+                    }
+                    button.classList.add("bg-green-600");
+                    button.innerHTML = `<span class="material-icons ${iconStyle}">done</span>`;
+                    setTimeout(() => {
+                        button.classList.remove("bg-green-600");
+                        button.innerHTML = `<span class="material-icons ${iconStyle}">content_copy</span>`;
+                    }, 2000);
+                });
+
+                block.appendChild(button);
+            });
+        },
     },
 });
 </script>
