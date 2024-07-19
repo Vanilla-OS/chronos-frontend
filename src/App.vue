@@ -14,7 +14,7 @@
             class="flex items-center border bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-opacity-50 border-gray-200 dark:border-gray-600">
             <input class="flex-1 px-4 py-2 text-gray-600 dark:text-gray-300 bg-transparent focus:outline-none w-full"
               type="text" placeholder="Search for articles.." v-model="search" @input="searchArticles"
-              @blur="emptySearch()" />
+              @blur="emptySearch()">
             <i class="material-icons p-2 text-gray-400 dark:text-gray-500">search</i>
 
             <div v-if="collectionShortName" class="relative border-l border-gray-200 dark:border-gray-600">
@@ -39,7 +39,7 @@
           <div v-if="searchResponse.length > 0"
             class="absolute w-full mt-1 z-50 max-h-80 overflow-auto bg-white dark:bg-gray-800 rounded-md shadow-lg m-2">
             <span class="block p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
-              v-for="(result, index) in searchResponse" :key="index" @click="goToArticle(result.Slug)">
+              v-for="(result, index) in searchResponse" :key="index" @mousedown.prevent="goToArticle(result.Slug)">
               <div class="flex items-center space-x-2">
                 <i class="mdi material-icons text-gray-500 dark:text-gray-400">book</i>
                 <div class="flex-1">
@@ -75,8 +75,8 @@
     <footer class="bg-white dark:bg-gray-900 mt-12">
       <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
         <p class="text-base text-gray-600 dark:text-gray-400">
-          <strong>Chronos</strong> by
-          <a href="https://vanillaos.org" class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
+          <strong>Chronos</strong> by <a href="https://vanillaos.org"
+            class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
         </p>
       </div>
     </footer>
@@ -201,7 +201,7 @@ export default defineComponent({
     },
     emptySearch() {
       this.searchResponse = [];
-      console.log("Focus lost");
+      console.log("Focus lost")
     },
   },
 });

@@ -8,7 +8,9 @@ stages:
       maintainer: Vanilla OS Contributors
     entrypoint:
       exec:
-        - "/bin/sh -c && cd /app && npm run publish"
+        - /bin/sh
+        - '-c'
+        - cd /app && npm run publish
     expose:
       "6090": ""
     modules:
