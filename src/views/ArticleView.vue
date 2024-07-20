@@ -1,5 +1,5 @@
 <template>
-    <nav class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2"
+    <nav class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2 print:hidden"
         aria-label="breadcrumbs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ul class="flex space-x-2">
@@ -48,8 +48,8 @@
                 </a>
             </div>
             <div class="flex flex-row justify-center mt-2 align-middle">
-                <p class="mt-4 text-gray-700 dark:text-gray-400"><b>Reading time:</b> {{ readingTime }}</p>
-                <div class="px-6 py-3.5 inline-flex justify-center align-middle cursor-pointer" @click="printArticle">
+                <p class="mt-4 text-gray-700 dark:text-gray-400"><b>Reading time:</b> {{ readingTime }} <span class="print:hidden">&middot;</span></p>
+                <div class="px-6 py-3.5 inline-flex justify-center align-middle cursor-pointer print:hidden" @click="printArticle">
                     <span class="toolBox-item-icon mdi material-icons -ml-4">print</span>
                 </div>
             </div>
@@ -76,7 +76,7 @@
             </div>
         </aside>
         <div class="w-full lg:w-3/4 lg:pl-4">
-            <div class="content prose dark:prose-invert article-content" v-html="article.Body"></div>
+            <div class="content prose dark:prose-invert print:text-black article-content" v-html="article.Body"></div>
             <div class="flex justify-between mt-8 space-x-4">
                 <div class="w-1/2">
                     <router-link v-if="previousArticle && previousArticle.Slug !== undefined"
@@ -109,7 +109,7 @@
     </div>
 
     <button @click="isSidebarVisible = !isSidebarVisible"
-        class="material-icons fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full z-50 md:hidden">
+        class="material-icons fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full z-50 md:hidden print:hidden">
         menu
     </button>
 

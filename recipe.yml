@@ -7,7 +7,6 @@ stages:
     labels:
       maintainer: Vanilla OS Contributors
     entrypoint:
-      workdir: /app
       exec:
         - /bin/sh
         - '-c'
