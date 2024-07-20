@@ -74,8 +74,12 @@
 
     <footer class="bg-white dark:bg-gray-900 mt-12">
       <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-base text-gray-600 dark:text-gray-400">
+        <p class="text-base text-gray-600 dark:text-gray-400 print:hidden">
           <strong>Chronos</strong> by <a href="https://vanillaos.org"
+            class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
+        </p>
+        <p class="text-base text-gray-600 dark:text-gray-400 hidden print:block">
+          PDF generated with <strong>Chronos</strong> by <a href="https://vanillaos.org"
             class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
         </p>
       </div>
