@@ -31,7 +31,7 @@
         </div>
     </nav>
     <section class="bg-gray-100 dark:bg-gray-800 text-black dark:text-gray-200">
-        <div class="container mx-auto py-8 px-4 text-center">
+        <div class="container mx-auto py-8 px-4 text-center print:text-black">
             <h1 class="text-3xl font-bold">{{ article.Title }}</h1>
             <p class="mt-4">{{ article.Description }}</p>
             <div class="flex justify-center mt-4 gap-2">
