@@ -340,6 +340,7 @@ export default defineComponent({
             const offset = 53;
             const element = document.getElementById(headingId);
             const y = element?.getBoundingClientRect().top;
+            history.replaceState(null, null, "#" + headingId)
             window.scrollTo({ top: y ? y + window.scrollY - offset : 0, behavior: "smooth" });
             this.isSidebarVisible = false;
         },
