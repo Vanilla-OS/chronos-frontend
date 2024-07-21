@@ -55,10 +55,11 @@
           </div>
         </div>
 
-        <button @click="toggleDarkMode"
+        <button @click="toggleThemeMode"
           class="flex items-center p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-          <i class="material-icons" v-if="isDarkMode">light_mode</i>
-          <i class="material-icons" v-else>dark_mode</i>
+          <i class="material-icons" v-if="theme === 'light'">light_mode</i>
+          <i class="material-icons" v-if="theme === 'system'">computer</i>
+          <i class="material-icons" v-if="theme === 'dark'">dark_mode</i>
         </button>
 
         <div class="hidden sm:flex items-center space-x-4">
@@ -102,7 +103,7 @@ export default defineComponent({
       search: "",
       chronosConfig: {} as ChronosConfig,
       collectionShortName: "",
-      isDarkMode: false,
+      theme: "system",
     };
   },
   computed: {
@@ -116,6 +117,9 @@ export default defineComponent({
   watch: {
     $route(to, from) {
       this.fetchLanguages();
+    },
+    theme() {
+      this.applyTheme();
     },
   },
   async mounted() {
@@ -133,17 +137,9 @@ export default defineComponent({
       state.prefLang = "en";
     });
 
-    // Dark mode
-    const userPrefersDark =
-      localStorage.getItem("darkMode") === "true" ||
-      (!("darkMode" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-    this.isDarkMode = userPrefersDark;
-    if (userPrefersDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    // Theme
+    this.theme = localStorage.getItem("theme") || "system";
+    this.applyTheme();
   },
   methods: {
     setLang(lang: string) {
@@ -196,12 +192,29 @@ export default defineComponent({
         }
       }
     },
-
-    toggleDarkMode() {
-      document.documentElement.classList.toggle("dark");
-      const isDarkMode = document.documentElement.classList.contains("dark");
-      localStorage.setItem("darkMode", isDarkMode ? "true" : "false");
-      this.isDarkMode = isDarkMode;
+    applyTheme() {
+      if (this.theme === "system") {
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      } else if (this.theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    },
+    toggleThemeMode() {
+      if (this.theme === "system") {
+        this.theme = "dark";
+      } else if (this.theme === "dark") {
+        this.theme = "light";
+      } else {
+        this.theme = "system";
+      }
+      localStorage.setItem("theme", this.theme);
+      this.applyTheme();
     },
     emptySearch() {
       this.searchResponse = [];
