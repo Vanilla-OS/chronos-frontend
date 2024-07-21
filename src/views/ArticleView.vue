@@ -180,6 +180,7 @@ export default defineComponent({
             (c) => c.shortName === this.collectionName
         );
 
+        document.getElementById(window.location.hash.slice(1))?.scrollIntoView({behavior: 'smooth'});
         this.setEditUrl(collectionConfig);
     },
     methods: {
