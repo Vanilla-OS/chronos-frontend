@@ -395,8 +395,15 @@ export default defineComponent({
             window.print();
         },
         addCopyToClipboardToPres() {
-            const highlightBlocks = document.querySelectorAll("pre");
-            highlightBlocks.forEach((block) => {
+            const codeBlocks = document.querySelectorAll("pre");
+            codeBlocks.forEach((block) => {
+                const div = document.createElement("div");
+                div.className = "relative pre-div";
+
+                const pre = document.createElement("pre");
+                pre.textContent = block.textContent;
+                div.appendChild(pre);
+
                 const button = document.createElement("button");
                 const iconStyle = "p-0 m-0 text-lg leading-none";
                 button.className = "bg-blue-500 text-white p-[6px] rounded absolute right-2 top-2 opacity-0 transition-opacity size-fit flex items-center justify-center";
@@ -404,8 +411,8 @@ export default defineComponent({
                 button.innerHTML = `<span class="material-icons ${iconStyle}">content_copy</span>`;
 
                 button.addEventListener("click", () => {
-                    if (block.textContent !== null) {
-                        navigator.clipboard.writeText(block.textContent);
+                    if (pre.textContent !== null) {
+                        navigator.clipboard.writeText(pre.textContent);
                     }
                     button.classList.add("bg-green-600");
                     button.innerHTML = `<span class="material-icons ${iconStyle}">done</span>`;
@@ -415,7 +422,8 @@ export default defineComponent({
                     }, 2000);
                 });
 
-                block.appendChild(button);
+                div.appendChild(button);
+                block.replaceWith(div);
             });
         },
     },

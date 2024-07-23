@@ -16,13 +16,8 @@
   background: #555;
 }
 
-pre {
-  @apply relative;
-}
-
-pre:hover button {
+.pre-div:hover button {
   @apply opacity-100;
-    background: #555;
 }
 
 
