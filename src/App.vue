@@ -1,11 +1,12 @@
 <template>
   <div :class="{ 'sticky top-0 z-50 shadow': stickyTopbar }" class="bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="flex justify-between items-center py-4" aria-label="main navigation">
+      <nav class="flex justify-between items-center py-4 print:hidden" aria-label="main navigation">
         <router-link to="/" class="flex items-center">
           <img :src="chronosConfig.logoUrl" class="w-7 min-w-7 h-7 min-h-7" alt="Logo" />
-          <h1 class="text-lg font-semibold ml-2 hidden sm:block text-gray-900 dark:text-gray-100">{{
-            chronosConfig.logoTitle }}</h1>
+          <h1 class="text-lg font-semibold ml-2 hidden sm:block text-gray-900 dark:text-gray-100">
+            {{ chronosConfig.logoTitle }}
+          </h1>
         </router-link>
 
         <div class="flex-1 mx-4 relative">
@@ -42,18 +43,23 @@
               <div class="flex items-center space-x-2">
                 <i class="mdi material-icons text-gray-500 dark:text-gray-400">book</i>
                 <div class="flex-1">
-                  <p class="font-semibold text-gray-900 dark:text-gray-100">{{ result.Title }}</p>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">{{ result.Description }}</p>
+                  <p class="font-semibold text-gray-900 dark:text-gray-100">
+                    {{ result.Title }}
+                  </p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    {{ result.Description }}
+                  </p>
                 </div>
               </div>
             </span>
           </div>
         </div>
 
-        <button @click="toggleDarkMode"
+        <button @click="toggleThemeMode"
           class="flex items-center p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-          <i class="material-icons" v-if="isDarkMode">light_mode</i>
-          <i class="material-icons" v-else>dark_mode</i>
+          <i class="material-icons" v-if="theme === 'light'">light_mode</i>
+          <i class="material-icons" v-if="theme === 'system'">computer</i>
+          <i class="material-icons" v-if="theme === 'dark'">dark_mode</i>
         </button>
 
         <div class="hidden sm:flex items-center space-x-4">
@@ -69,8 +75,12 @@
 
     <footer class="bg-white dark:bg-gray-900 mt-12">
       <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-base text-gray-600 dark:text-gray-400">
+        <p class="text-base text-gray-600 dark:text-gray-400 print:hidden">
           <strong>Chronos</strong> by <a href="https://vanillaos.org"
+            class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
+        </p>
+        <p class="text-base text-gray-600 dark:text-gray-400 hidden print:block">
+          PDF generated with <strong>Chronos</strong> by <a href="https://vanillaos.org"
             class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
         </p>
       </div>
@@ -93,7 +103,7 @@ export default defineComponent({
       search: "",
       chronosConfig: {} as ChronosConfig,
       collectionShortName: "",
-      isDarkMode: false,
+      theme: "system",
     };
   },
   computed: {
@@ -107,6 +117,9 @@ export default defineComponent({
   watch: {
     $route(to, from) {
       this.fetchLanguages();
+    },
+    theme() {
+      this.applyTheme();
     },
   },
   async mounted() {
@@ -124,15 +137,9 @@ export default defineComponent({
       state.prefLang = "en";
     });
 
-    // Dark mode
-    const userPrefersDark = localStorage.getItem('darkMode') === 'true' ||
-      (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    this.isDarkMode = userPrefersDark;
-    if (userPrefersDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    // Theme
+    this.theme = localStorage.getItem("theme") || "system";
+    this.applyTheme();
   },
   methods: {
     setLang(lang: string) {
@@ -144,7 +151,11 @@ export default defineComponent({
     async searchArticles() {
       try {
         // @ts-ignore
-        const response = await this.$chronosAPI.searchArticles(this.chronosStore.prefLang, this.search, this.collectionShortName);
+        const response = await this.$chronosAPI.searchArticles(
+          this.chronosStore.prefLang,
+          this.search,
+          this.collectionShortName,
+        );
         if (response != null) {
           this.searchResponse = response;
         } else {
@@ -156,7 +167,9 @@ export default defineComponent({
       }
     },
     goToArticle(slug: string) {
-      this.$router.push(`/${this.collectionShortName}/${this.chronosStore.prefLang}/${slug}`);
+      this.$router.push(
+        `/${this.collectionShortName}/${this.chronosStore.prefLang}/${slug}`,
+      );
       this.searchResponse = [];
       this.search = "";
     },
@@ -168,18 +181,40 @@ export default defineComponent({
         // Fetch languages for the specific collection
         try {
           // @ts-ignore
-          this.langs = await this.$chronosAPI.getLangs(this.collectionShortName);
+          this.langs = await this.$chronosAPI.getLangs(
+            this.collectionShortName,
+          );
         } catch (error) {
-          console.error(`Error fetching languages for collection ${this.collectionShortName}:`, error);
+          console.error(
+            `Error fetching languages for collection ${this.collectionShortName}:`,
+            error,
+          );
         }
       }
     },
-
-    toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-      const isDarkMode = document.documentElement.classList.contains('dark');
-      localStorage.setItem('darkMode', isDarkMode ? 'true' : 'false');
-      this.isDarkMode = isDarkMode;
+    applyTheme() {
+      if (this.theme === "system") {
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      } else if (this.theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    },
+    toggleThemeMode() {
+      if (this.theme === "system") {
+        this.theme = "dark";
+      } else if (this.theme === "dark") {
+        this.theme = "light";
+      } else {
+        this.theme = "system";
+      }
+      localStorage.setItem("theme", this.theme);
+      this.applyTheme();
     },
     emptySearch() {
       this.searchResponse = [];
