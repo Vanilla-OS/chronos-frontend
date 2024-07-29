@@ -117,7 +117,7 @@ export default defineComponent({
       return useChronosStore();
     },
     filteredArticles() {
-      let filtered = this.articles.filter((article) => article.Listed == false);
+      let filtered = this.articles.filter((article) => article.Listed !== false);
       if (this.selectedTags.length > 0) {
         filtered = filtered.filter((article) => {
           if (article.Tags === null) return false;
