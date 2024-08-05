@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ArticleView from "../views/ArticleView.vue";
 import CollectionView from "../views/CollectionView.vue";
+import NotFoundView from "../views/NotFoundView.vue";
 import { useHead } from 'unhead'
 
 
@@ -23,6 +24,11 @@ const router = createRouter({
       name: "article",
       component: ArticleView,
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "notfound",
+      component: NotFoundView,
+    }
   ],
 });
 
