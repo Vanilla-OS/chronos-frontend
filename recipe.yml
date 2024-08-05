@@ -14,6 +14,12 @@ stages:
     expose:
       "6090": ""
     modules:
+      - name: pnpm
+        type: shell
+        commands:
+          - corepack enable pnpm
+          - corepack use pnpm@latest
+
       - name: build-app
         type: shell
         source:
@@ -24,5 +30,5 @@ stages:
         commands:
           - mv /sources/build-app /app
           - cd /app
-          - npm install
-          - npm run build
+          - pnpm install
+          - pnpm build

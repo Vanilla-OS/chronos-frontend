@@ -74,7 +74,6 @@ CHRONOS_COLLECTION_2='[{"shortName": "handbook", "title": "Handbook", "url": "ht
 # add more collections here
 CHRONOS_EXTRA_LINK_1='[{"url": "https://github.com/vanilla-os/Chronos", "name": "Source Code"}]' \
 # add more extra links here
-npm run generate-config
 ```
 
 ## Development
@@ -82,7 +81,15 @@ npm run generate-config
 To start the development server, run the following command:
 
 ```bash
-npm run dev
+pnpm dev
+```
+
+## Generate Configuration
+
+To generate the configuration file, run the following command:
+
+```bash
+pnpm generate-config
 ```
 
 ## Production
@@ -90,7 +97,7 @@ npm run dev
 To build the production version, run the following command:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 ### Docker
