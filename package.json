@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "generate-config": "node generate-config.js",
     "start": "node server.js",
-    "publish": "pnpm generate-config && pnpm build && npm run start"
+    "publish": "pnpm generate-config && pnpm build && pnpm start"
   },
   "dependencies": {
     "@babel/types": "^7.24.5",
