@@ -10,7 +10,7 @@ stages:
       exec:
         - /bin/sh
         - '-c'
-        - cd /app && npm run publish
+        - cd /app && pnpm run publish
     expose:
       "6090": ""
     modules:
