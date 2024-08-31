@@ -1,5 +1,4 @@
 import { dirname, resolve } from "path";
-
 import fastify from "fastify";
 import fastifyStatic from "@fastify/static";
 import fastifyRateLimit from "@fastify/rate-limit";
@@ -13,6 +12,8 @@ const PORT = process.env.PORT || 6090;
 
 app.register(fastifyStatic, {
   root: resolve(__dirname, "dist"),
+  prefix: "/",
+  wildcard: false,
 });
 
 app.register(fastifyRateLimit, {
@@ -20,7 +21,7 @@ app.register(fastifyRateLimit, {
   timeWindow: "1 minute",
 });
 
-app.get("/", (req, reply) => {
+app.setNotFoundHandler((req, reply) => {
   reply.sendFile("index.html");
 });
 
