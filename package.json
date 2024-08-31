@@ -9,7 +9,10 @@
     "preview": "vite preview",
     "generate-config": "node generate-config.js",
     "start": "node server.js",
-    "publish": "pnpm generate-config && pnpm build && pnpm start"
+    "publish": "pnpm generate-config && pnpm build && pnpm start",
+    "build-live": "npm-run-all -p watch:build watch:start",
+    "watch:build": "nodemon --watch src --ext js,ts,vue,css --exec \"npm run build\"",
+    "watch:start": "nodemon --watch dist --exec \"npm run start\""
   },
   "dependencies": {
     "@babel/types": "^7.24.5",
@@ -34,6 +37,7 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.19",
+    "nodemon": "^3.1.4",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.7",
