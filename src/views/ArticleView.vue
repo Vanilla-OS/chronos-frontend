@@ -8,7 +8,7 @@
                         class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400">Home</router-link>
                 </li>
                 <li>
-                    <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
+                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-300">chevron_right</span>
                 </li>
                 <li v-if="collectionName">
                     <router-link :to="{ name: 'collection', params: { collection: collectionName } }"
@@ -16,7 +16,7 @@
                         collectionName }}</router-link>
                 </li>
                 <li v-if="collectionName">
-                    <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
+                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-300">chevron_right</span>
                 </li>
                 <li>
                     <a class="cursor-pointer text-gray-600 dark:text-gray-400">{{
@@ -24,7 +24,7 @@
                         }}</a>
                 </li>
                 <li v-if="article.Title" class="hidden md:flex">
-                    <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
+                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-300">chevron_right</span>
                 </li>
                 <li class="text-gray-500 dark:text-gray-300 hidden md:flex" aria-current="page" v-if="article.Title">
                     {{ article.Title }}
@@ -52,7 +52,7 @@
             <div class="flex flex-row justify-center mt-2 align-middle">
                 <p class="mt-4 text-gray-700 dark:text-gray-400"><b>Reading time:</b> {{ readingTime }} <span class="print:hidden">&middot;</span></p>
                 <div class="px-6 py-3.5 inline-flex justify-center align-middle cursor-pointer print:hidden" @click="printArticle">
-                    <span class="toolBox-item-icon mdi material-icons -ml-4">print</span>
+                    <span class="toolBox-item-icon mdi material-symbols-outlined -ml-4">print</span>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                     <router-link v-if="previousArticle && previousArticle.Slug !== undefined"
                         :to="`/${collectionName}/${chronosStore.prefLang}/${previousArticle.Slug}`"
                         class="flex justify-between items-center border border-gray-300 rounded-lg p-4 gap-4">
-                        <span class="material-icons">arrow_back</span>
+                        <span class="material-symbols-outlined">arrow_back</span>
                         <div class="flex flex-col">
                             <span class="mr-2 text-gray-700 dark:text-gray-300 text-right">Previous</span>
                             <span class="mr-2 text-gray-700 dark:text-gray-300 text-right font-semibold text-lg">
@@ -105,7 +105,7 @@
                                 {{ nextArticle.Title }}
                             </span>
                         </div>
-                        <span class="material-icons">arrow_forward</span>
+                        <span class="material-symbols-outlined">arrow_forward</span>
                     </router-link>
                 </div>
             </div>
@@ -113,7 +113,7 @@
     </div>
 
     <button @click="isSidebarVisible = !isSidebarVisible"
-        class="material-icons fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full z-50 md:hidden print:hidden">
+        class="material-symbols-outlined fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full z-50 md:hidden print:hidden">
         menu
     </button>
 
@@ -408,17 +408,17 @@ export default defineComponent({
                 const iconStyle = "p-0 m-0 text-lg leading-none";
                 button.className = "bg-blue-500 text-white p-[6px] rounded absolute right-2 top-2 opacity-0 transition-opacity size-fit flex items-center justify-center";
                 button.type = "button";
-                button.innerHTML = `<span class="material-icons ${iconStyle}">content_copy</span>`;
+                button.innerHTML = `<span class="material-symbols-outlined ${iconStyle}">content_copy</span>`;
 
                 button.addEventListener("click", () => {
                     if (pre.textContent !== null) {
                         navigator.clipboard.writeText(pre.textContent);
                     }
                     button.classList.add("bg-green-600");
-                    button.innerHTML = `<span class="material-icons ${iconStyle}">done</span>`;
+                    button.innerHTML = `<span class="material-symbols-outlined ${iconStyle}">done</span>`;
                     setTimeout(() => {
                         button.classList.remove("bg-green-600");
-                        button.innerHTML = `<span class="material-icons ${iconStyle}">content_copy</span>`;
+                        button.innerHTML = `<span class="material-symbols-outlined ${iconStyle}">content_copy</span>`;
                     }, 2000);
                 });
 

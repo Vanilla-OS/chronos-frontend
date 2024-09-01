@@ -20,7 +20,7 @@
             <div
               class="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-semibold text-sm transition-colors duration-150 ease-in-out mb-4">
               <span class="flex items-center">
-                <i class="material-icons text-base mr-2">book</i>
+                <i class="material-symbols-outlined text-base mr-2">book</i>
                 <span v-if="articleCounts[collection.shortName] !== undefined">
                   {{ articleCounts[collection.shortName] }} Articles
                 </span>
@@ -31,7 +31,7 @@
               <span
                 class="inline-flex items-center text-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-semibold transition-colors duration-150 ease-in-out">
                 View collection
-                <i class="material-icons ml-2">arrow_forward</i>
+                <i class="material-symbols-outlined ml-2">arrow_forward</i>
               </span>
             </div>
           </router-link>

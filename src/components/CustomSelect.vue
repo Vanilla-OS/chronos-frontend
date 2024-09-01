@@ -12,14 +12,14 @@
                 <li v-for="option in filteredOptions" :key="option" @click="selectOption(option)"
                     class="cursor-pointer select-none p-2 hover:bg-blue-100 dark:hover:bg-gray-700 dark:text-gray-200">
                     {{ option }}
-                    <span v-if="modelValue.includes(option)" class="material-icons text-sm dark:text-gray-200">check</span>
+                    <span v-if="modelValue.includes(option)" class="material-symbols-outlined text-sm dark:text-gray-200">check</span>
                 </li>
             </ul>
             <div v-if="modelValue.length !== 0" class="p-2 flex flex-wrap gap-2 flex-col dark:bg-gray-600">
                 <span v-for="tag in modelValue" :key="tag"
                     class="bg-blue-100 dark:bg-gray-800 text-blue-800 dark:text-blue-200 rounded-full px-3 py-1 text-xs font-medium flex items-center flex-1 mr-2">
                     {{ tag }}
-                    <i class="material-icons text-sm cursor-pointer ml-auto dark:text-gray-200"
+                    <i class="material-symbols-outlined text-sm cursor-pointer ml-auto dark:text-gray-200"
                         @click.stop="removeTag(tag)">cancel</i>
                 </span>
             </div>
@@ -124,4 +124,3 @@ export default defineComponent({
     },
 });
 </script>
-  
