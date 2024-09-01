@@ -58,7 +58,7 @@
         <button @click="toggleThemeMode"
           class="flex items-center p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
           <i class="material-symbols-outlined" v-if="theme === 'light'">light_mode</i>
-          <i class="material-symbols-outlined" v-if="theme === 'system'">computer</i>
+          <i class="material-symbols-outlined" v-if="theme === 'system'">contrast</i>
           <i class="material-symbols-outlined" v-if="theme === 'dark'">dark_mode</i>
         </button>
 
