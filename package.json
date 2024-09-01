@@ -19,7 +19,7 @@
     "@fastify/rate-limit": "^9.1.0",
     "@fastify/static": "^7.0.4",
     "@highlightjs/vue-plugin": "^2.1.0",
-    "@tailwindcss/typography": "^0.5.12",
+    "@tailwindcss/typography": "^0.5.15",
     "axios": "^1.7.7",
     "fastify": "^4.28.1",
     "highlight.js": "^11.10.0",
