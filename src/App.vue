@@ -15,13 +15,13 @@
             <input class="flex-1 px-4 py-2 text-gray-600 dark:text-gray-300 bg-transparent focus:outline-none w-full"
               type="text" placeholder="Search for articles.." v-model="search" @input="searchArticles"
               @blur="emptySearch()">
-            <i class="material-icons p-2 text-gray-400 dark:text-gray-500">search</i>
+            <i class="material-symbols-outlined p-2 text-gray-400 dark:text-gray-500">search</i>
 
             <div v-if="collectionShortName" class="relative border-l border-gray-200 dark:border-gray-600">
               <button @click="showLangs = !showLangs"
                 class="flex items-center p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 <span>{{ chronosStore.prefLang }}</span>
-                <i class="material-icons">arrow_drop_down</i>
+                <i class="material-symbols-outlined">arrow_drop_down</i>
               </button>
             </div>
           </div>
@@ -41,7 +41,7 @@
             <span class="block p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
               v-for="(result, index) in searchResponse" :key="index" @mousedown.prevent="goToArticle(result.Slug)">
               <div class="flex items-center space-x-2">
-                <i class="mdi material-icons text-gray-500 dark:text-gray-400">book</i>
+                <i class="mdi material-symbols-outlined text-gray-500 dark:text-gray-400">book</i>
                 <div class="flex-1">
                   <p class="font-semibold text-gray-900 dark:text-gray-100">
                     {{ result.Title }}
@@ -57,9 +57,9 @@
 
         <button @click="toggleThemeMode"
           class="flex items-center p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-          <i class="material-icons" v-if="theme === 'light'">light_mode</i>
-          <i class="material-icons" v-if="theme === 'system'">computer</i>
-          <i class="material-icons" v-if="theme === 'dark'">dark_mode</i>
+          <i class="material-symbols-outlined" v-if="theme === 'light'">light_mode</i>
+          <i class="material-symbols-outlined" v-if="theme === 'system'">computer</i>
+          <i class="material-symbols-outlined" v-if="theme === 'dark'">dark_mode</i>
         </button>
 
         <div class="hidden sm:flex items-center space-x-4">

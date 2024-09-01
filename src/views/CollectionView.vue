@@ -25,7 +25,7 @@
             <span
               class="inline-flex items-center text-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-semibold transition-colors duration-150 ease-in-out">
               Start reading
-              <i class="material-icons ml-2">arrow_forward</i>
+              <i class="material-symbols-outlined ml-2">arrow_forward</i>
             </span>
           </div>
         </router-link>
@@ -36,7 +36,7 @@
     <aside
       class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow md:sticky top-2 flex flex-row gap-4 mt-2 items-center">
       <router-link class="text-blue-600 dark:text-blue-400 flex items-center mr-auto" to="/">
-        <i class="material-icons">arrow_back</i>
+        <i class="material-symbols-outlined">arrow_back</i>
         <span class="hidden sm:inline">Back to collections</span>
       </router-link>
 
@@ -77,7 +77,7 @@
           <router-link :to="`/${collectionName}/${chronosStore.prefLang}/${article.Slug}`"
             class="mt-auto inline-flex items-center text-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-semibold transition-colors duration-150 ease-in-out">
             Read the article
-            <i class="material-icons ml-2">arrow_forward</i>
+            <i class="material-symbols-outlined ml-2">arrow_forward</i>
           </router-link>
         </article>
       </div>
