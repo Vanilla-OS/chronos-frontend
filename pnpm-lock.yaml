@@ -24,8 +24,8 @@ importers:
         specifier: ^0.5.12
         version: 0.5.13(tailwindcss@3.4.7)
       axios:
-        specifier: ^1.7.2
-        version: 1.7.2
+        specifier: ^1.7.7
+        version: 1.7.7
       fastify:
         specifier: ^4.28.1
         version: 4.28.1
@@ -601,8 +601,8 @@ packages:
   avvio@8.3.2:
     resolution: {integrity: sha512-st8e519GWHa/azv8S87mcJvZs4WsgTBjOw/Ih1CP6u+8SZvcOeAYNG6JbsIrAUUJJ7JfmrnOkR8ipDS+u9SIRQ==}
 
-  axios@1.7.2:
-    resolution: {integrity: sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==}
+  axios@1.7.7:
+    resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -2233,7 +2233,7 @@ snapshots:
       '@fastify/error': 3.4.1
       fastq: 1.17.1
 
-  axios@1.7.2:
+  axios@1.7.7:
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
