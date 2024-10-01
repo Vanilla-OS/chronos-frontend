@@ -21,7 +21,7 @@
     "@highlightjs/vue-plugin": "^2.1.0",
     "@tailwindcss/typography": "^0.5.15",
     "axios": "^1.7.7",
-    "fastify": "^4.28.1",
+    "fastify": "^5.0.0",
     "highlight.js": "^11.10.0",
     "js-yaml": "^4.1.0",
     "pinia": "^2.1.7",
