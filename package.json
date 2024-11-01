@@ -17,7 +17,7 @@
   "dependencies": {
     "@babel/types": "^7.24.5",
     "@fastify/rate-limit": "^10.1.0",
-    "@fastify/static": "^8.0.1",
+    "@fastify/static": "^8.0.2",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@tailwindcss/typography": "^0.5.15",
     "axios": "^1.7.7",
