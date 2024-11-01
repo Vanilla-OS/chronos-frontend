@@ -15,7 +15,7 @@
     "watch:start": "nodemon --watch dist --exec \"npm run start\""
   },
   "dependencies": {
-    "@babel/types": "^7.24.5",
+    "@babel/types": "^7.26.0",
     "@fastify/rate-limit": "^10.1.0",
     "@fastify/static": "^8.0.2",
     "@highlightjs/vue-plugin": "^2.1.0",
