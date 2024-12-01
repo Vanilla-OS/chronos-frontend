@@ -34,7 +34,7 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.14.9",
-    "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.20",
     "nodemon": "^3.1.7",
