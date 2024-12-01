@@ -51,8 +51,8 @@ importers:
         specifier: ^1.3.3
         version: 1.3.3
       vue-router:
-        specifier: ^4.4.3
-        version: 4.4.3(vue@3.5.10(typescript@5.5.4))
+        specifier: ^4.5.0
+        version: 4.5.0(vue@3.5.10(typescript@5.5.4))
     devDependencies:
       '@types/js-yaml':
         specifier: ^4.0.9
@@ -479,8 +479,8 @@ packages:
   '@vue/devtools-api@6.6.2':
     resolution: {integrity: sha512-134clD8u7cBBXdmBbXI282gHGF7T/eAbD/G7mAK2llQF62IbI4ny28IVamZVMoJSvfImC2Xxnj732hXkJvUj6g==}
 
-  '@vue/devtools-api@6.6.3':
-    resolution: {integrity: sha512-0MiMsFma/HqA6g3KLKn+AGpL1kgKhFWszC9U29NfpWK5LE7bjeXxySWJrOJ77hBz+TBrBQ7o4QJqbPbqbs8rJw==}
+  '@vue/devtools-api@6.6.4':
+    resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
 
   '@vue/language-core@2.0.19':
     resolution: {integrity: sha512-A9EGOnvb51jOvnCYoRLnMP+CcoPlbZVxI9gZXE/y2GksRWM6j/PrLEIC++pnosWTN08tFpJgxhSS//E9v/Sg+Q==}
@@ -1751,8 +1751,8 @@ packages:
   vue-highlightjs@1.3.3:
     resolution: {integrity: sha512-NaBfeVVa5rbKw9bNU0ajAcDmKOdzT+XuBZwYKFbEGSGFKGOc5wYerMY3R4WQrnlLD7BkG9tIIusqemKnIgQ7MA==}
 
-  vue-router@4.4.3:
-    resolution: {integrity: sha512-sv6wmNKx2j3aqJQDMxLFzs/u/mjA9Z5LCgy6BE0f7yFWMjrPLnS/sPNn8ARY/FXw6byV18EFutn5lTO6+UsV5A==}
+  vue-router@4.5.0:
+    resolution: {integrity: sha512-HDuk+PuH5monfNuY+ct49mNmkCRK4xJAV9Ts4z9UFc4rzdDnxQLyCMGGc8pKhZhHTVzfanpNwB/lwqevcBwI4w==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -2130,7 +2130,7 @@ snapshots:
 
   '@vue/devtools-api@6.6.2': {}
 
-  '@vue/devtools-api@6.6.3': {}
+  '@vue/devtools-api@6.6.4': {}
 
   '@vue/language-core@2.0.19(typescript@5.5.4)':
     dependencies:
@@ -3502,9 +3502,9 @@ snapshots:
     dependencies:
       highlight.js: 11.10.0
 
-  vue-router@4.4.3(vue@3.5.10(typescript@5.5.4)):
+  vue-router@4.5.0(vue@3.5.10(typescript@5.5.4)):
     dependencies:
-      '@vue/devtools-api': 6.6.3
+      '@vue/devtools-api': 6.6.4
       vue: 3.5.10(typescript@5.5.4)
 
   vue-template-compiler@2.7.16:
