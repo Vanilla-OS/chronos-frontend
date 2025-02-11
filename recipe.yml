@@ -18,7 +18,7 @@ stages:
         type: shell
         commands:
           - corepack enable pnpm
-          - corepack use pnpm@latest
+          - corepack use pnpm@latest-10
 
       - name: build-app
         type: shell
