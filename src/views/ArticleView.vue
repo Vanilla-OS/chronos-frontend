@@ -185,9 +185,9 @@
 
   <button
     @click="isSidebarVisible = !isSidebarVisible"
-    class="material-symbols-outlined fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full z-50 md:hidden print:hidden"
+    class="print:hidden md:hidden fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full z-50 flex items-center justify-center"
   >
-    menu
+    <span class="material-symbols-outlined">menu</span>
   </button>
 
   <div
