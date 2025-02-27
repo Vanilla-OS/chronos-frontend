@@ -83,18 +83,20 @@
       <div class="flex flex-row justify-center mt-2 align-middle">
         <p class="flex flex-row gap-2 justify-center items-center mt-4 text-gray-700 dark:text-gray-400">
           <b>Reading time:</b> {{ readingTime }}
-          <span class="print:hidden">&middot;</span>
-          <span
-            class="mdi material-symbols-outlined print:hidden select-none cursor-pointer"
+          <span class="inline-flex items-center justify-center gap-2 print:hidden">
+            <span>&middot;</span>
+            <span
+            class="mdi material-symbols-outlined select-none cursor-pointer"
             @click="printArticle"
             >print</span
-          >
-          <span class="print:hidden">&middot;</span>
-          <span
-            class="mdi material-symbols-outlined print:hidden select-none cursor-pointer"
-            @click="shareModalVisible = true"
-            >share</span
-          >
+            >
+            <span>&middot;</span>
+            <span
+              class="mdi material-symbols-outlined select-none cursor-pointer"
+              @click="shareModalVisible = true"
+              >share</span
+            >
+          </span>
         </p>
       </div>
     </div>
