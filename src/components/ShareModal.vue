@@ -3,7 +3,7 @@
     class="flex fixed top-0 left-0 justify-center items-center z-40 size-full"
   >
     <div
-      class="flex absolute top-0 left-0 size-full bg-gray-100 dark:bg-black backdrop-blur-xl z-40"
+      class="flex absolute top-0 left-0 size-full bg-gray-100 dark:bg-gray-800 backdrop-blur-xl z-40"
       @click="$emit('close')"
     ></div>
     <div
@@ -23,46 +23,13 @@
         </div>
         <div class="grid grid-cols-3 gap-3">
           <a
-            :href="mastodonLink"
+          v-for="(link, index) in socialLinks"
+            :key="index"
+            :href="link.url"
             target="_blank"
             class="p-4 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600"
           >
-            <i class="fa-brands fa-mastodon text-gray-900 dark:text-white"></i>
-          </a>
-          <a
-            :href="twitterLink"
-            target="_blank"
-            class="p-4 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600"
-          >
-            <i class="fa-brands fa-twitter text-gray-900 dark:text-white"></i>
-          </a>
-          <a
-            :href="telegramLink"
-            target="_blank"
-            class="p-4 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600"
-          >
-            <i class="fa-brands fa-telegram text-gray-900 dark:text-white"></i>
-          </a>
-          <a
-            :href="facebookLink"
-            target="_blank"
-            class="p-4 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600"
-          >
-            <i class="fa-brands fa-facebook text-gray-900 dark:text-white"></i>
-          </a>
-          <a
-            :href="whatsappLink"
-            target="_blank"
-            class="p-4 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600"
-          >
-            <i class="fa-brands fa-whatsapp text-gray-900 dark:text-white"></i>
-          </a>
-          <a
-            :href="linkedinLink"
-            target="_blank"
-            class="p-4 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600"
-          >
-            <i class="fa-brands fa-linkedin text-gray-900 dark:text-white"></i>
+            <i :class="link.icon" class="text-gray-900 dark:text-white"></i>
           </a>
           <div
             @click="sendEmail"
@@ -90,6 +57,15 @@ import { ref } from "vue";
 
 const copied = ref(false);
 
+const socialLinks = ref([
+  { icon: "fa-brands fa-mastodon", url: `https://shareopenly.org/share/?title=${document.title}&url=${window.location.href}` },
+  { icon: "fa-brands fa-twitter", url: `https://twitter.com/intent/tweet?text=${window.location.href}` },
+  { icon: "fa-brands fa-telegram", url: `https://t.me/share/url?url=${window.location.href}` },
+  { icon: "fa-brands fa-facebook", url: `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}` },
+  { icon: "fa-brands fa-whatsapp", url: `https://api.whatsapp.com/send?text=${window.location.href}` },
+  { icon: "fa-brands fa-linkedin", url: `https://www.linkedin.com/shareArticle?mini=true&url=${window.location.href}` },
+]);
+
 const copyLink = () => {
   navigator.clipboard.writeText(window.location.href);
   copied.value = true;
@@ -104,21 +80,4 @@ const sendEmail = () => {
     you might like this article: ${window.location.href}`;
   window.location.href = `mailto:?subject=${subject}&body=${body}`;
 };
-
-const mastodonLink = ref(
-  `https://shareopenly.org/share/?title=${document.title}&url=${window.location.href}`,
-);
-const twitterLink = ref(
-  `https://twitter.com/intent/tweet?text=${window.location.href}`,
-);
-const telegramLink = ref(`https://t.me/share/url?url=${window.location.href}`);
-const facebookLink = ref(
-  `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`,
-);
-const whatsappLink = ref(
-  `https://api.whatsapp.com/send?text=${window.location.href}`,
-);
-const linkedinLink = ref(
-  `https://www.linkedin.com/shareArticle?mini=true&url=${window.location.href}`,
-);
 </script>
