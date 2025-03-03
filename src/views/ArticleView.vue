@@ -101,41 +101,49 @@
       </div>
     </div>
   </section>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex py-8">
-    <aside class="hidden lg:block lg:w-1/4">
-      <div class="sticky top-4 z-1">
-        <div
-          class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg"
+  <div
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex py-8"
+    :class="{'flex-col gap-6': isSidebarVisible, 'flex-row': !isSidebarVisible}"
+  >
+  <aside class="hidden lg:block lg:w-1/4">
+    <div class="sticky top-4 z-1">
+      <div
+        class="flex flex-col gap-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg"
+      >
+        <p
+          class="font-semibold text-gray-900 dark:text-gray-200 cursor-pointer"
+          @click="isSidebarVisible = !isSidebarVisible"
         >
-          <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">
-            Navigation
-          </p>
-          <ul class="space-y-2 max-h-[85vh] overflow-y-scroll">
-            <li
-              v-for="(heading, index) in headings"
-              :key="index"
-              :style="heading.style"
-              class="text-gray-900 dark:text-gray-200"
-            >
-              <a
-                @click="scrollToHeading(heading.id)"
-                class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400"
-                >{{ heading.text }}</a
-              >
-            </li>
-          </ul>
-          <a
-            v-if="editUrl != ''"
-            :href="editUrl"
-            target="_blank"
-            class="mt-4 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+          Navigation
+        </p>
+        <ul v-if="!isSidebarVisible" class="space-y-2 max-h-[85vh] overflow-y-scroll">
+          <li
+            v-for="(heading, index) in headings"
+            :key="index"
+            :style="heading.style"
+            class="text-gray-900 dark:text-gray-200"
           >
-            Edit
-          </a>
-        </div>
+            <a
+              @click="scrollToHeading(heading.id)"
+              class="cursor-pointer text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 dark:text-blue-400"
+              >{{ heading.text }}</a
+            >
+          </li>
+        </ul>
+        <a
+          v-if="editUrl != ''"
+          :href="editUrl"
+          target="_blank"
+          class="mt-4 inline-block w-full text-center bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+        >
+          Edit
+        </a>
       </div>
-    </aside>
-    <div class="w-full lg:w-3/4 lg:pl-4">
+    </div>
+  </aside>
+    <div class="w-full"
+        :class="{'lg:w-full': isSidebarVisible, 'lg:w-3/4 lg:pl-4': !isSidebarVisible}"
+    >
       <div
         class="content prose dark:prose-invert print:text-black article-content"
         v-html="article.Body"
