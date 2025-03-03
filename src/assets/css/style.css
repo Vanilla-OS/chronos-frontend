@@ -31,3 +31,7 @@
         color: black;
     }
 }
+
+.prose {
+    max-width: 100%;
+}
