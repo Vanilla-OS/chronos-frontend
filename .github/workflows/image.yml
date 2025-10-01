@@ -21,7 +21,7 @@ jobs:
       id-token: write  # Additional permissions for the persistence of the attestations
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - uses: vanilla-os/vib-gh-action@v0.8.1
 
