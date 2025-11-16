@@ -21,7 +21,7 @@
     "@highlightjs/vue-plugin": "^2.1.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.8",
-    "axios": "^1.8.2",
+    "axios": "^1.12.2",
     "fastify": "^5.3.3",
     "highlight.js": "^11.11.1",
     "js-yaml": "^4.1.1",
