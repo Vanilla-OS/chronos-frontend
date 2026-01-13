@@ -1,25 +1,25 @@
 <template>
-  <div :class="{ 'sticky top-0 z-50 shadow': stickyTopbar }" class="bg-white dark:bg-gray-900">
+  <div :class="{ 'sticky top-0 z-50 shadow': stickyTopbar }" class="bg-white dark:bg-zinc-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <nav class="flex justify-between items-center py-4 print:hidden" aria-label="main navigation">
         <router-link to="/" class="flex items-center">
           <img :src="chronosConfig.logoUrl" class="w-7 min-w-7 h-7 min-h-7" alt="Logo" />
-          <h1 class="text-lg font-semibold ml-2 hidden sm:block text-gray-900 dark:text-gray-100">
+          <h1 class="text-lg font-semibold ml-2 hidden sm:block text-zinc-900 dark:text-zinc-100">
             {{ chronosConfig.logoTitle }}
           </h1>
         </router-link>
 
         <div class="flex-1 mx-4 relative">
           <div v-if="collectionShortName"
-            class="flex items-center border bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-opacity-50 border-gray-200 dark:border-gray-600">
-            <input class="flex-1 px-4 py-2 text-gray-600 dark:text-gray-300 bg-transparent focus:outline-none w-full"
+            class="flex items-center border bg-zinc-100 dark:bg-zinc-800 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-opacity-50 border-zinc-200 dark:border-zinc-600">
+            <input class="flex-1 px-4 py-2 text-zinc-600 dark:text-zinc-300 bg-transparent focus:outline-none w-full"
               type="text" placeholder="Search for articles.." v-model="search" @input="searchArticles"
               @blur="emptySearch()">
-            <i class="material-symbols-outlined p-2 text-gray-400 dark:text-gray-500">search</i>
+            <i class="material-symbols-outlined p-2 text-zinc-400 dark:text-zinc-500">search</i>
 
-            <div v-if="collectionShortName" class="relative border-l border-gray-200 dark:border-gray-600">
+            <div v-if="collectionShortName" class="relative border-l border-zinc-200 dark:border-zinc-600">
               <button @click="showLangs = !showLangs"
-                class="flex items-center p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                class="flex items-center p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white">
                 <span>{{ chronosStore.prefLang }}</span>
                 <i class="material-symbols-outlined">arrow_drop_down</i>
               </button>
@@ -27,26 +27,26 @@
           </div>
 
           <div v-show="showLangs"
-            class="absolute right-0 mt-2 w-max bg-white dark:bg-gray-800 shadow-lg rounded-md z-50">
+            class="absolute right-0 mt-2 w-max bg-white dark:bg-zinc-800 shadow-lg rounded-md z-50">
             <div class="py-1">
               <a v-for="(lang, index) in langs" :key="index" @click="setLang(lang)"
-                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                class="block px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer">
                 {{ lang }}
               </a>
             </div>
           </div>
 
           <div v-if="searchResponse.length > 0"
-            class="absolute w-full mt-1 z-50 max-h-80 overflow-auto bg-white dark:bg-gray-800 rounded-md shadow-lg m-2">
-            <span class="block p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+            class="absolute w-full mt-1 z-50 max-h-80 overflow-auto bg-white dark:bg-zinc-800 rounded-md shadow-lg m-2">
+            <span class="block p-4 hover:bg-zinc-50 dark:hover:bg-zinc-800 cursor-pointer"
               v-for="(result, index) in searchResponse" :key="index" @mousedown.prevent="goToArticle(result.Slug)">
               <div class="flex items-center space-x-2">
-                <i class="mdi material-symbols-outlined text-gray-500 dark:text-gray-400">book</i>
+                <i class="mdi material-symbols-outlined text-zinc-500 dark:text-zinc-400">book</i>
                 <div class="flex-1">
-                  <p class="font-semibold text-gray-900 dark:text-gray-100">
+                  <p class="font-semibold text-zinc-900 dark:text-zinc-100">
                     {{ result.Title }}
                   </p>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                  <p class="text-sm text-zinc-500 dark:text-zinc-400">
                     {{ result.Description }}
                   </p>
                 </div>
@@ -56,14 +56,14 @@
         </div>
 
         <button @click="toggleThemeMode"
-          class="flex items-center p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+          class="flex items-center p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white">
           <i class="material-symbols-outlined" v-if="theme === 'light'">light_mode</i>
           <i class="material-symbols-outlined" v-if="theme === 'system'">contrast</i>
           <i class="material-symbols-outlined" v-if="theme === 'dark'">dark_mode</i>
         </button>
 
         <div class="hidden sm:flex items-center space-x-4">
-          <a class="text-base text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+          <a class="text-base text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white"
             :href="link.url" target="_blank" v-for="(link, index) in chronosConfig.extraLinks" :key="index">
             {{ link.name }}
           </a>
@@ -73,13 +73,13 @@
 
     <router-view />
 
-    <footer class="bg-white dark:bg-gray-900 mt-12">
+    <footer class="bg-white dark:bg-zinc-900 mt-12">
       <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-base text-gray-600 dark:text-gray-400 print:hidden">
+        <p class="text-base text-zinc-600 dark:text-zinc-400 print:hidden">
           <strong>Chronos</strong> by <a href="https://vanillaos.org"
             class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
         </p>
-        <p class="text-base text-gray-600 dark:text-gray-400 hidden print:block">
+        <p class="text-base text-zinc-600 dark:text-zinc-400 hidden print:block">
           PDF generated with <strong>Chronos</strong> by <a href="https://vanillaos.org"
             class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
         </p>

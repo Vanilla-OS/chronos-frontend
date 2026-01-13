@@ -3,20 +3,20 @@
     class="flex fixed top-0 left-0 justify-center items-center z-40 size-full"
   >
     <div
-      class="flex absolute top-0 left-0 size-full bg-gray-100 dark:bg-gray-800 backdrop-blur-xl z-40"
+      class="flex absolute top-0 left-0 size-full bg-zinc-100 dark:bg-zinc-800 backdrop-blur-xl z-40"
       @click="$emit('close')"
     ></div>
     <div
-      class="relative shadow-lg rounded-xl bg-white dark:bg-gray-900 w-[30%] h-max z-50"
+      class="relative shadow-lg rounded-xl bg-white dark:bg-zinc-900 w-[30%] h-max z-50"
     >
       <div class="grid gap-4 p-6">
         <div class="flex justify-between items-center">
-          <h2 class="text-xl font-semibold text-gray-900 dark:text-neutral-50">
+          <h2 class="text-xl font-semibold text-zinc-900 dark:text-neutral-50">
             Share
           </h2>
           <button
             @click="$emit('close')"
-            class="text-gray-900 dark:text-neutral-50 hover:text-gray-600 dark:hover:text-neutral-300"
+            class="text-zinc-900 dark:text-neutral-50 hover:text-zinc-600 dark:hover:text-neutral-300"
           >
             ✕
           </button>
@@ -27,22 +27,22 @@
             :key="index"
             :href="link.url"
             target="_blank"
-            class="p-4 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600"
+            class="p-4 bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-zinc-200 dark:hover:bg-zinc-600"
           >
-            <i :class="link.icon" class="text-gray-900 dark:text-white"></i>
+            <i :class="link.icon" class="text-zinc-900 dark:text-white"></i>
           </a>
           <div
             @click="sendEmail"
-            class="p-4 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer"
+            class="p-4 bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-zinc-200 dark:hover:bg-zinc-600 cursor-pointer"
           >
-            <i class="fa-regular fa-envelope text-gray-900 dark:text-white"></i>
+            <i class="fa-regular fa-envelope text-zinc-900 dark:text-white"></i>
           </div>
           <div
             @click="copyLink"
-            class="p-4 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 col-span-3 cursor-pointer"
+            class="p-4 bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-50 rounded-full flex items-center justify-center hover:bg-zinc-200 dark:hover:bg-zinc-600 col-span-3 cursor-pointer"
           >
-            <i class="fa-regular fa-copy text-gray-900 dark:text-white"></i>
-            <span class="ml-2 text-gray-900 dark:text-white">
+            <i class="fa-regular fa-copy text-zinc-900 dark:text-white"></i>
+            <span class="ml-2 text-zinc-900 dark:text-white">
               {{ copied ? "Copied!" : "Copy to Clipboard" }}
             </span>
           </div>

@@ -1,6 +1,6 @@
 <template>
   <div v-if="chronosConfig">
-    <section class="bg-gray-100 dark:bg-gray-800 text-black dark:text-gray-200 text-center py-8">
+    <section class="bg-zinc-100 dark:bg-zinc-800 text-black dark:text-zinc-200 text-center py-8">
       <div class="container mx-auto px-4">
         <h1 class="text-3xl font-bold">{{ chronosConfig.title }}</h1>
         <p class="mt-4">Collections</p>
@@ -10,15 +10,15 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8" v-if="chronosConfig.chronosCollections">
         <div v-for="(collection, index) in chronosConfig.chronosCollections" :key="index"
-          class="bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out flex flex-col p-5 gap-4">
+          class="bg-white dark:bg-zinc-800 rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out flex flex-col p-5 gap-4">
           <router-link :to="`/collections/${collection.shortName}`"
             class="hover:no-underline flex-1 flex gap-2 flex-col">
-            <h4 class="text-xl font-semibold text-black dark:text-gray-200">
+            <h4 class="text-xl font-semibold text-black dark:text-zinc-200">
               {{ collection.title }}
             </h4>
-            <p class="text-gray-700 dark:text-gray-300">{{ collection.description }}</p>
+            <p class="text-zinc-700 dark:text-zinc-300">{{ collection.description }}</p>
             <div
-              class="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-semibold text-sm transition-colors duration-150 ease-in-out mb-4">
+              class="inline-flex items-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 font-semibold text-sm transition-colors duration-150 ease-in-out mb-4">
               <span class="flex items-center">
                 <i class="material-symbols-outlined text-base mr-2">book</i>
                 <span v-if="articleCounts[collection.shortName] !== undefined">
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div v-else>
-        <p class="text-black dark:text-gray-200">Loading...</p>
+        <p class="text-black dark:text-zinc-200">Loading...</p>
       </div>
     </div>
   </div>

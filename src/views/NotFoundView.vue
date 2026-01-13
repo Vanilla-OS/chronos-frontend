@@ -1,5 +1,5 @@
 <template>
-    <section class="bg-gray-100 dark:bg-gray-800 text-black dark:text-gray-200">
+    <section class="bg-zinc-100 dark:bg-zinc-800 text-black dark:text-zinc-200">
         <div class="container mx-auto py-20 px-4 text-center print:text-black">
             <h1 class="text-6xl font-extrabold animate-pulse">404</h1>
             <h2 class="text-2xl font-bold">Not Found</h2>

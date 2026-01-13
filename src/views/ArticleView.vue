@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2 print:hidden"
+    class="bg-zinc-50 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 px-4 py-2 print:hidden"
     aria-label="breadcrumbs"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,7 +14,7 @@
         </li>
         <li>
           <span
-            class="material-symbols-outlined text-gray-500 dark:text-gray-300"
+            class="material-symbols-outlined text-zinc-500 dark:text-zinc-300"
             >chevron_right</span
           >
         </li>
@@ -27,23 +27,23 @@
         </li>
         <li v-if="collectionName">
           <span
-            class="material-symbols-outlined text-gray-500 dark:text-gray-300"
+            class="material-symbols-outlined text-zinc-500 dark:text-zinc-300"
             >chevron_right</span
           >
         </li>
         <li>
-          <a class="cursor-pointer text-gray-600 dark:text-gray-400">{{
+          <a class="cursor-pointer text-zinc-600 dark:text-zinc-400">{{
             lang
           }}</a>
         </li>
         <li v-if="article.Title" class="hidden md:flex">
           <span
-            class="material-symbols-outlined text-gray-500 dark:text-gray-300"
+            class="material-symbols-outlined text-zinc-500 dark:text-zinc-300"
             >chevron_right</span
           >
         </li>
         <li
-          class="text-gray-500 dark:text-gray-300 hidden md:flex"
+          class="text-zinc-500 dark:text-zinc-300 hidden md:flex"
           aria-current="page"
           v-if="article.Title"
         >
@@ -52,7 +52,7 @@
       </ul>
     </div>
   </nav>
-  <section class="bg-gray-100 dark:bg-gray-800 text-black dark:text-gray-200">
+  <section class="bg-zinc-100 dark:bg-zinc-800 text-black dark:text-zinc-200">
     <div class="container mx-auto py-8 px-4 text-center print:text-black">
       <h1 class="text-3xl font-bold">{{ article.Title }}</h1>
       <p class="mt-4">{{ article.Description }}</p>
@@ -81,7 +81,7 @@
         </a>
       </div>
       <div class="flex flex-row justify-center mt-2 align-middle">
-        <p class="flex flex-row gap-2 justify-center items-center mt-4 text-gray-700 dark:text-gray-400">
+        <p class="flex flex-row gap-2 justify-center items-center mt-4 text-zinc-700 dark:text-zinc-400">
           <b>Reading time:</b> {{ readingTime }}
           <span class="inline-flex items-center justify-center gap-2 print:hidden">
             <span>&middot;</span>
@@ -108,10 +108,10 @@
   <aside class="hidden lg:block lg:w-1/4">
     <div class="sticky top-4 z-1">
       <div
-        class="flex flex-col gap-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg"
+        class="flex flex-col gap-4 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-600 p-4 rounded-lg"
       >
         <p
-          class="font-semibold text-gray-900 dark:text-gray-200 cursor-pointer"
+          class="font-semibold text-zinc-900 dark:text-zinc-200 cursor-pointer"
           @click="isSidebarVisible = !isSidebarVisible"
         >
           Navigation
@@ -121,7 +121,7 @@
             v-for="(heading, index) in headings"
             :key="index"
             :style="heading.style"
-            class="text-gray-900 dark:text-gray-200"
+            class="text-zinc-900 dark:text-zinc-200"
           >
             <a
               @click="scrollToHeading(heading.id)"
@@ -153,15 +153,15 @@
           <router-link
             v-if="previousArticle && previousArticle.Slug !== undefined"
             :to="`/${collectionName}/${chronosStore.prefLang}/${previousArticle.Slug}`"
-            class="flex justify-between items-center border border-gray-300 rounded-lg p-4 gap-4"
+            class="flex justify-between items-center border border-zinc-300 rounded-lg p-4 gap-4"
           >
             <span class="material-symbols-outlined">arrow_back</span>
             <div class="flex flex-col">
-              <span class="mr-2 text-gray-700 dark:text-gray-300 text-right"
+              <span class="mr-2 text-zinc-700 dark:text-zinc-300 text-right"
                 >Previous</span
               >
               <span
-                class="mr-2 text-gray-700 dark:text-gray-300 text-right font-semibold text-lg"
+                class="mr-2 text-zinc-700 dark:text-zinc-300 text-right font-semibold text-lg"
               >
                 {{ previousArticle.Title }}
               </span>
@@ -172,14 +172,14 @@
           <router-link
             v-if="nextArticle && nextArticle.Slug !== undefined"
             :to="`/${collectionName}/${chronosStore.prefLang}/${nextArticle.Slug}`"
-            class="flex justify-between items-center border border-gray-300 rounded-lg p-4 gap-4"
+            class="flex justify-between items-center border border-zinc-300 rounded-lg p-4 gap-4"
           >
             <div class="flex flex-col">
-              <span class="ml-2 text-gray-700 dark:text-gray-300 text-left"
+              <span class="ml-2 text-zinc-700 dark:text-zinc-300 text-left"
                 >Next</span
               >
               <span
-                class="ml-2 text-gray-700 dark:text-gray-300 text-left font-semibold text-lg"
+                class="ml-2 text-zinc-700 dark:text-zinc-300 text-left font-semibold text-lg"
               >
                 {{ nextArticle.Title }}
               </span>
@@ -204,10 +204,10 @@
     class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden bottom-0 flex flex-col items-end justify-end"
   >
     <aside
-      class="relative bg-white dark:bg-gray-700 p-4 shadow-lg overflow-auto w-full rounded-t-lg pb-16"
+      class="relative bg-white dark:bg-zinc-800 p-4 shadow-lg overflow-auto w-full rounded-t-lg pb-16"
     >
       <div class="p-2">
-        <p class="font-semibold mb-4 text-gray-900 dark:text-gray-200">
+        <p class="font-semibold mb-4 text-zinc-900 dark:text-zinc-200">
           Navigation
         </p>
         <ul class="space-y-2">
@@ -215,7 +215,7 @@
             v-for="(heading, index) in headings"
             :key="index"
             :style="heading.style"
-            class="text-gray-900 dark:text-gray-200"
+            class="text-zinc-900 dark:text-zinc-200"
           >
             <a
               @click="scrollToHeading(heading.id)"
