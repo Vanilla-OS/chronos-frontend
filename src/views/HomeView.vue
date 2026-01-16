@@ -1,6 +1,6 @@
 <template>
-  <div v-if="chronosConfig">
-    <section class="bg-zinc-100 dark:bg-zinc-800 text-black dark:text-zinc-200 text-center py-8">
+  <div v-if="chronosConfig" class="mt-16.25 min-h-screen">
+    <section class="text-black dark:text-zinc-200 text-center py-8">
       <div class="container mx-auto px-4">
         <h1 class="text-3xl font-bold">{{ chronosConfig.title }}</h1>
         <p class="mt-4">Collections</p>
@@ -10,10 +10,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8" v-if="chronosConfig.chronosCollections">
         <div v-for="(collection, index) in chronosConfig.chronosCollections" :key="index"
-          class="bg-white dark:bg-zinc-800 rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out flex flex-col p-5 gap-4">
+          class="border dark:border-zinc-800 border-zinc-300 rounded-xl overflow-hidden transition duration-300 ease-in-out flex flex-col p-8 gap-4">
           <router-link :to="`/collections/${collection.shortName}`"
             class="hover:no-underline flex-1 flex gap-2 flex-col">
-            <h4 class="text-xl font-semibold text-black dark:text-zinc-200">
+            <h4 class="text-xl font-semibold text-black dark:text-zinc-200 font-mono">
               {{ collection.title }}
             </h4>
             <p class="text-zinc-700 dark:text-zinc-300">{{ collection.description }}</p>
@@ -42,6 +42,20 @@
       </div>
     </div>
   </div>
+  <footer class="bg-white dark:bg-zinc-900 mt-12">
+    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-base text-zinc-600 dark:text-zinc-400 print:hidden">
+        <strong>Chronos</strong> by <a href="https://vanillaos.org"
+                                       class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
+      </p>
+      <p class="text-base text-zinc-600 dark:text-zinc-400 hidden print:block">
+        PDF generated with <strong>Chronos</strong> by <a href="https://vanillaos.org"
+                                                          class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla
+        OS</a>.
+      </p>
+    </div>
+  </footer>
+
 </template>
 
 

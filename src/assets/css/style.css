@@ -1,43 +1,53 @@
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+    background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+    background: #888;
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background: #555;
 }
 
 .pre-div:hover button {
-  @apply opacity-100;
+    @apply opacity-100;
 }
 
 
 @media print {
-  body {
-    background-color: white;
-    color: black;
-  }
+    body {
+        background-color: white;
+        color: black;
+    }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  code {
-    color: black;
-  }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    code {
+        color: black;
+    }
 }
 
 .prose {
-  max-width: 100%;
+    max-width: 100%;
+}
+
+.material-symbols-outlined {
+    font-size: unset;
+}
+
+pre code {
+    background-color: transparent !important;
+    scrollbar-track-color: transparent !important;
+    padding: 0 !important;
 }

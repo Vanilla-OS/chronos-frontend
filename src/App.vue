@@ -1,7 +1,9 @@
 <template>
-  <div :class="{ 'sticky top-0 z-50 shadow': stickyTopbar }" class="bg-white dark:bg-zinc-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="flex justify-between items-center py-4 print:hidden" aria-label="main navigation">
+  <div :class="{ 'sticky top-0 z-50 shadow': stickyTopbar }" class="bg-white dark:bg-zinc-950">
+    <div class="print:hidden fixed top-0 inset-x-0 h-max px-4 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 z-50">
+      <nav
+        class="flex justify-between items-center py-4 z-50 max-w-7xl mx-auto"
+        aria-label="main navigation">
         <router-link to="/" class="flex items-center">
           <img :src="chronosConfig.logoUrl" class="w-7 min-w-7 h-7 min-h-7" alt="Logo" />
           <h1 class="text-lg font-semibold ml-2 hidden sm:block text-zinc-900 dark:text-zinc-100">
@@ -9,37 +11,39 @@
           </h1>
         </router-link>
 
-        <div class="flex-1 mx-4 relative">
-          <div v-if="collectionShortName"
-            class="flex items-center border bg-zinc-100 dark:bg-zinc-800 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-opacity-50 border-zinc-200 dark:border-zinc-600">
-            <input class="flex-1 px-4 py-2 text-zinc-600 dark:text-zinc-300 bg-transparent focus:outline-none w-full"
-              type="text" placeholder="Search for articles.." v-model="search" @input="searchArticles"
-              @blur="emptySearch()">
-            <i class="material-symbols-outlined p-2 text-zinc-400 dark:text-zinc-500">search</i>
+        <div class="flex items-center justify-center flex-row gap-4">
 
-            <div v-if="collectionShortName" class="relative border-l border-zinc-200 dark:border-zinc-600">
-              <button @click="showLangs = !showLangs"
-                class="flex items-center p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white">
-                <span>{{ chronosStore.prefLang }}</span>
-                <i class="material-symbols-outlined">arrow_drop_down</i>
-              </button>
+          <div class="flex-1 mx-4 relative">
+            <div v-if="collectionShortName"
+                 class="flex items-center border bg-zinc-100 dark:bg-zinc-900 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-opacity-50 border-zinc-200 dark:border-zinc-800">
+              <i class="material-symbols-outlined p-2 text-zinc-400 dark:text-zinc-500">search</i>
+              <input class="flex-1 px-4 py-2 text-zinc-600 dark:text-zinc-300 bg-transparent focus:outline-none w-full"
+                     type="text" placeholder="Search for articles.." v-model="search" @input="searchArticles"
+                     @blur="emptySearch()">
+
+              <div v-if="collectionShortName" class="relative border-l pl-4 border-zinc-200 dark:border-zinc-800">
+                <button @click="showLangs = !showLangs"
+                        class="flex items-center p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white">
+                  <span class="text-zinc-500 dark:text-zinc-400">{{ chronosStore.prefLang }}</span>
+                  <i class="material-symbols-outlined text-zinc-500 dark:text-zinc-400">arrow_drop_down</i>
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div v-show="showLangs"
-            class="absolute right-0 mt-2 w-max bg-white dark:bg-zinc-800 shadow-lg rounded-md z-50">
-            <div class="py-1">
-              <a v-for="(lang, index) in langs" :key="index" @click="setLang(lang)"
-                class="block px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer">
-                {{ lang }}
-              </a>
+            <div v-show="showLangs"
+                 class="absolute right-0 mt-2 w-max bg-white dark:bg-zinc-800 shadow-lg rounded-md z-50">
+              <div class="py-1">
+                <a v-for="(lang, index) in langs" :key="index" @click="setLang(lang)"
+                   class="block px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer">
+                  {{ lang }}
+                </a>
+              </div>
             </div>
-          </div>
 
-          <div v-if="searchResponse.length > 0"
-            class="absolute w-full mt-1 z-50 max-h-80 overflow-auto bg-white dark:bg-zinc-800 rounded-md shadow-lg m-2">
+            <div v-if="searchResponse.length > 0"
+                 class="absolute w-full mt-1 z-50 max-h-80 overflow-auto bg-white dark:bg-zinc-800 rounded-md shadow-lg m-2">
             <span class="block p-4 hover:bg-zinc-50 dark:hover:bg-zinc-800 cursor-pointer"
-              v-for="(result, index) in searchResponse" :key="index" @mousedown.prevent="goToArticle(result.Slug)">
+                  v-for="(result, index) in searchResponse" :key="index" @mousedown.prevent="goToArticle(result.Slug)">
               <div class="flex items-center space-x-2">
                 <i class="mdi material-symbols-outlined text-zinc-500 dark:text-zinc-400">book</i>
                 <div class="flex-1">
@@ -52,39 +56,31 @@
                 </div>
               </div>
             </span>
+            </div>
           </div>
-        </div>
 
-        <button @click="toggleThemeMode"
-          class="flex items-center p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white">
-          <i class="material-symbols-outlined" v-if="theme === 'light'">light_mode</i>
-          <i class="material-symbols-outlined" v-if="theme === 'system'">contrast</i>
-          <i class="material-symbols-outlined" v-if="theme === 'dark'">dark_mode</i>
-        </button>
+          <div class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-400">
+            <a class="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+               :href="link.url" target="_blank" v-for="(link, index) in chronosConfig.extraLinks" :key="index">
+              {{ link.name }}
+            </a>
+          </div>
 
-        <div class="hidden sm:flex items-center space-x-4">
-          <a class="text-base text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white"
-            :href="link.url" target="_blank" v-for="(link, index) in chronosConfig.extraLinks" :key="index">
-            {{ link.name }}
-          </a>
+          <div class="hidden sm:block w-px h-4 bg-zinc-200 dark:bg-zinc-800"></div>
+
+          <button @click="toggleThemeMode"
+                  class="flex items-center p-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">
+            <i class="material-symbols-outlined" v-if="theme === 'light'">light_mode</i>
+            <i class="material-symbols-outlined" v-if="theme === 'system'">contrast</i>
+            <i class="material-symbols-outlined" v-if="theme === 'dark'">dark_mode</i>
+          </button>
+
         </div>
       </nav>
     </div>
 
     <router-view />
 
-    <footer class="bg-white dark:bg-zinc-900 mt-12">
-      <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-base text-zinc-600 dark:text-zinc-400 print:hidden">
-          <strong>Chronos</strong> by <a href="https://vanillaos.org"
-            class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
-        </p>
-        <p class="text-base text-zinc-600 dark:text-zinc-400 hidden print:block">
-          PDF generated with <strong>Chronos</strong> by <a href="https://vanillaos.org"
-            class="text-blue-800 dark:text-blue-400 hover:underline">Vanilla OS</a>.
-        </p>
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -103,7 +99,7 @@ export default defineComponent({
       search: "",
       chronosConfig: {} as ChronosConfig,
       collectionShortName: "",
-      theme: "system",
+      theme: "system"
     };
   },
   computed: {
@@ -112,7 +108,7 @@ export default defineComponent({
     },
     stickyTopbar() {
       return this.$route.name !== "article";
-    },
+    }
   },
   watch: {
     $route(to, from) {
@@ -120,7 +116,7 @@ export default defineComponent({
     },
     theme() {
       this.applyTheme();
-    },
+    }
   },
   async mounted() {
     try {
@@ -154,7 +150,7 @@ export default defineComponent({
         const response = await this.$chronosAPI.searchArticles(
           this.chronosStore.prefLang,
           this.search,
-          this.collectionShortName,
+          this.collectionShortName
         );
         if (response != null) {
           this.searchResponse = response;
@@ -168,7 +164,7 @@ export default defineComponent({
     },
     goToArticle(slug: string) {
       this.$router.push(
-        `/${this.collectionShortName}/${this.chronosStore.prefLang}/${slug}`,
+        `/${this.collectionShortName}/${this.chronosStore.prefLang}/${slug}`
       );
       this.searchResponse = [];
       this.search = "";
@@ -182,12 +178,12 @@ export default defineComponent({
         try {
           // @ts-ignore
           this.langs = await this.$chronosAPI.getLangs(
-            this.collectionShortName,
+            this.collectionShortName
           );
         } catch (error) {
           console.error(
             `Error fetching languages for collection ${this.collectionShortName}:`,
-            error,
+            error
           );
         }
       }
@@ -218,8 +214,8 @@ export default defineComponent({
     },
     emptySearch() {
       this.searchResponse = [];
-      console.log("Focus lost")
-    },
-  },
+      console.log("Focus lost");
+    }
+  }
 });
 </script>
