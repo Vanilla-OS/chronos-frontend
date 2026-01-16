@@ -2,5 +2,10 @@
 @import url('style.css');
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+@plugin 'tailwind-scrollbar';
+
+@theme {
+    --font-sans: 'Geist', sans-serif;
+}
 
 @custom-variant dark (&:where(.dark, .dark *));
